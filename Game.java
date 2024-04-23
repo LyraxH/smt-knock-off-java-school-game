@@ -41,7 +41,7 @@ public class Game
     int turn = 0; // 0 = ally, 1 = enemy.
     int currentCharacter = 0; // what out of four characters turn it is
     // goes turn 0, character 1-2-3-4, then turn 1, character 1-2-3-4. then repeat
-    ArrayList<Integer> orderOfOperations = new ArrayList<Integer>();
+    int move;
     int difficulty;
 
     public void Start(){
@@ -69,14 +69,12 @@ public class Game
         // the script that decides whos turn is next, and basically advances the game
         if (currentCharacter < 3){
             currentCharacter++;
-        } else {
-            if (currentCharacter == 3 && turn == 0){
-                currentCharacter = 0;
-                turn = 1;
-            } else if (currentCharacter == 3 && turn == 1){
-                currentCharacter = 0;
-                turn = 0;
-            }
+            page = 0;
+        } else if (currentCharacter == 3 && turn == 0){
+            page = 0;
+            currentCharacter = 0;
+            System.out.println("chaning to enemy turn");
+            turn = 1;
         }
     }
     
@@ -87,28 +85,137 @@ public class Game
         // the script that decides whos turn is next, and basically advances the game
         if (currentCharacter < 3){
             currentCharacter++;
-        } else {
-            if (currentCharacter == 3 && turn == 0){
-                currentCharacter = 0;
-                turn = 1;
-            } else if (currentCharacter == 3 && turn == 1){
-                currentCharacter = 0;
-                turn = 0;
-            }
+            page = 0;
+        } else if (currentCharacter == 3 && turn == 0){
+            page = 0;
+            currentCharacter = 0;
+            System.out.println("chaning to enemy turn");
+            turn = 1;
         }
     }
     
-    public void magic(int move){
+    void magic(int enemy){
+        switch (currentCharacter){
+            case 0: // ame
+                switch (move){
+                    case 0: // zephyr
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("Ame No Uzume uses Zephyr on Archangel");
+                                System.out.println("Ame No Uzume uses Zephyr on Archangel");
+                                break;
+                            case 1:
+                                textHistory.add("Ame No Uzume uses Zephyr on Jack Frost");
+                                System.out.println("Ame No Uzume uses Zephyr on Jack Frost");
+                                break;
+                            case 2:
+                                textHistory.add("Ame No Uzume uses Zephyr on Legion");
+                                System.out.println("Ame No Uzume uses Zephyr on Legion");
+                                break;
+                            case 3:
+                                textHistory.add("Ame No Uzume uses Zephyr on Principality");
+                                System.out.println("Ame No Uzume uses Zephyr on Principality");
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case 1: // cendrillon
+                switch (move){
+                    case 0: // aqua prison
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("Cendrillon uses Aqua Prison on Archangel");
+                                System.out.println("Cendrillon uses Aqua Prison on Archangel");
+                                break;
+                            case 1:
+                                textHistory.add("Cendrillon uses Aqua Prison on Jack Frost");
+                                System.out.println("Cendrillon uses Aqua Prison on Jack Frost");
+                                break;
+                            case 2:
+                                textHistory.add("Cendrillon uses Aqua Prison on Legion");
+                                System.out.println("Cendrillon uses Aqua Prison on Legion");
+                                break;
+                            case 3:
+                                textHistory.add("Cendrillon uses Aqua Prison on Principality");
+                                System.out.println("Cendrillon uses Aqua Prison on Principality");
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case 2: // orpheus
+                switch (move){
+                    case 0: // lunar rush
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("Orpheus uses Lunar Rush on Archangel");
+                                System.out.println("Orpheus uses Lunar Rush on Archangel");
+                                break;
+                            case 1:
+                                textHistory.add("Orpheus uses Lunar Rush on Jack Frost");
+                                System.out.println("Orpheus uses Lunar Rush on Jack Frost");
+                                break;
+                            case 2:
+                                textHistory.add("Orpheus uses Lunar Rush on Legion");
+                                System.out.println("Orpheus uses Lunar Rush on Legion");
+                                break;
+                            case 3:
+                                textHistory.add("Orpheus uses Lunar Rush on Principality");
+                                System.out.println("Orpheus uses Lunar Rush on Principality");
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case 3: // robin hood
+                switch (move){
+                    case 0: // zenith blade
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("Robin Hood uses Zenith Blade on Archangel");
+                                System.out.println("Robin Hood uses Zenith Blade on Archangel");
+                                break;
+                            case 1:
+                                textHistory.add("Robin Hood uses Zenith Blade on Jack Frost");
+                                System.out.println("Robin Hood uses Zenith Blade on Jack Frost");
+                                break;
+                            case 2:
+                                textHistory.add("Robin Hood uses Zenith Blade on Legion");
+                                System.out.println("Robin Hood uses Zenith Blade on Legion");
+                                break;
+                            case 3:
+                                textHistory.add("Robin Hood uses Zenith Blade on Principality");
+                                System.out.println("Robin Hood uses Zenith Blade on Principality");
+                                break;
+                        }
+                        break;
+                }
+                break;
+        }
+        
+        // the script that decides whos turn is next, and basically advances the game
+        if (currentCharacter < 3){
+            currentCharacter++;
+            page = 0;
+        } else if (currentCharacter == 3 && turn == 0){
+            page = 0;
+            currentCharacter = 0;
+            System.out.println("chaning to enemy turn");
+            turn = 1;
+        }
+    }
+    
+    public void magicMoveSelect(int move){
+        move = move;
         switch (currentCharacter){ //depending on who is choosing to magic attack, display different moves
             case 0: // ame moves
                 switch (move){
                     case 0:
-                        System.out.println("Ame No Uzume uses Zephyr");
-                        textHistory.add("Ame No Uzume uses Zephyr");
+                        page = 1; // single target enemy select
                         break;
                     case 1:
-                        System.out.println("Ame No Uzume uses Monsoon");
-                        textHistory.add("Ame No Uzume uses Monsoon");
+                        page = 5; // multi target enemy select
                         break;
                     case 2:
                         break;
@@ -119,12 +226,10 @@ public class Game
             case 1: // cendrillon moves
                 switch (move){
                     case 0:
-                        System.out.println("Cendrillon uses Aqua Prison");
-                        textHistory.add("Cendrillon uses Aqua Prison");
+                        page = 1; // single target enemy select
                         break;
                     case 1:
-                        System.out.println("Cendrillon uses Surging Tides");
-                        textHistory.add("Cendrillon uses Surging Tides");
+                        page = 5; // multi target enemy select
                         break;
                     case 2:
                         break;
@@ -135,12 +240,10 @@ public class Game
             case 2: // orpheus moves
                 switch (move){
                     case 0:
-                        System.out.println("Orpheus uses Lunar Rush");
-                        textHistory.add("Orpheus uses Lunar Rush");
+                        page = 1; // single target enemy select
                         break;
                     case 1:
-                        System.out.println("Orpheus uses Moonfall");
-                        textHistory.add("Orpheus uses Moonfall");
+                        page = 5; // multi target enemy select
                         break;
                     case 2:
                         break;
@@ -148,15 +251,13 @@ public class Game
                         break;
                 }
                 break;
-            case 3: // robin hood moves
+            case 3: // robin hood moves 
                 switch (move){
                     case 0:
-                        System.out.println("Robin Hood uses Zenith Blade");
-                        textHistory.add("Robin Hood uses Zenith Blade");
+                        page = 1; // single target enemy select
                         break;
                     case 1:
-                        System.out.println("Robin Hood uses Solar Flare");
-                        textHistory.add("Robin Hood uses Solar Flare");
+                        page = 5; // multi target enemy select
                         break;
                     case 2:
                         break;
@@ -164,22 +265,6 @@ public class Game
                         break;
                 }
                 break;
-        }
-        
-        // the script that decides whos turn is next, and basically advances the game
-        if (currentCharacter < 3){
-            currentCharacter++;
-            page = 0;
-        } else {
-            if (currentCharacter == 3 && turn == 0){
-                currentCharacter = 0;
-                turn = 1;
-                page = 0;
-            } else if (currentCharacter == 3 && turn == 1){
-                currentCharacter = 0;
-                turn = 0;
-                page = 0;
-            }
         }
     }
     
@@ -198,14 +283,12 @@ public class Game
         // the script that decides whos turn is next, and basically advances the game
         if (currentCharacter < 3){
             currentCharacter++;
-        } else {
-            if (currentCharacter == 3 && turn == 0){
-                currentCharacter = 0;
-                turn = 1;
-            } else if (currentCharacter == 3 && turn == 1){
-                currentCharacter = 0;
-                turn = 0;
-            }
+            page = 0;
+        } else if (currentCharacter == 3 && turn == 0){
+            page = 0;
+            currentCharacter = 0;
+            System.out.println("chaning to enemy turn");
+            turn = 1;
         }
     }
     
