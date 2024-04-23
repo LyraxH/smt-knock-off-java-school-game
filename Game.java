@@ -83,7 +83,6 @@ public class Game
     public void guard(String who){
         textHistory.add(who + " Guards");
         System.out.println("guard" + who);
-        System.out.println(currentCharacter);
         
         // the script that decides whos turn is next, and basically advances the game
         if (currentCharacter < 3){
@@ -99,17 +98,88 @@ public class Game
         }
     }
     
-    public void magic(int who){
-        page = 2;
-        switch (who){ //depending on who is choosing to magic attack, display different moves
+    public void magic(int move){
+        switch (currentCharacter){ //depending on who is choosing to magic attack, display different moves
             case 0: // ame moves
+                switch (move){
+                    case 0:
+                        System.out.println("Ame No Uzume uses Zephyr");
+                        textHistory.add("Ame No Uzume uses Zephyr");
+                        break;
+                    case 1:
+                        System.out.println("Ame No Uzume uses Monsoon");
+                        textHistory.add("Ame No Uzume uses Monsoon");
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
                 break;
             case 1: // cendrillon moves
+                switch (move){
+                    case 0:
+                        System.out.println("Cendrillon uses Aqua Prison");
+                        textHistory.add("Cendrillon uses Aqua Prison");
+                        break;
+                    case 1:
+                        System.out.println("Cendrillon uses Surging Tides");
+                        textHistory.add("Cendrillon uses Surging Tides");
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
                 break;
             case 2: // orpheus moves
+                switch (move){
+                    case 0:
+                        System.out.println("Orpheus uses Lunar Rush");
+                        textHistory.add("Orpheus uses Lunar Rush");
+                        break;
+                    case 1:
+                        System.out.println("Orpheus uses Moonfall");
+                        textHistory.add("Orpheus uses Moonfall");
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
                 break;
             case 3: // robin hood moves
+                switch (move){
+                    case 0:
+                        System.out.println("Robin Hood uses Zenith Blade");
+                        textHistory.add("Robin Hood uses Zenith Blade");
+                        break;
+                    case 1:
+                        System.out.println("Robin Hood uses Solar Flare");
+                        textHistory.add("Robin Hood uses Solar Flare");
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
                 break;
+        }
+        
+        // the script that decides whos turn is next, and basically advances the game
+        if (currentCharacter < 3){
+            currentCharacter++;
+            page = 0;
+        } else {
+            if (currentCharacter == 3 && turn == 0){
+                currentCharacter = 0;
+                turn = 1;
+                page = 0;
+            } else if (currentCharacter == 3 && turn == 1){
+                currentCharacter = 0;
+                turn = 0;
+                page = 0;
+            }
         }
     }
     
@@ -151,6 +221,7 @@ public class Game
                                 guard("Ame no uzume");
                                 break;
                             case 2: // magic
+                                page = 2;
                                 break;
                             case 3: // item
                                 items(currentCharacter);
@@ -165,6 +236,7 @@ public class Game
                                 guard("Cendrillon");
                                 break;
                             case 2: // magic
+                                page = 2;
                                 break;
                             case 3: // item
                                 break;
@@ -178,6 +250,7 @@ public class Game
                                 guard("Orpheus");
                                 break;
                             case 2: // magic
+                                page = 2;
                                 break;
                             case 3: // item
                                 break;
@@ -191,6 +264,7 @@ public class Game
                                 guard("Robin Hood");
                                 break;
                             case 2: // magic
+                                page = 2;
                                 break;
                             case 3: // item
                                 break;

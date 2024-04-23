@@ -69,44 +69,54 @@ public class Images
     
     // move icons
     // 0 fire
-    ImageIcon pyroclasm = new ImageIcon("buttons/moves/0fire/pyroclasm.png"); // fire to all
-    ImageIcon unPyroclasm = new ImageIcon("buttons/moves/0fire/pyroclasmUn.png"); // fire to all
-    ImageIcon sear = new ImageIcon("buttons/moves/0fire/sear.png"); // fire to one
-    ImageIcon unSear = new ImageIcon("buttons/moves/0fire/searUn.png"); // fire to one
+    ImageIcon pyroclasm = new ImageIcon("moves/0fire/pyroclasm.png"); // fire to all
+    ImageIcon unPyroclasm = new ImageIcon("moves/0fire/pyroclasmUn.png"); // fire to all
+    ImageIcon sear = new ImageIcon("moves/0fire/sear.png"); // fire to one
+    ImageIcon unSear = new ImageIcon("moves/0fire/searUn.png"); // fire to one
     
     // 1 water
-    ImageIcon aquaPrison = new ImageIcon("buttons/moves/1water/aquaPrison.png"); // water to one
-    ImageIcon unAquaPrison = new ImageIcon("buttons/moves/1water/aquaPrisonUn.png"); // water to one
-    ImageIcon surgingTide = new ImageIcon("buttons/moves/1water/surgingTide.png"); // water to all
-    ImageIcon unSurgingTide = new ImageIcon("buttons/moves/1water/surgingTideUn.png"); // water to all
+    ImageIcon aquaPrison = new ImageIcon("moves/1water/aquaPrison.png"); // water to one
+    ImageIcon unAquaPrison = new ImageIcon("moves/1water/aquaPrisonUn.png"); // water to one
+    ImageIcon surgingTide = new ImageIcon("moves/1water/surgingTide.png"); // water to all
+    ImageIcon unSurgingTide = new ImageIcon("moves/1water/surgingTideUn.png"); // water to all
     
     // 2 wind
-    ImageIcon monsoon = new ImageIcon("buttons/moves/2wind/monsoon.png"); // wind to all
-    ImageIcon unMonsoon = new ImageIcon("buttons/moves/2wind/monsoonUn.png"); // wind to all
-    ImageIcon zephyr = new ImageIcon("buttons/moves/2wind/zephyr.png"); // wind to one
-    ImageIcon unZephyr = new ImageIcon("buttons/moves/2wind/zephyrUn.png"); // wind to one
+    ImageIcon monsoon = new ImageIcon("moves/2wind/monsoon.png"); // wind to all
+    ImageIcon unMonsoon = new ImageIcon("moves/2wind/monsoonUn.png"); // wind to all
+    ImageIcon zephyr = new ImageIcon("moves/2wind/zephyr.png"); // wind to one
+    ImageIcon unZephyr = new ImageIcon("moves/2wind/zephyrUn.png"); // wind to one
     
     // 3 earth
-    ImageIcon magnetStorm = new ImageIcon("buttons/moves/3earth/magnetStorm.png"); // earth to all
-    ImageIcon unMagnetStorm = new ImageIcon("buttons/moves/3earth/magnetStormUn.png"); // earth to all
-    ImageIcon shatteringStrike = new ImageIcon("buttons/moves/3earth/shatteringStrike.png"); // earth to one
-    ImageIcon unShatteringStrike = new ImageIcon("buttons/moves/3earth/shatteringStrikeUn.png"); // earth to one
+    ImageIcon magnetStorm = new ImageIcon("moves/3earth/magnetStorm.png"); // earth to all
+    ImageIcon unMagnetStorm = new ImageIcon("moves/3earth/magnetStormUn.png"); // earth to all
+    ImageIcon shatteringStrike = new ImageIcon("moves/3earth/shatteringStrike.png"); // earth to one
+    ImageIcon unShatteringStrike = new ImageIcon("moves/3earth/shatteringStrikeUn.png"); // earth to one
     
     // 4 sun
-    ImageIcon solarFlare = new ImageIcon("buttons/moves/4sun/solarFlare.png"); // sun to all
-    ImageIcon unSolarFlare = new ImageIcon("buttons/moves/4sun/solarFlareUn.png"); // sun to all
-    ImageIcon zenithBlade = new ImageIcon("buttons/moves/4sun/zenithBlade.png"); // sun to one
-    ImageIcon unZenithBlade = new ImageIcon("buttons/moves/4sun/zenithBladeUn.png"); // sun to one
+    ImageIcon solarFlare = new ImageIcon("moves/4sun/solarFlare.png"); // sun to all
+    ImageIcon unSolarFlare = new ImageIcon("moves/4sun/solarFlareUn.png"); // sun to all
+    ImageIcon zenithBlade = new ImageIcon("moves/4sun/zenithBlade.png"); // sun to one
+    ImageIcon unZenithBlade = new ImageIcon("moves/4sun/zenithBladeUn.png"); // sun to one
     
     // 5 moon
-    ImageIcon lunarRush = new ImageIcon("buttons/moves/5moon/lunarRush.png"); // moon to one
-    ImageIcon unLunarRush = new ImageIcon("buttons/moves/5moon/lunarRush.png"); // moon to one
-    ImageIcon moonfall = new ImageIcon("buttons/moves/5moon/moonfall.png"); // moon to all
-    ImageIcon unMoonfall = new ImageIcon("buttons/moves/5moon/moonfallUn.png"); // moon to all
+    ImageIcon lunarRush = new ImageIcon("moves/5moon/lunarRush.png"); // moon to one
+    ImageIcon unLunarRush = new ImageIcon("moves/5moon/lunarRushUn.png"); // moon to one
+    ImageIcon moonfall = new ImageIcon("moves/5moon/moonfall.png"); // moon to all
+    ImageIcon unMoonfall = new ImageIcon("moves/5moon/moonfallUn.png"); // moon to all
     
     // 6 phys
-    ImageIcon needlework = new ImageIcon("buttons/moves/6phys/needlework.png"); // phys to all
-    ImageIcon unNeedlework = new ImageIcon("buttons/moves/6phys/needleworkUn.png"); // phys to all
-    ImageIcon snipSnip = new ImageIcon("buttons/moves/6phys/snipSnip.png"); // phys to one
-    ImageIcon unSnipSnip = new ImageIcon("buttons/moves/6phys/snipSnipUn.png"); // phys to one
+    ImageIcon needlework = new ImageIcon("moves/6phys/needlework.png"); // phys to all
+    ImageIcon unNeedlework = new ImageIcon("moves/6phys/needleworkUn.png"); // phys to all
+    ImageIcon snipSnip = new ImageIcon("moves/6phys/snipSnip.png"); // phys to one
+    ImageIcon unSnipSnip = new ImageIcon("moves/6phys/snipSnipUn.png"); // phys to one
+    
+    // enemy select buttons
+    ImageIcon enemyOne = new ImageIcon("buttons/enemyOne.png");
+    ImageIcon enemyTwo = new ImageIcon("buttons/enemyTwo.png");
+    ImageIcon enemyThree = new ImageIcon("buttons/enemyThree.png");
+    ImageIcon enemyFour = new ImageIcon("buttons/enemyFour.png");
+    ImageIcon unEnemyOne = new ImageIcon("buttons/enemyOneUn.png");
+    ImageIcon unEnemyTwo = new ImageIcon("buttons/enemyTwoUn.png");
+    ImageIcon unEnemyThree = new ImageIcon("buttons/enemyThreeUn.png");
+    ImageIcon unEnemyFour = new ImageIcon("buttons/enemyFourUn.png");
 }

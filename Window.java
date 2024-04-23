@@ -246,12 +246,151 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                 }
                 break;
+            case 1: // if selecting which enemy to attack single target
+                switch (game.selected){
+                    case 0:
+                        moveButtonOne.setIcon(img.enemyOne);
+                        moveButtonTwo.setIcon(img.unEnemyTwo);
+                        moveButtonThree.setIcon(img.unEnemyThree);
+                        moveButtonFour.setIcon(img.unEnemyFour);
+                        break;
+                    case 1:
+                        moveButtonOne.setIcon(img.unEnemyOne);
+                        moveButtonTwo.setIcon(img.enemyTwo);
+                        moveButtonThree.setIcon(img.unEnemyThree);
+                        moveButtonFour.setIcon(img.unEnemyFour);
+                        break;
+                    case 2:
+                        moveButtonOne.setIcon(img.unEnemyOne);
+                        moveButtonTwo.setIcon(img.unEnemyTwo);
+                        moveButtonThree.setIcon(img.enemyThree);
+                        moveButtonFour.setIcon(img.unEnemyFour);
+                        break;
+                    case 3:
+                        moveButtonOne.setIcon(img.unEnemyOne);
+                        moveButtonTwo.setIcon(img.unEnemyTwo);
+                        moveButtonThree.setIcon(img.unEnemyThree);
+                        moveButtonFour.setIcon(img.enemyFour);
+                        break;
+                }
+                break;
             case 2: // if in magic attack
-                if (game.turn == 0 ){
+                if (game.turn == 0 ){ //if the turn is an ally that you can see abilities for 
                     switch (game.currentCharacter){
-                    
+                        case 0: // ame no uzume
+                            switch (game.selected){
+                                case 0: // if move one selected
+                                    moveButtonOne.setIcon(img.zephyr); // single target wind
+                                    moveButtonTwo.setIcon(img.unMonsoon); // multi target wind
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 1: // if move two selected
+                                    moveButtonOne.setIcon(img.unZephyr); // single target wind
+                                    moveButtonTwo.setIcon(img.monsoon); // multi target wind
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 2: // if move three selected
+                                    moveButtonOne.setIcon(img.unZephyr); // single target wind
+                                    moveButtonTwo.setIcon(img.unMonsoon); // multi target wind
+                                    moveButtonThree.setIcon(img.magicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 3: // if move four selected
+                                    moveButtonOne.setIcon(img.unZephyr); // single target wind
+                                    moveButtonTwo.setIcon(img.unMonsoon); // multi target wind
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.itemIcon);
+                                    break;
+                            }
+                            break;
+                        case 1: // cendrillon
+                            switch (game.selected){
+                                case 0: // if move one selected
+                                    moveButtonOne.setIcon(img.aquaPrison); // single target water
+                                    moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 1: // if move two selected
+                                    moveButtonOne.setIcon(img.unAquaPrison); // single target water
+                                    moveButtonTwo.setIcon(img.surgingTide); // multi target water
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 2: // if move three selected
+                                    moveButtonOne.setIcon(img.unAquaPrison); // single target water
+                                    moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
+                                    moveButtonThree.setIcon(img.magicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 3: // if move four selected
+                                    moveButtonOne.setIcon(img.unAquaPrison); // single target water
+                                    moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.itemIcon);
+                                    break;
+                            }
+                            break;
+                        case 2: // orpheus
+                            switch (game.selected){
+                                case 0: // if move one selected
+                                    moveButtonOne.setIcon(img.lunarRush); // single target moon
+                                    moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 1: // if move two selected
+                                    moveButtonOne.setIcon(img.unLunarRush); // single target moon
+                                    moveButtonTwo.setIcon(img.moonfall); // multi target moon
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 2: // if move three selected
+                                    moveButtonOne.setIcon(img.unLunarRush); // single target moon
+                                    moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
+                                    moveButtonThree.setIcon(img.magicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 3: // if move four selected
+                                    moveButtonOne.setIcon(img.unLunarRush); // single target moon
+                                    moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.itemIcon);
+                                    break;
+                            }
+                            break;
+                        case 3: // robin hood
+                            switch (game.selected){
+                                case 0: // if move one selected
+                                    moveButtonOne.setIcon(img.zenithBlade); // single target sun
+                                    moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 1: // if move two selected
+                                    moveButtonOne.setIcon(img.unZenithBlade); // single target sun
+                                    moveButtonTwo.setIcon(img.solarFlare); // multi target sun
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 2: // if move three selected
+                                    moveButtonOne.setIcon(img.unZenithBlade); // single target sun
+                                    moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
+                                    moveButtonThree.setIcon(img.magicIcon);
+                                    moveButtonFour.setIcon(img.unItemIcon);
+                                    break;
+                                case 3: // if move four selected
+                                    moveButtonOne.setIcon(img.unZenithBlade); // single target sun
+                                    moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
+                                    moveButtonThree.setIcon(img.unMagicIcon);
+                                    moveButtonFour.setIcon(img.itemIcon);
+                                    break;
+                            }
+                            break;
                     }
-                } else {
+                } else { // if its on the enemies turn... then:
                     System.out.println("you have done something horribly wrong");
                 }
                 break;
@@ -407,6 +546,21 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 game.page = 3; // set page to item
                 updateUI();
                 break;
+                
+            case "magicOne":
+                game.magic(0);
+                break;
+            case "magicTwo":
+                game.magic(1);
+                break;
+            case "magicThree":
+                game.magic(2);
+                break;
+            case "magicFour":
+                game.magic(3);
+                break;
+                
+                
 
                 // menu bar clicks
             case "Quit Game":
