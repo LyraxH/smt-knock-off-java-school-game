@@ -54,10 +54,78 @@ public class Game
         textHistory.add("xdd");
     }
     
+    public void attack(int who){
+        switch (who){ //depending on who is choosing to magic attack, display different moves
+            case 0: // ame items
+                break;
+            case 1: // cendrillon items
+                break;
+            case 2: // orpheus items
+                break;
+            case 3: // robin hood items
+                break;
+        }
+        
+        // the script that decides whos turn is next, and basically advances the game
+        if (currentCharacter < 3){
+            currentCharacter++;
+        } else {
+            if (currentCharacter == 3 && turn == 0){
+                currentCharacter = 0;
+                turn = 1;
+            } else if (currentCharacter == 3 && turn == 1){
+                currentCharacter = 0;
+                turn = 0;
+            }
+        }
+    }
+    
     public void guard(String who){
         textHistory.add(who + " Guards");
         System.out.println("guard" + who);
         System.out.println(currentCharacter);
+        
+        // the script that decides whos turn is next, and basically advances the game
+        if (currentCharacter < 3){
+            currentCharacter++;
+        } else {
+            if (currentCharacter == 3 && turn == 0){
+                currentCharacter = 0;
+                turn = 1;
+            } else if (currentCharacter == 3 && turn == 1){
+                currentCharacter = 0;
+                turn = 0;
+            }
+        }
+    }
+    
+    public void magic(int who){
+        page = 2;
+        switch (who){ //depending on who is choosing to magic attack, display different moves
+            case 0: // ame moves
+                break;
+            case 1: // cendrillon moves
+                break;
+            case 2: // orpheus moves
+                break;
+            case 3: // robin hood moves
+                break;
+        }
+    }
+    
+    public void items(int who){
+        switch (who){ //depending on who is choosing items, display different items
+            case 0: // ame items
+                break;
+            case 1: // cendrillon items
+                break;
+            case 2: // orpheus items
+                break;
+            case 3: // robin hood items
+                break;
+        }
+        
+        // the script that decides whos turn is next, and basically advances the game
         if (currentCharacter < 3){
             currentCharacter++;
         } else {
@@ -77,53 +145,54 @@ public class Game
                 switch (currentCharacter){ // which ally is it
                     case 0: // ame no uzume, wind
                         switch (move){ // what move are they making
-                            case 0:
+                            case 0: // attack
                                 break;
-                            case 1:
+                            case 1: // guard
                                 guard("Ame no uzume");
                                 break;
-                            case 2:
+                            case 2: // magic
                                 break;
-                            case 3:
+                            case 3: // item
+                                items(currentCharacter);
                                 break;
                         }
                         break;
                     case 1: // cendrillon, water damage
                         switch (move){ // what move are they making
-                            case 0:
+                            case 0: // attack
                                 break;
-                            case 1:
+                            case 1: // guard
                                 guard("Cendrillon");
                                 break;
-                            case 2:
+                            case 2: // magic
                                 break;
-                            case 3:
+                            case 3: // item
                                 break;
                         }
                         break;
                     case 2: // orpheus, moon damage
                         switch (move){ // what move are they making
-                            case 0:
+                            case 0: // attack
                                 break;
-                            case 1:
+                            case 1: // guard
                                 guard("Orpheus");
                                 break;
-                            case 2:
+                            case 2: // magic
                                 break;
-                            case 3:
+                            case 3: // item
                                 break;
                         }
                         break;
                     case 3: // robin hood, sun damage
                         switch (move){ // what move are they making
-                            case 0:
+                            case 0: // attack
                                 break;
-                            case 1:
+                            case 1: // guard
                                 guard("Robin Hood");
                                 break;
-                            case 2:
+                            case 2: // magic
                                 break;
-                            case 3:
+                            case 3: // item
                                 break;
                         }                        
                         break;
@@ -168,7 +237,6 @@ public class Game
         }
     }
     
-    
     public void setDifficulty(int set){
         switch (set){
             case 0:
@@ -193,7 +261,7 @@ public class Game
      * 3 - earth
      * 4 - sun
      * 5 - moon
-     * 6 - physical
+     * 6 - physicalr
      */
     
     /**

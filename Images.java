@@ -65,4 +65,48 @@ public class Images
     JLabel weak = new JLabel(weakIMG);
     JLabel resist = new JLabel(resistIMG);
     JLabel nullify = new JLabel(nullifyIMG);
+    
+    
+    // move icons
+    // 0 fire
+    ImageIcon pyroclasm = new ImageIcon("buttons/moves/0fire/pyroclasm.png"); // fire to all
+    ImageIcon unPyroclasm = new ImageIcon("buttons/moves/0fire/pyroclasmUn.png"); // fire to all
+    ImageIcon sear = new ImageIcon("buttons/moves/0fire/sear.png"); // fire to one
+    ImageIcon unSear = new ImageIcon("buttons/moves/0fire/searUn.png"); // fire to one
+    
+    // 1 water
+    ImageIcon aquaPrison = new ImageIcon("buttons/moves/1water/aquaPrison.png"); // water to one
+    ImageIcon unAquaPrison = new ImageIcon("buttons/moves/1water/aquaPrisonUn.png"); // water to one
+    ImageIcon surgingTide = new ImageIcon("buttons/moves/1water/surgingTide.png"); // water to all
+    ImageIcon unSurgingTide = new ImageIcon("buttons/moves/1water/surgingTideUn.png"); // water to all
+    
+    // 2 wind
+    ImageIcon monsoon = new ImageIcon("buttons/moves/2wind/monsoon.png"); // wind to all
+    ImageIcon unMonsoon = new ImageIcon("buttons/moves/2wind/monsoonUn.png"); // wind to all
+    ImageIcon zephyr = new ImageIcon("buttons/moves/2wind/zephyr.png"); // wind to one
+    ImageIcon unZephyr = new ImageIcon("buttons/moves/2wind/zephyrUn.png"); // wind to one
+    
+    // 3 earth
+    ImageIcon magnetStorm = new ImageIcon("buttons/moves/3earth/magnetStorm.png"); // earth to all
+    ImageIcon unMagnetStorm = new ImageIcon("buttons/moves/3earth/magnetStormUn.png"); // earth to all
+    ImageIcon shatteringStrike = new ImageIcon("buttons/moves/3earth/shatteringStrike.png"); // earth to one
+    ImageIcon unShatteringStrike = new ImageIcon("buttons/moves/3earth/shatteringStrikeUn.png"); // earth to one
+    
+    // 4 sun
+    ImageIcon solarFlare = new ImageIcon("buttons/moves/4sun/solarFlare.png"); // sun to all
+    ImageIcon unSolarFlare = new ImageIcon("buttons/moves/4sun/solarFlareUn.png"); // sun to all
+    ImageIcon zenithBlade = new ImageIcon("buttons/moves/4sun/zenithBlade.png"); // sun to one
+    ImageIcon unZenithBlade = new ImageIcon("buttons/moves/4sun/zenithBladeUn.png"); // sun to one
+    
+    // 5 moon
+    ImageIcon lunarRush = new ImageIcon("buttons/moves/5moon/lunarRush.png"); // moon to one
+    ImageIcon unLunarRush = new ImageIcon("buttons/moves/5moon/lunarRush.png"); // moon to one
+    ImageIcon moonfall = new ImageIcon("buttons/moves/5moon/moonfall.png"); // moon to all
+    ImageIcon unMoonfall = new ImageIcon("buttons/moves/5moon/moonfallUn.png"); // moon to all
+    
+    // 6 phys
+    ImageIcon needlework = new ImageIcon("buttons/moves/6phys/needlework.png"); // phys to all
+    ImageIcon unNeedlework = new ImageIcon("buttons/moves/6phys/needleworkUn.png"); // phys to all
+    ImageIcon snipSnip = new ImageIcon("buttons/moves/6phys/snipSnip.png"); // phys to one
+    ImageIcon unSnipSnip = new ImageIcon("buttons/moves/6phys/snipSnipUn.png"); // phys to one
 }

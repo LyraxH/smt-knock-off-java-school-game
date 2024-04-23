@@ -246,6 +246,15 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                 }
                 break;
+            case 2: // if in magic attack
+                if (game.turn == 0 ){
+                    switch (game.currentCharacter){
+                    
+                    }
+                } else {
+                    System.out.println("you have done something horribly wrong");
+                }
+                break;
         }
         
         //UPDATE ACTION COMMANDS FOR INTERACTABLE ICONS
