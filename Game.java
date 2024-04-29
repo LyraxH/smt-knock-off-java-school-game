@@ -33,6 +33,21 @@ public class Game
     int spAllyTwo;
     int spAllyThree;
     int spAllyFour;
+    int spMaxAllyOne = 150;
+    int spMaxAllyTwo = 150;
+    int spMaxAllyThree = 150;
+    int spMaxAllyFour = 150;
+    
+    // first number = attack status, second = defense status, third = accuracy/evasion status. 
+    //2 target stat up, 0.5 is target stat down
+    int allyOneStats[] = new int[]{0,0,0};
+    int allyTwoStats[] = new int[]{0,0,0};
+    int allyThreeStats[] = new int[]{0,0,0};
+    int allyFourStats[] = new int[]{0,0,0};
+    int enemyOneStats[] = new int[]{0,0,0};
+    int enemyTwoStats[] = new int[]{0,0,0};
+    int enemyThreeStats[] = new int[]{0,0,0};
+    int enemyFourStats [] = new int[]{0,0,0};
     
     int hpEnemyOne;
     int hpEnemyTwo;
@@ -60,6 +75,10 @@ public class Game
         hpAllyTwo = hpMaxAllyTwo;
         hpAllyThree = hpMaxAllyThree;
         hpAllyFour = hpMaxAllyFour;
+        spAllyOne = spMaxAllyOne;
+        spAllyTwo = spMaxAllyTwo;
+        spAllyThree = spMaxAllyThree;
+        spAllyFour = spMaxAllyFour;
         textHistory.add("Welcome to my shitty SMT knockoff for school");
         textHistory.add("made by taison");
         textHistory.add("xdd");
@@ -410,12 +429,20 @@ public class Game
             case 0: // ame moves
                 switch (move){
                     case 0: // zephyr
-                        typeOfMove = 1;
-                        page = 1; // single target enemy select
+                        if (spAllyOne > 9){
+                            typeOfMove = 1;
+                            page = 1; // single target enemy select
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                     case 1: // monsoon
-                        typeOfMove = 1;
-                        page = 5; // multi target enemy select
+                        if (spAllyOne > 21){
+                            typeOfMove = 1;
+                            page = 5; // multi target enemy select
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                     case 2:
                         // for example, single target physical move
@@ -432,12 +459,20 @@ public class Game
             case 1: // cendrillon moves
                 switch (move){
                     case 0: // aqua prison
-                        typeOfMove = 1;
-                        page = 1; // single target enemy select
+                        if (spAllyOne > 9){
+                            typeOfMove = 1;
+                            page = 1; // single target enemy select
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                     case 1: // surging tide
-                        typeOfMove = 1;
-                        page = 5; // multi target enemy select
+                        if (spAllyOne > 21){
+                            typeOfMove = 1;
+                            page = 5; // multi target enemy select
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                     case 2:
                         break;
@@ -448,12 +483,20 @@ public class Game
             case 2: // orpheus moves
                 switch (move){
                     case 0: // lunar rush
-                        typeOfMove = 1;
-                        page = 1; // single target enemy select
+                        if (spAllyOne > 9){
+                            typeOfMove = 1;
+                            page = 1; // single target enemy select
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                     case 1: // moonfall
-                        typeOfMove = 1;
-                        page = 5; // multi target enemy select
+                        if (spAllyOne > 21){
+                            typeOfMove = 1;
+                            page = 5; // multi target enemy select
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                     case 2:
                         break;
@@ -464,12 +507,20 @@ public class Game
             case 3: // robin hood moves 
                 switch (move){
                     case 0: // zenith blade
-                        typeOfMove = 1;
-                        page = 1; // single target enemy select
+                        if (spAllyOne > 9){
+                            typeOfMove = 1;
+                            page = 1; // single target enemy select
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                     case 1: // solar flare
-                        typeOfMove = 1;
-                        page = 5; // multi target enemy select
+                        if (spAllyOne > 21){
+                            typeOfMove = 1;
+                            page = 5; // multi target enemy select
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                     case 2:
                         break;
@@ -481,7 +532,6 @@ public class Game
     }  
     
     void magic(int enemy){
-        
         switch (currentCharacter){
             case 0: // ame
                 switch (move){
@@ -490,28 +540,33 @@ public class Game
                             case 0:
                                 textHistory.add("Ame No Uzume uses Zephyr on Archangel");
                                 System.out.println("Ame No Uzume uses Zephyr on Archangel");
+                                spAllyOne -= 9;
                                 break;
                             case 1:
                                 textHistory.add("Ame No Uzume uses Zephyr on Jack Frost");
                                 System.out.println("Ame No Uzume uses Zephyr on Jack Frost");
+                                spAllyOne -= 9;
                                 break;
                             case 2:
                                 textHistory.add("Ame No Uzume uses Zephyr on Legion");
                                 System.out.println("Ame No Uzume uses Zephyr on Legion");
+                                spAllyOne -= 9;
                                 break;
                             case 3:
                                 textHistory.add("Ame No Uzume uses Zephyr on Principality");
                                 System.out.println("Ame No Uzume uses Zephyr on Principality");
+                                spAllyOne -= 9;
                                 break;
                         }
                         break;
                     case 1: // monsoon
                         textHistory.add("Ame No Uzume uses Monsoon on every enemy");
                         System.out.println("Ame No Uzume uses Monsoon on every enemy");
+                        spAllyOne -= 21;
                         break;
-                    case 2: // ability 3
+                    case 2: // redemption
                         break;
-                    case 3: // ability 4
+                    case 3: // guardian angel
                         break;
                 }
                 break;
@@ -522,24 +577,29 @@ public class Game
                             case 0:
                                 textHistory.add("Cendrillon uses Aqua Prison on Archangel");
                                 System.out.println("Cendrillon uses Aqua Prison on Archangel");
+                                spAllyTwo -= 9;
                                 break;
                             case 1:
                                 textHistory.add("Cendrillon uses Aqua Prison on Jack Frost");
                                 System.out.println("Cendrillon uses Aqua Prison on Jack Frost");
+                                spAllyTwo -= 9;
                                 break;
                             case 2:
                                 textHistory.add("Cendrillon uses Aqua Prison on Legion");
                                 System.out.println("Cendrillon uses Aqua Prison on Legion");
+                                spAllyTwo -= 9;
                                     break;
                             case 3:
                                 textHistory.add("Cendrillon uses Aqua Prison on Principality");
                                 System.out.println("Cendrillon uses Aqua Prison on Principality");
+                                spAllyTwo -= 9;
                                 break;
                         }
                         break;
                     case 1: // surging tide
                         textHistory.add("Cendrillon uses Surging Tide on every enemy");
                         System.out.println("Cendrillon uses Surging Tide on every enemy");
+                        spAllyTwo -= 21;
                         break;
                     case 2: // ability 3
                         break;
@@ -554,24 +614,29 @@ public class Game
                             case 0:
                                 textHistory.add("Orpheus uses Lunar Rush on Archangel");
                                 System.out.println("Orpheus uses Lunar Rush on Archangel");
+                                spAllyThree -= 9;
                                 break;
                             case 1:
                                 textHistory.add("Orpheus uses Lunar Rush on Jack Frost");
                                 System.out.println("Orpheus uses Lunar Rush on Jack Frost");
+                                spAllyThree -= 9;
                                 break;
                             case 2:
                                 textHistory.add("Orpheus uses Lunar Rush on Legion");
                                 System.out.println("Orpheus uses Lunar Rush on Legion");
+                                spAllyThree -= 9;
                                 break;
                             case 3:
                                 textHistory.add("Orpheus uses Lunar Rush on Principality");
                                 System.out.println("Orpheus uses Lunar Rush on Principality");
+                                spAllyThree -= 9;
                                 break;
                         }
                         break;
                     case 1: // moon fall
                         textHistory.add("Orpheus uses Moonfall on every enemy");
                         System.out.println("Orpheus uses Moonfall on every enemy");
+                        spAllyThree -= 21;
                         break;
                     case 2: // ability 3
                         break;
@@ -586,24 +651,29 @@ public class Game
                             case 0:
                                 textHistory.add("Robin Hood uses Zenith Blade on Archangel");
                                 System.out.println("Robin Hood uses Zenith Blade on Archangel");
+                                spAllyFour -= 9;
                                 break;
                             case 1:
                                 textHistory.add("Robin Hood uses Zenith Blade on Jack Frost");
                                 System.out.println("Robin Hood uses Zenith Blade on Jack Frost");
+                                spAllyFour -= 9;
                                 break;
                             case 2:
                                 textHistory.add("Robin Hood uses Zenith Blade on Legion");
                                 System.out.println("Robin Hood uses Zenith Blade on Legion");
+                                spAllyFour -= 9;
                                 break;
                             case 3:
                                 textHistory.add("Robin Hood uses Zenith Blade on Principality");
                                 System.out.println("Robin Hood uses Zenith Blade on Principality");
+                                spAllyFour -= 9;
                                 break;
                         }
                         break;
                     case 1:  // solar flare
                         textHistory.add("Robin Hood uses Solar Flare on every enemy");
                         System.out.println("Robin Hood uses Solar Flare on every enemy");
+                        spAllyFour -= 21;
                         break;
                     case 2: // ability 3
                         break;

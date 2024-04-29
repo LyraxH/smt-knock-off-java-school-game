@@ -148,24 +148,26 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         // adding variables to game window
         gameWindow.setLayout(new GridLayout(2, 4, 50, 100));
         gameWindow.add(enemyOneSprite);
-        enemyOneSprite.setIcon(img.archangelIMG);
         gameWindow.add(enemyTwoSprite);
-        enemyTwoSprite.setIcon(img.jackFrostIMG);
         gameWindow.add(enemyThreeSprite);
-        enemyThreeSprite.setIcon(img.legionIMG);
         gameWindow.add(enemyFourSprite);
-        enemyFourSprite.setIcon(img.principalityIMG);
         gameWindow.add(allyOneSprite);
-        allyOneSprite.setIcon(img.ameNoUzumeIMG);
         gameWindow.add(allyTwoSprite);
-        allyTwoSprite.setIcon(img.cendrillonIMG);
         gameWindow.add(allyThreeSprite);
-        allyThreeSprite.setIcon(img.orpheusIMG);
         gameWindow.add(allyFourSprite);
-        allyFourSprite.setIcon(img.robinHoodIMG);
 
         updateUI();
         initialize();
+    }
+    public void addAndRemove(){
+        enemyOneSprite.setIcon(img.archangelIMG);
+        enemyTwoSprite.setIcon(img.jackFrostIMG);
+        enemyThreeSprite.setIcon(img.legionIMG);
+        enemyFourSprite.setIcon(img.principalityIMG);
+        allyOneSprite.setIcon(img.ameNoUzumeIMG);
+        allyTwoSprite.setIcon(img.cendrillonIMG);
+        allyThreeSprite.setIcon(img.orpheusIMG);
+        allyFourSprite.setIcon(img.robinHoodIMG);
     }
     
     public void updateUI(){
@@ -175,15 +177,23 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 switch (game.currentCharacter){
                     case 0:
                         currentMoveText.setText("Ame No Uzume");
+                        addAndRemove();
+                        allyOneSprite.setIcon(img.ameNoUzumeSelected);
                         break;
                     case 1:
                         currentMoveText.setText("Cendrillon");
+                        addAndRemove();
+                        allyTwoSprite.setIcon(img.cendrillonSelected);
                         break;
                     case 2:
                         currentMoveText.setText("Orpheus");
+                        addAndRemove();
+                        allyThreeSprite.setIcon(img.orpheusSelected);
                         break;
                     case 3:
                         currentMoveText.setText("Robin Hood");
+                        addAndRemove();
+                        allyFourSprite.setIcon(img.robinHoodSelected);
                         break;
                 }
                 break;
@@ -191,15 +201,23 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 switch (game.currentCharacter){
                     case 0:
                         currentMoveText.setText("Archangel");
+                        addAndRemove();
+                        enemyOneSprite.setIcon(img.archangelSelected);
                         break;
                     case 1:
                         currentMoveText.setText("Jack Frost");
+                        addAndRemove();
+                        enemyTwoSprite.setIcon(img.jackFrostSelected);
                         break;
                     case 2:
                         currentMoveText.setText("Legion");
+                        addAndRemove();
+                        enemyThreeSprite.setIcon(img.legionSelected);
                         break;
                     case 3:
                         currentMoveText.setText("Principality");
+                        addAndRemove();
+                        enemyFourSprite.setIcon(img.principalitySelected);
                         break;
                 }
                 break;
@@ -336,26 +354,26 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                     case 0: // if move one selected
                                         moveButtonOne.setIcon(img.zephyr); // single target wind
                                         moveButtonTwo.setIcon(img.unMonsoon); // multi target wind
-                                        moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonThree.setIcon(img.unRedemption);
+                                        moveButtonFour.setIcon(img.unGuardianAngel);
                                         break;
                                     case 1: // if move two selected
                                         moveButtonOne.setIcon(img.unZephyr); // single target wind
                                         moveButtonTwo.setIcon(img.monsoon); // multi target wind
-                                        moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonThree.setIcon(img.unRedemption);
+                                        moveButtonFour.setIcon(img.unGuardianAngel);
                                         break;
                                     case 2: // if move three selected
                                         moveButtonOne.setIcon(img.unZephyr); // single target wind
                                         moveButtonTwo.setIcon(img.unMonsoon); // multi target wind
-                                        moveButtonThree.setIcon(img.magicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonThree.setIcon(img.redemption);
+                                        moveButtonFour.setIcon(img.unGuardianAngel);
                                         break;
                                     case 3: // if move four selected
                                         moveButtonOne.setIcon(img.unZephyr); // single target wind
                                         moveButtonTwo.setIcon(img.unMonsoon); // multi target wind
-                                        moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.itemIcon);
+                                        moveButtonThree.setIcon(img.unRedemption);
+                                        moveButtonFour.setIcon(img.guardianAngel);
                                         break;
                                 }
                                 break;
@@ -365,25 +383,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                         moveButtonOne.setIcon(img.aquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unAglBoost);
                                         break;
                                     case 1: // if move two selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.surgingTide); // multi target water
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unAglBoost);
                                         break;
                                     case 2: // if move three selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
                                         moveButtonThree.setIcon(img.magicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unAglBoost);
                                         break;
                                     case 3: // if move four selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.itemIcon);
+                                        moveButtonFour.setIcon(img.aglBoost);
                                         break;
                                 }
                                 break;
@@ -393,25 +411,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                         moveButtonOne.setIcon(img.lunarRush); // single target moon
                                         moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unDefBoost);
                                         break;
                                     case 1: // if move two selected
                                         moveButtonOne.setIcon(img.unLunarRush); // single target moon
                                         moveButtonTwo.setIcon(img.moonfall); // multi target moon
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unDefBoost);
                                         break;
                                     case 2: // if move three selected
                                         moveButtonOne.setIcon(img.unLunarRush); // single target moon
                                         moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
                                         moveButtonThree.setIcon(img.magicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unDefBoost);
                                         break;
                                     case 3: // if move four selected
                                         moveButtonOne.setIcon(img.unLunarRush); // single target moon
                                         moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.itemIcon);
+                                        moveButtonFour.setIcon(img.defBoost);
                                         break;
                                 }
                                 break;
@@ -421,25 +439,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                         moveButtonOne.setIcon(img.zenithBlade); // single target sun
                                         moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unAtkBoost);
                                         break;
                                     case 1: // if move two selected
                                         moveButtonOne.setIcon(img.unZenithBlade); // single target sun
                                         moveButtonTwo.setIcon(img.solarFlare); // multi target sun
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unAtkBoost);
                                         break;
                                     case 2: // if move three selected
                                         moveButtonOne.setIcon(img.unZenithBlade); // single target sun
                                         moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
                                         moveButtonThree.setIcon(img.magicIcon);
-                                        moveButtonFour.setIcon(img.unItemIcon);
+                                        moveButtonFour.setIcon(img.unAtkBoost);
                                         break;
                                     case 3: // if move four selected
                                         moveButtonOne.setIcon(img.unZenithBlade); // single target sun
                                         moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
                                         moveButtonThree.setIcon(img.unMagicIcon);
-                                        moveButtonFour.setIcon(img.itemIcon);
+                                        moveButtonFour.setIcon(img.atkBoost);
                                         break;
                                 }
                                 break;
@@ -591,7 +609,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 }
                 break;
                 
-            // multi target magic buttons. (i wish i could only use one case, but i dont think it works like that..
+            // multi target spells
             case "allEnemies":
                 switch (game.typeOfMove){
                     case 0: // physical
