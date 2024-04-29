@@ -205,6 +205,53 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 break;
         }
         
+        //UPDATE ACTION COMMANDS FOR INTERACTABLE ICONS
+        allyOneButton.setActionCommand("ameNoUzume");
+        allyTwoButton.setActionCommand("cendrillon");
+        allyThreeButton.setActionCommand("orpheus");
+        allyFourButton.setActionCommand("robinHood");
+        enemyOneButton.setActionCommand("archangel");
+        enemyTwoButton.setActionCommand("jackFrost");
+        enemyThreeButton.setActionCommand("legion");
+        enemyFourButton.setActionCommand("principality");
+        switch (game.page){
+            case 0: // if main page
+                moveButtonOne.setActionCommand("attack");
+                moveButtonTwo.setActionCommand("guard");
+                moveButtonThree.setActionCommand("magic");
+                moveButtonFour.setActionCommand("item");
+                break;
+            case 1: // if enemy select
+                moveButtonOne.setActionCommand("enemyOne");
+                moveButtonTwo.setActionCommand("enemyTwo");
+                moveButtonThree.setActionCommand("enemyThree");
+                moveButtonFour.setActionCommand("enemyFour");
+                break;
+            case 2: // if magic
+                moveButtonOne.setActionCommand("magicOne");
+                moveButtonTwo.setActionCommand("magicTwo");
+                moveButtonThree.setActionCommand("magicThree");
+                moveButtonFour.setActionCommand("magicFour");
+                break;
+            case 3: // if item
+                moveButtonOne.setActionCommand("itemOne");
+                moveButtonTwo.setActionCommand("itemTwo");
+                moveButtonThree.setActionCommand("itemThree");
+                moveButtonFour.setActionCommand("itemFour");
+                break;
+            case 4: // for ally select (healing spells)
+                moveButtonOne.setActionCommand("allyOne");
+                moveButtonTwo.setActionCommand("allyTwo");
+                moveButtonThree.setActionCommand("allyThree");
+                moveButtonFour.setActionCommand("allyFour");
+                break;
+            case 5: // if all enemy select
+                moveButtonOne.setActionCommand("allEnemies");
+                moveButtonTwo.setActionCommand("allEnemies");
+                moveButtonThree.setActionCommand("allEnemies");
+                moveButtonFour.setActionCommand("allEnemies");
+        }
+        
         //UPDATE TEXT HISTORY
         int size = game.textHistory.size();
         textUpdateOne.setText(game.textHistory.get(size - 3));
@@ -212,7 +259,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         textUpdateThree.setText(game.textHistory.get(size - 1));
         
         //UPDATE SELECTABLE ICONS
-        if (game.turn == 0){
+        if (game.turn == 0){ 
             moveWindow.add(currentMoveText);
             moveWindow.add(moveButtonOne);
             moveWindow.add(moveButtonTwo);
@@ -275,8 +322,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             break;
                     }
                     break;
+                case 5: // if selecting which enemies to multi target (yes i know case 1: into case 5: is gross but id rather have the attacks together
+                    moveButtonOne.setIcon(img.enemyOne);
+                    moveButtonTwo.setIcon(img.enemyTwo);
+                    moveButtonThree.setIcon(img.enemyThree);
+                    moveButtonFour.setIcon(img.enemyFour);
+                    break;
                 case 2: // if in magic attack
-                    if (game.turn == 0 ){ //if the turn is an ally that you can see abilities for 
+                    if (game.turn == 0 ){ //if the turn is an ally that you can see abilities for
                         switch (game.currentCharacter){
                             case 0: // ame no uzume
                                 switch (game.selected){
@@ -391,57 +444,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                 }
                                 break;
                         }
-                    } else { // if its on the enemies turn... then:
-                        System.out.println("you have done something horribly wrong");
                     }
                     break;
             }
         } else if (game.turn == 1){
             moveWindow.removeAll();
-            moveWindow.revalidate();
+            moveWindow.add(currentMoveText);
             moveWindow.repaint();
-        } 
-        
-        //UPDATE ACTION COMMANDS FOR INTERACTABLE ICONS
-        allyOneButton.setActionCommand("ameNoUzume");
-        allyTwoButton.setActionCommand("cendrillon");
-        allyThreeButton.setActionCommand("orpheus");
-        allyFourButton.setActionCommand("robinHood");
-        enemyOneButton.setActionCommand("archangel");
-        enemyTwoButton.setActionCommand("jackFrost");
-        enemyThreeButton.setActionCommand("legion");
-        enemyFourButton.setActionCommand("principality");
-        switch (game.page){
-            case 0: // if main page
-                moveButtonOne.setActionCommand("attack");
-                moveButtonTwo.setActionCommand("guard");
-                moveButtonThree.setActionCommand("magic");
-                moveButtonFour.setActionCommand("item");
-                break;
-            case 1: // if enemy select
-                moveButtonOne.setActionCommand("enemyOne");
-                moveButtonTwo.setActionCommand("enemyTwo");
-                moveButtonThree.setActionCommand("enemyThree");
-                moveButtonFour.setActionCommand("enemyFour");
-                break;
-            case 2: // if magic
-                moveButtonOne.setActionCommand("magicOne");
-                moveButtonTwo.setActionCommand("magicTwo");
-                moveButtonThree.setActionCommand("magicThree");
-                moveButtonFour.setActionCommand("magicFour");
-                break;
-            case 3: // if item
-                moveButtonOne.setActionCommand("itemOne");
-                moveButtonTwo.setActionCommand("itemTwo");
-                moveButtonThree.setActionCommand("itemThree");
-                moveButtonFour.setActionCommand("itemFour");
-                break;
-            case 4: // for ally select (healing spells)
-            moveButtonOne.setActionCommand("allyOne");
-                moveButtonTwo.setActionCommand("allyTwo");
-                moveButtonThree.setActionCommand("allyThree");
-                moveButtonFour.setActionCommand("allyFour");
-                break;
+            moveWindow.revalidate();
         }
     }
     
@@ -494,8 +504,132 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         String cmd = e.getActionCommand();
         //System.out.println(e);
         switch (cmd){
-                // stat view clicks // 0 = fire, 1 = water, 2 = air, 3 = earth, 4 = sun, 5 = moon, 6 = phys
-            case "ameNoUzume": // 0 = normal, 1 = weak, 2 = null, 3 = resist
+            // move button clicks
+            case "attack":
+                game.move(0); // set page to attack
+                updateUI();
+                break;
+            case "guard":
+                game.move(1); // do guard
+                updateUI();
+                break;
+            case "magic":
+                game.move(2); // set page to magic
+                updateUI();
+                break;
+            case "item":
+                game.move(3); // set page to item
+                updateUI();
+                break;
+                
+            // magic button clicks
+            case "magicOne":
+                game.magicMoveSelect(0); // magic move one (usually single target magic damage)
+                updateUI();
+                break;
+            case "magicTwo":
+                game.magicMoveSelect(1); // magic move two (usually multi target magic damage)
+                updateUI();
+                break;
+            case "magicThree":
+                game.magicMoveSelect(2); // magic move three (probably going to be single target physical damage or single target heal)
+                updateUI();
+                break;
+            case "magicFour":
+                game.magicMoveSelect(3); // magic move three (probably going to be multi target heal, revive, or something else special)
+                updateUI();
+                break;
+                
+                
+            // single target enemy clicks
+            case "enemyOne":
+                switch (game.typeOfMove){
+                    case 0: // physical
+                        game.physical(0);
+                        updateUI();
+                        break;
+                    case 1: // magic
+                        game.magic(0);
+                        updateUI();
+                        break;
+                }
+                break;
+            case "enemyTwo":
+                switch (game.typeOfMove){
+                    case 0: // physical
+                        game.physical(1);
+                        updateUI();
+                        break;
+                    case 1: // magic
+                        game.magic(1);
+                        updateUI();
+                        break;
+                }
+                break;
+            case "enemyThree":
+                switch (game.typeOfMove){
+                    case 0: // physical
+                        game.physical(2);
+                        updateUI();
+                        break;
+                    case 1: // magic
+                        game.magic(2);
+                        updateUI();
+                        break;
+                }
+                break;
+            case "enemyFour":
+                switch (game.typeOfMove){
+                    case 0: // physical
+                        game.physical(3);
+                        updateUI();
+                        break;
+                    case 1: // magic
+                        game.magic(3);
+                        updateUI();
+                        break;
+                }
+                break;
+                
+            // multi target magic buttons. (i wish i could only use one case, but i dont think it works like that..
+            case "allEnemies":
+                switch (game.typeOfMove){
+                    case 0: // physical
+                        System.out.println("physical hit all  move, which if you get here atm means its broken");
+                        break;
+                    case 1: // magic
+                        game.magic(69);
+                        updateUI();
+                        break;
+                }
+                break;
+
+            // menu bar clicks
+            case "Quit Game":
+                System.exit(0);
+                break;
+            case "Next Track":
+                break;
+            case "Previous Track":
+                break;
+            case "Pause Music":
+                break;
+            case "Easy":
+                game.setDifficulty(0);
+                break;
+            case "Medium":
+                game.setDifficulty(1);
+                break;
+            case "Hard":
+                game.setDifficulty(2);
+                break;
+            case "Display Battle Log":
+                createBattleLog();
+                break;
+                
+            // createStatsMenu("charName", fire, water, air, earth, sun, moon, phys);
+            //                    0 = normal, 1 = weak, 2 = null, 3 = resist
+            case "ameNoUzume":
                 createStatsMenu("Ame-No-Uzume", 0, 1, 0, 3, 0, 0, 2, 0);
                 game.openStats(0);
                 updateUI();
@@ -535,81 +669,13 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 game.openStats(7);
                 updateUI();
                 break;
-
-                // move button clicks
-            case "attack":
-                game.page = 1; // set page to attack
-                break;
-            case "guard":
-                game.move(1);
-                updateUI();
-                break;
-            case "magic":
-                game.page = 2; // set page to magic
-                updateUI();
-                break;
-            case "item":
-                game.page = 3; // set page to item
-                updateUI();
-                break;
-                
-            case "magicOne":
-                game.magicMoveSelect(0);
-                break;
-            case "magicTwo":
-                game.magicMoveSelect(1);
-                break;
-            case "magicThree":
-                game.magicMoveSelect(2);
-                break;
-            case "magicFour":
-                game.magicMoveSelect(3);
-                break;
-                
-                
-            case "enemyOne":
-                game.magic(0);
-                break;
-            case "enemyTwo":
-                game.magic(1);
-                break;
-            case "enemyThree":
-                game.magic(2);
-                break;
-            case "enemyFour":
-                game.magic(3);
-                break;
-                
-                
-
-                // menu bar clicks
-            case "Quit Game":
-                System.exit(0);
-                break;
-            case "Next Track":
-                break;
-            case "Previous Track":
-                break;
-            case "Pause Music":
-                break;
-            case "Easy":
-                game.setDifficulty(0);
-                break;
-            case "Medium":
-                game.setDifficulty(1);
-                break;
-            case "Hard":
-                game.setDifficulty(2);
-                break;
-            case "Display Battle Log":
-                createBattleLog();
-                break;
         }
         jRequestFocus();
     }
 
     public void keyPressed(KeyEvent e){
         int keyCode = e.getKeyCode();
+        //System.out.println(keyCode);
         switch (game.page){ // what menu are we in
             case 0: // if main page
                 switch (keyCode){
@@ -649,6 +715,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 break;
             case 2:
                 break;
+        }
+        if (keyCode == 84){
+            game.goNext();
+            updateUI();
         }
     }
 
@@ -828,14 +898,28 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
 
     public void mouseEntered(MouseEvent e){
         int hover = e.getXOnScreen();
-        if (hover > 263 && hover < 518){ //button one
-            game.selected = 0;
-        } else if (hover > 519 && hover < 774) {// button two
-            game.selected = 1;
-        } else if (hover > 775 && hover < 1030){ // button 3
-            game.selected = 2;
-        } else if (hover > 1031 && hover < 1285){ // button 4
-            game.selected = 3;
+        if (game.page == 0){
+            if (hover > 263 && hover < 518){ //button one
+                game.selected = 0;
+            } else if (hover > 519 && hover < 774) {// button two
+                game.selected = 1;
+            } else if (hover > 775 && hover < 1030){ // button 3
+                game.selected = 2;
+            } else if (hover > 1031 && hover < 1285){ // button 4
+                game.selected = 3;
+            }
+        } else {
+            if (hover > 263 && hover < 518){ //button one
+                game.selected = 0;
+            } else if (hover > 519 && hover < 774) {// button two
+                game.selected = 1;
+            } else if (hover > 775 && hover < 1030){ // button 3
+                game.selected = 2;
+            } else if (hover > 1031 && hover < 1285){ // button 4
+                game.selected = 3;
+            } else if (hover < 263){ // back button on pages that can go back 
+                game.selected = 4;
+            }
         }
         updateUI();
     }
