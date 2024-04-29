@@ -19,13 +19,13 @@ public class Game
     
     // varialbes for characters
     int hpAllyOne;
-    int hpMaxAllyOne;
     int hpAllyTwo;
-    int hpMaxAllyTwo;
     int hpAllyThree;
-    int hpMaxAllyThree;
     int hpAllyFour;
-    int hpMaxAllyFour;
+    int hpMaxAllyOne = 500;
+    int hpMaxAllyTwo = 500;
+    int hpMaxAllyThree = 500;
+    int hpMaxAllyFour = 500;
     boolean allyInjured = false;
     boolean allyDead = false;
     
@@ -40,14 +40,14 @@ public class Game
     
     // first number = attack status, second = defense status, third = accuracy/evasion status. 
     //2 target stat up, 0.5 is target stat down
-    int allyOneStats[] = new int[]{0,0,0};
-    int allyTwoStats[] = new int[]{0,0,0};
-    int allyThreeStats[] = new int[]{0,0,0};
-    int allyFourStats[] = new int[]{0,0,0};
-    int enemyOneStats[] = new int[]{0,0,0};
-    int enemyTwoStats[] = new int[]{0,0,0};
-    int enemyThreeStats[] = new int[]{0,0,0};
-    int enemyFourStats [] = new int[]{0,0,0};
+    double allyOneStats[] = new double[]{0,0,0};
+    double allyTwoStats[] = new double[]{0,0,0};
+    double allyThreeStats[] = new double[]{0,0,0};
+    double allyFourStats[] = new double[]{0,0,0};
+    double enemyOneStats[] = new double[]{0,0,0};
+    double enemyTwoStats[] = new double[]{0,0,0};
+    double enemyThreeStats[] = new double[]{0,0,0};
+    double enemyFourStats [] = new double[]{0,0,0};
     
     int hpEnemyOne;
     int hpEnemyTwo;
@@ -65,7 +65,7 @@ public class Game
     int currentCharacter = 0; // what out of four characters turn it is
     // goes turn 0, character 1-2-3-4, then turn 1, character 1-2-3-4. then repeat
     int move;
-    int typeOfMove; // 0 = phys, 1 = magic
+    int typeOfMove; // 0 = phys, 1 = magic, 2 = healing, 3 = buff atk, 4 = buff def, 5 = buff agl
     int difficulty;
     double damageMultiplier;
     double damageTakenMultiplier;
@@ -444,15 +444,29 @@ public class Game
                             System.out.println("Not Enough SP");
                         }
                         break;
-                    case 2:
-                        // for example, single target physical move
-                        // typeOfMove = 0;
-                        // page = 1;
+                    case 2: // redemption
+                        if (allyInjured){
+                            if (spAllyOne > 22){
+                                typeOfMove = 2;
+                                page = 4; // single target ally select
+                            } else {
+                                System.out.println("Not Enough SP");
+                            }
+                        } else {
+                            System.out.println("No one is injured");
+                        }
                         break;
-                    case 3:
-                        // for example, multi target physical move
-                        // typeOfMove = 0;
-                        // page = 5;
+                    case 3: // guardian angel
+                        if (allyDead){
+                            if (spAllyOne > 8){
+                                typeOfMove = 2;
+                                page = 4; // single target ally select
+                            } else {
+                                System.out.println("Not Enough SP");
+                            }
+                        } else {
+                            System.out.println("No one is dead");
+                        }
                         break;
                 }
                 break;
@@ -476,7 +490,13 @@ public class Game
                         break;
                     case 2:
                         break;
-                    case 3:
+                    case 3: // agl boost
+                        if (spAllyOne > 12){
+                            typeOfMove = 5;
+                            page = 4; // single target
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                 }
                 break;
@@ -500,7 +520,13 @@ public class Game
                         break;
                     case 2:
                         break;
-                    case 3:
+                    case 3: // def boost
+                        if (spAllyOne > 12){
+                            typeOfMove = 4;
+                            page = 4; // single target
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                 }
                 break;
@@ -524,7 +550,13 @@ public class Game
                         break;
                     case 2:
                         break;
-                    case 3:
+                    case 3: // atk boost
+                        if (spAllyOne > 12){
+                            typeOfMove = 3;
+                            page = 4; // single target
+                        } else {
+                            System.out.println("Not Enough SP");
+                        }
                         break;
                 }
                 break;
@@ -678,6 +710,184 @@ public class Game
                     case 2: // ability 3
                         break;
                     case 3: // ability 4
+                        break;
+                }
+                break;
+        }
+        goNext();
+    }
+    
+    void healing(int ally){
+        switch (currentCharacter){
+            case 0: // ame
+                switch (ally){
+                    case 0:
+                        textHistory.add("Ame No Uzume uses redemption on Ame No Uzume");
+                        System.out.println("Ame No Uzume uses redemption on Ame No Uzume");
+                        break;
+                    case 1:
+                        textHistory.add("Ame No Uzume uses redemption on Cendrillon");
+                        System.out.println("Ame No Uzume uses redemption on Cendrillon");
+                        break;
+                    case 2:
+                        textHistory.add("Ame No Uzume uses redemption on Orpheus");
+                        System.out.println("Ame No Uzume uses redemption on Orpheus");
+                        break;
+                    case 3:
+                        textHistory.add("Ame No Uzume uses redemption on Robin Hood");
+                        System.out.println("Ame No Uzume uses redemption on Robin Hood");
+                        break;
+                }
+                break;
+        }
+        goNext();
+    }
+    
+    void revive(int ally){
+        switch (currentCharacter){
+            case 0: // ame
+                switch (ally){
+                    case 0:
+                        textHistory.add("Ame No Uzume uses guardian angel on Ame No Uzume");
+                        System.out.println("Ame No Uzume uses guardian angel on Ame No Uzume");
+                        break;
+                    case 1:
+                        textHistory.add("Ame No Uzume uses guardian angel on Cendrillon");
+                        System.out.println("Ame No Uzume uses guardian angel on Cendrillon");
+                        break;
+                    case 2:
+                        textHistory.add("Ame No Uzume uses guardian angel on Orpheus");
+                        System.out.println("Ame No Uzume uses guardian angel on Orpheus");
+                        break;
+                    case 3:
+                        textHistory.add("Ame No Uzume uses guardian angel on Robin Hood");
+                        System.out.println("Ame No Uzume uses guardian angel on Robin Hood");
+                        break;
+                }
+                break;
+        }
+        goNext();
+    }
+    
+    void boost(int ally){
+        switch (typeOfMove){
+            case 3: // attack boosts
+                switch (currentCharacter){ // who is giving the boost
+                    case 0: // ame
+                        System.out.println("if you got here you fucked something up");
+                        // ame has no boost moves, so if you got here something went wrong
+                        break;
+                    case 1:
+                        System.out.println("if you got here you fucked something up");
+                        // cendrillon cant boost attack
+                        break;
+                    case 2:
+                        System.out.println("if you got here you fucked something up");
+                        // orpheus cannot boost attack
+                        break;
+                    case 3: // robin hood can boost attack
+                        switch (ally){
+                            case 0: // boost ame
+                                textHistory.add("Robin Hood boosts Attack of Ame No Uzume");
+                                System.out.println("Robin Hood boosts Attack of Ame No Uzume");
+                                allyOneStats[0] = 2; // multiplying total damage by 2 means more damage, which means higher attack
+                                break;
+                            case 1: // boost cendrillon
+                                textHistory.add("Robin Hood boosts Attack of Cendrillon");
+                                System.out.println("Robin Hood boosts Attack of Cendrillon");
+                                allyTwoStats[0] = 2;
+                                break;
+                            case 2: // boost orpheus
+                                textHistory.add("Robin Hood boosts Attack of Orpheus");
+                                System.out.println("Robin Hood boosts Attack of Orpheus");
+                                allyThreeStats[0] = 2;
+                                break;
+                            case 3: // boost robin hood
+                                textHistory.add("Robin Hood boosts Attack of Robin Hood");
+                                System.out.println("Robin Hood boosts Attack of Robin Hood");
+                                allyFourStats[0] = 2;
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case 4: // defense boosts 
+                switch (currentCharacter){ // who is giving the boost
+                    case 0: // ame
+                        System.out.println("if you got here you fucked something up");
+                        // ame has no boost moves, so if you got here something went wrong
+                        break;
+                    case 1:
+                        System.out.println("if you got here you fucked something up");
+                        // cendrillon cant boost defesne
+                        break;
+                    case 2:
+                        switch (ally){
+                            case 0: // boost ame
+                                textHistory.add("Orpheus boosts Defense of Ame No Uzume");
+                                System.out.println("Orpheus boosts Defense of Ame No Uzume");
+                                allyOneStats[1] = 0.5; // multiplying total damage by 0.5 means less damage, which means higher defense
+                                break;
+                            case 1: // boost cendrillon
+                                textHistory.add("Orpheus boosts Defense of Cendrillon");
+                                System.out.println("Orpheus boosts Defense of Cendrillon");
+                                allyTwoStats[1] = 0.5;
+                                break;
+                            case 2: // boost orpheus
+                                textHistory.add("Orpheus boosts Defense of Orpheus");
+                                System.out.println("Orpheus boosts Defense of Orpheus");
+                                allyThreeStats[1] = 0.5;
+                                break;
+                            case 3: // boost robin hood
+                                textHistory.add("Orpheus boosts Defense of Robin Hood");
+                                System.out.println("Orpheus boosts Defense of Robin Hood");
+                                allyFourStats[1] = 0.5;
+                                break;
+                        }
+                        break;
+                    case 3:
+                        System.out.println("if you got here you fucked something up");
+                        // robin hood cant boost defense
+                        break;
+                }
+                break;
+            case 5: // agility boosts
+                switch (currentCharacter){ // who is giving the boost
+                    case 0: // ame
+                        System.out.println("if you got here you fucked something up");
+                        // ame has no boost moves, so if you got here something went wrong
+                        break;
+                    case 1:
+                        switch (ally){
+                            case 0: // boost ame
+                                textHistory.add("Cendrillon boosts Agility of Ame No Uzume");
+                                System.out.println("Cendrillon boosts Agility of Ame No Uzume");
+                                allyOneStats[2] = 2;
+                                break;
+                            case 1: // boost cendrillon
+                                textHistory.add("Cendrillon boosts Agility of Cendrillon");
+                                System.out.println("Cendrillon boosts Agility of Cendrillon");
+                                allyTwoStats[2] = 2;
+                                break;
+                            case 2: // boost orpheus
+                                textHistory.add("Cendrillon boosts Agility of Orpheus");
+                                System.out.println("Cendrillon boosts Agility of Orpheus");
+                                allyThreeStats[2] = 2;
+                                break;
+                            case 3: // boost robin hood
+                                textHistory.add("Cendrillon boosts Agility of Robin Hood");
+                                System.out.println("Cendrillon boosts Agility of Robin Hood");
+                                allyFourStats[2] = 2;
+                                break;
+                        }
+                        break;
+                    case 2:
+                        System.out.println("if you got here you fucked something up");
+                        // orpheus cant boost agility
+                        break;
+                    case 3:
+                        System.out.println("if you got here you fucked something up");
+                        // robin hood cant boost agility
                         break;
                 }
                 break;

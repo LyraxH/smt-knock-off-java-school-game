@@ -464,6 +464,34 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         }
                     }
                     break;
+                case 4: // single target ally healing
+                    switch (game.selected){
+                        case 0:
+                            moveButtonOne.setIcon(img.allyOne);
+                            moveButtonTwo.setIcon(img.unAllyTwo);
+                            moveButtonThree.setIcon(img.unAllyThree);
+                            moveButtonFour.setIcon(img.unAllyFour);
+                            break;
+                        case 1:
+                            moveButtonOne.setIcon(img.unAllyOne);
+                            moveButtonTwo.setIcon(img.allyTwo);
+                            moveButtonThree.setIcon(img.unAllyThree);
+                            moveButtonFour.setIcon(img.unAllyFour);
+                            break;
+                        case 2:
+                            moveButtonOne.setIcon(img.unAllyOne);
+                            moveButtonTwo.setIcon(img.unAllyTwo);
+                            moveButtonThree.setIcon(img.allyThree);
+                            moveButtonFour.setIcon(img.unAllyFour);
+                            break;
+                        case 3:
+                            moveButtonOne.setIcon(img.unAllyOne);
+                            moveButtonTwo.setIcon(img.unAllyTwo);
+                            moveButtonThree.setIcon(img.unAllyThree);
+                            moveButtonFour.setIcon(img.allyFour);
+                            break;
+                    }
+                    break;
             }
         } else if (game.turn == 1){
             moveWindow.removeAll();
@@ -606,6 +634,56 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.magic(3);
                         updateUI();
                         break;
+                }
+                break;
+                
+            // single target ally clicks
+            case "allyOne":
+                switch (game.typeOfMove){
+                    case 2: // helaing
+                        game.healing(0);
+                        updateUI();
+                        break;
+                    case 3,4,5: // buffs
+                        game.boost(0);
+                        updateUI();
+                        break;  
+                }
+                break;
+            case "allyTwo":
+                switch (game.typeOfMove){
+                    case 2: // healing
+                        game.healing(1);
+                        updateUI();
+                        break;
+                    case 3,4,5: // buffs
+                        game.boost(1);
+                        updateUI();
+                        break;  
+                }
+                break;
+            case "allyThree":
+                switch (game.typeOfMove){
+                    case 2: // healing
+                        game.healing(2);
+                        updateUI();
+                        break;
+                    case 3,4,5: // buffs
+                        game.boost(2);
+                        updateUI();
+                        break;  
+                }
+                break;
+            case "allyFour":
+                switch (game.typeOfMove){
+                    case 2: // healing
+                        game.healing(3);
+                        updateUI();
+                        break;
+                    case 3,4,5: // buffs
+                        game.boost(3);
+                        updateUI();
+                        break;        
                 }
                 break;
                 

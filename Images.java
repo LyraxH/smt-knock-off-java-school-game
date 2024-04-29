@@ -143,4 +143,14 @@ public class Images
     ImageIcon unEnemyTwo = new ImageIcon("buttons/enemyTwoUn.png");
     ImageIcon unEnemyThree = new ImageIcon("buttons/enemyThreeUn.png");
     ImageIcon unEnemyFour = new ImageIcon("buttons/enemyFourUn.png");
+    
+    // ally select buttons
+    ImageIcon allyOne = new ImageIcon("buttons/allyOne.png");
+    ImageIcon allyTwo = new ImageIcon("buttons/allyTwo.png");
+    ImageIcon allyThree = new ImageIcon("buttons/allyThree.png");
+    ImageIcon allyFour = new ImageIcon("buttons/allyFour.png");
+    ImageIcon unAllyOne = new ImageIcon("buttons/allyOneUn.png");
+    ImageIcon unAllyTwo = new ImageIcon("buttons/allyTwoUn.png");
+    ImageIcon unAllyThree = new ImageIcon("buttons/allyThreeUn.png");
+    ImageIcon unAllyFour = new ImageIcon("buttons/allyFourUn.png");
 }
