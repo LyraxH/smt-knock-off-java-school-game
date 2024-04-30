@@ -374,6 +374,7 @@ public class Game
                                 System.out.println("Cendrillon uses Snip Snip on Principality");
                                 break;
                         }
+                        hpAllyTwo -= 40;
                         break;
                     default:
                         switch (enemy){
@@ -990,14 +991,6 @@ public class Game
                 break;
         }
         goNext();
-    }
-    
-    void wait(int ms) { // the only part of my project taken from the internet
-        try {
-            Thread.sleep(ms);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
     }
     
     public void goNext(){

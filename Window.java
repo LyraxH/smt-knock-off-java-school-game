@@ -7,6 +7,7 @@
  */
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
@@ -822,12 +823,20 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case 2:
                 break;
         }
+        
         if (keyCode == 84){
-            game.goNext();
-            updateUI();
+            ActionListener turnOne = new ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    game.goNext();
+                    updateUI();
+                }
+            };
+            Timer waitOne = new Timer(1500, turnOne);
+            waitOne.setRepeats(false);
+            waitOne.start();
         }
-    }
-
+    }    
+    
     void createStatsMenu(String name, int character, int one, int two, int three, int four, int five, int six, int seven){
         JDialog box = new JDialog(this);
         box.setTitle(name + " stats");
