@@ -270,6 +270,16 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 moveButtonFour.setActionCommand("allEnemies");
         }
         
+        // UPDATE HP AND SP
+        allyOneHPText.setText("HP: " + game.hpAllyOne + " / " + game.hpMaxAllyOne);
+        allyOneSPText.setText("SP: " + game.spAllyOne + " / " + game.spMaxAllyOne);
+        allyTwoHPText.setText("HP: " + game.hpAllyTwo + " / " + game.hpMaxAllyTwo);
+        allyTwoSPText.setText("SP: " + game.spAllyTwo + " / " + game.spMaxAllyTwo);
+        allyThreeHPText.setText("HP: " + game.hpAllyThree + " / " + game.hpMaxAllyThree);
+        allyThreeSPText.setText("SP: " + game.spAllyThree + " / " + game.spMaxAllyThree);
+        allyFourHPText.setText("HP: " + game.hpAllyFour + " / " + game.hpMaxAllyFour);
+        allyFourSPText.setText("SP: " + game.spAllyFour + " / " + game.spMaxAllyFour);
+        
         //UPDATE TEXT HISTORY
         int size = game.textHistory.size();
         textUpdateOne.setText(game.textHistory.get(size - 3));
@@ -382,25 +392,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                     case 0: // if move one selected
                                         moveButtonOne.setIcon(img.aquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unSnipSnip);
                                         moveButtonFour.setIcon(img.unAglBoost);
                                         break;
                                     case 1: // if move two selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.surgingTide); // multi target water
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unSnipSnip);
                                         moveButtonFour.setIcon(img.unAglBoost);
                                         break;
                                     case 2: // if move three selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
-                                        moveButtonThree.setIcon(img.magicIcon);
+                                        moveButtonThree.setIcon(img.snipSnip);
                                         moveButtonFour.setIcon(img.unAglBoost);
                                         break;
                                     case 3: // if move four selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unSnipSnip);
                                         moveButtonFour.setIcon(img.aglBoost);
                                         break;
                                 }
@@ -410,25 +420,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                     case 0: // if move one selected
                                         moveButtonOne.setIcon(img.lunarRush); // single target moon
                                         moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unShatteringStrike);
                                         moveButtonFour.setIcon(img.unDefBoost);
                                         break;
                                     case 1: // if move two selected
                                         moveButtonOne.setIcon(img.unLunarRush); // single target moon
                                         moveButtonTwo.setIcon(img.moonfall); // multi target moon
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unShatteringStrike);
                                         moveButtonFour.setIcon(img.unDefBoost);
                                         break;
                                     case 2: // if move three selected
                                         moveButtonOne.setIcon(img.unLunarRush); // single target moon
                                         moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
-                                        moveButtonThree.setIcon(img.magicIcon);
+                                        moveButtonThree.setIcon(img.shatteringStrike);
                                         moveButtonFour.setIcon(img.unDefBoost);
                                         break;
                                     case 3: // if move four selected
                                         moveButtonOne.setIcon(img.unLunarRush); // single target moon
                                         moveButtonTwo.setIcon(img.unMoonfall); // multi target moon
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unShatteringStrike);
                                         moveButtonFour.setIcon(img.defBoost);
                                         break;
                                 }
@@ -438,25 +448,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                     case 0: // if move one selected
                                         moveButtonOne.setIcon(img.zenithBlade); // single target sun
                                         moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unSear);
                                         moveButtonFour.setIcon(img.unAtkBoost);
                                         break;
                                     case 1: // if move two selected
                                         moveButtonOne.setIcon(img.unZenithBlade); // single target sun
                                         moveButtonTwo.setIcon(img.solarFlare); // multi target sun
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unSear);
                                         moveButtonFour.setIcon(img.unAtkBoost);
                                         break;
                                     case 2: // if move three selected
                                         moveButtonOne.setIcon(img.unZenithBlade); // single target sun
                                         moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
-                                        moveButtonThree.setIcon(img.magicIcon);
+                                        moveButtonThree.setIcon(img.sear);
                                         moveButtonFour.setIcon(img.unAtkBoost);
                                         break;
                                     case 3: // if move four selected
                                         moveButtonOne.setIcon(img.unZenithBlade); // single target sun
                                         moveButtonTwo.setIcon(img.unSolarFlare); // multi target sun
-                                        moveButtonThree.setIcon(img.unMagicIcon);
+                                        moveButtonThree.setIcon(img.unSear);
                                         moveButtonFour.setIcon(img.atkBoost);
                                         break;
                                 }

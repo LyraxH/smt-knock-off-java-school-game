@@ -125,7 +125,7 @@ public class Images
     ImageIcon unRedemption = new ImageIcon("moves/7heal/redemptionUn.png"); // healing to one
     ImageIcon guardianAngel = new ImageIcon("moves/7heal/guardianAngel.png"); // revive to one
     ImageIcon unGuardianAngel = new ImageIcon("moves/7heal/guardianAngelUn.png"); // revive to one
-    
+     
     // 8 stat boosts // alchemy symbol sulfur
     ImageIcon atkBoost = new ImageIcon("moves/8buff/atkBoost.png"); // take a wild guess at what these do
     ImageIcon unAtkBoost = new ImageIcon("moves/8buff/atkBoostUn.png");
