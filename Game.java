@@ -7,7 +7,6 @@
 import java.util.*;
 public class Game
 {
-    Images img = new Images();
     Random rng = new Random();
     
     // game variables
@@ -48,6 +47,16 @@ public class Game
     double enemyTwoStats[] = new double[]{0,0,0};
     double enemyThreeStats[] = new double[]{0,0,0};
     double enemyFourStats [] = new double[]{0,0,0};
+    // 0 = normal, 1 = weak, 2 = null, 3 = resist, 4 = unknown
+    int allyOneAffinity[] = new int[]{1,0,2,3,0,0,0};
+    int allyTwoAffinity[] = new int[]{0,2,3,1,0,0,0};
+    int allyThreeAffinity[] = new int[]{0,3,0,0,1,2,0};
+    int allyFourAffinity[] = new int[]{3,0,0,0,2,1,0};
+    int enemyOneAffinity[] = new int[]{0,0,0,0,0,0,0};
+    int enemyTwoAffinity[] = new int[]{0,0,0,0,0,0,0};
+    int enemyThreeAffinity[] = new int[]{0,0,0,0,0,0,0};
+    int enemyFourAffinity[] = new int[]{0,0,0,0,0,0,0};
+    int affinitiesKnown[] = new int[]{0,0,0,0}; // 1 unknown affinities, 1 = known affinities.
     
     int hpEnemyOne;
     int hpEnemyTwo;
@@ -65,20 +74,14 @@ public class Game
     int currentCharacter = 0; // what out of four characters turn it is
     // goes turn 0, character 1-2-3-4, then turn 1, character 1-2-3-4. then repeat
     int move;
-    int typeOfMove; // 0 = phys, 1 = magic, 2 = healing, 3 = buff atk, 4 = buff def, 5 = buff agl
+    int typeOfMove; // 0 = phys, 1 = magic, 2 = healing, 3 = buff atk, 4 = buff def, 5 = buff agl, 6 = sweeper
     int difficulty;
     double damageMultiplier;
     double damageTakenMultiplier;
 
     public void Start(){
-        hpAllyOne = hpMaxAllyOne;
-        hpAllyTwo = hpMaxAllyTwo;
-        hpAllyThree = hpMaxAllyThree;
-        hpAllyFour = hpMaxAllyFour;
-        spAllyOne = spMaxAllyOne;
-        spAllyTwo = spMaxAllyTwo;
-        spAllyThree = spMaxAllyThree;
-        spAllyFour = spMaxAllyFour;
+        initializeAffinities();
+        
         textHistory.add("Welcome to my shitty SMT knockoff for school");
         textHistory.add("made by taison");
         textHistory.add("xdd");
@@ -979,18 +982,49 @@ public class Game
         goNext();
     }
     
-    public void items(int who){
-        switch (who){ //depending on who is choosing items, display different items
-            case 0: // ame items
+    void sweeper(int enemy){ // reveal affinities for an enemy'
+        switch (enemy){
+            case 0:
+                if (affinitiesKnown[0] == 0){ // if we dont know the affinities
+                    textHistory.add("Oracle Lens Used. Affinities for Enemy One revealed.");
+                    System.out.println("Oracle Lens Used. Affinities for Enemy One revealed.");
+                    affinitiesKnown[0] = 1;
+                    goNext();
+                } else {
+                    System.out.println("Affinities for enemy one already revealed");
+                }
                 break;
-            case 1: // cendrillon items
+            case 1:
+                if (affinitiesKnown[1] == 0){ // if we dont know the affinities
+                    textHistory.add("Oracle Lens Used. Affinities for Enemy Two revealed.");
+                    System.out.println("Oracle Lens Used. Affinities for Enemy Two revealed.");
+                    affinitiesKnown[1] = 1;
+                    goNext();
+                } else {
+                    System.out.println("Affinities for Enemy Two already revealed");
+                }
                 break;
-            case 2: // orpheus items
+            case 2:
+                if (affinitiesKnown[2] == 0){ // if we dont know the affinities
+                    textHistory.add("Oracle Lens Used. Affinities for Enemy Three revealed.");
+                    System.out.println("Oracle Lens Used. Affinities for Enemy Three revealed.");
+                    affinitiesKnown[2] = 1;
+                    goNext();
+                } else {
+                    System.out.println("Affinities for Enemy Three already revealed");
+                }
                 break;
-            case 3: // robin hood items
+            case 3:
+                if (affinitiesKnown[3] == 0){ // if we dont know the affinities
+                    textHistory.add("Oracle Lens Used. Affinities for Enemy Four revealed.");
+                    System.out.println("Oracle Lens Used. Affinities for Enemy Four revealed.");
+                    affinitiesKnown[3] = 1;
+                    goNext();
+                } else {
+                    System.out.println("Affinities for Enemy Four already revealed");
+                }
                 break;
         }
-        goNext();
     }
     
     public void goNext(){
@@ -1041,35 +1075,6 @@ public class Game
         }
     }
     
-    public void openStats(int who){
-        switch (who){
-            case 0:
-                textHistory.add("opened Ame No Uzume stats");
-                break;
-            case 1:
-                textHistory.add("opened Cendrillon stats");
-                break;
-            case 2:
-                textHistory.add("opened Orpheus stats");
-                break;
-            case 3:
-                textHistory.add("opened Robin Hood stats");
-                break;
-            case 4:
-                textHistory.add("opened Archangel stats");
-                break;
-            case 5:
-                textHistory.add("opened Jack Frost stats");
-                break;
-            case 6:
-                textHistory.add("opened Legion stats");
-                break;
-            case 7:
-                textHistory.add("opened Principality stats");
-                break;
-        }
-    }
-    
     public void setDifficulty(int set){
         switch (set){
             case 0:
@@ -1090,6 +1095,87 @@ public class Game
                 damageTakenMultiplier = 1.6;
                 difficulty = set;
                 break;
+        }
+    }
+    
+    public void initializeAffinities(){
+        // this isnt technically a part of affinities, but i moved it here to get it out of the early method, cuz this only happens once
+        hpAllyOne = hpMaxAllyOne;
+        hpAllyTwo = hpMaxAllyTwo;
+        hpAllyThree = hpMaxAllyThree;
+        hpAllyFour = hpMaxAllyFour;
+        spAllyOne = spMaxAllyOne;
+        spAllyTwo = spMaxAllyTwo;
+        spAllyThree = spMaxAllyThree;
+        spAllyFour = spMaxAllyFour;
+        
+        boolean can = false;
+        int weak = 0;
+        int resist = 0;
+        int nullify = 0;
+        while (!can){
+            if (weak != resist && weak != nullify && resist != nullify){
+                can = true;
+                enemyOneAffinity[weak] = 1;
+                enemyOneAffinity[nullify] = 2;
+                enemyOneAffinity[resist] = 3;
+            } else {
+                can = false;
+                weak = rng.nextInt(7);
+                resist = rng.nextInt(7);
+                nullify = rng.nextInt(7);
+            }
+        }
+        can = false;
+        weak = 0;
+        resist = 0;
+        nullify = 0;
+        while (!can){
+            if (weak != resist && weak != nullify && resist != nullify){
+                can = true;
+                enemyTwoAffinity[weak] = 1;
+                enemyTwoAffinity[nullify] = 2;
+                enemyTwoAffinity[resist] = 3;
+            } else {
+                can = false;
+                weak = rng.nextInt(7);
+                resist = rng.nextInt(7);
+                nullify = rng.nextInt(7);
+            }
+        }
+        can = false;
+        weak = 0;
+        resist = 0;
+        nullify = 0;
+        while (!can){
+            if (weak != resist && weak != nullify && resist != nullify){
+                can = true;
+                enemyThreeAffinity[weak] = 1;
+                enemyThreeAffinity[nullify] = 2;
+                enemyThreeAffinity[resist] = 3;
+            } else {
+                can = false;
+                weak = rng.nextInt(7);
+                resist = rng.nextInt(7);
+                nullify = rng.nextInt(7);
+            }
+        }
+        can = false;
+        weak = 0;
+        resist = 0;
+        nullify = 0;
+        while (!can){
+            if (weak != resist && weak != nullify && resist != nullify){
+                can = true;
+                enemyFourAffinity[weak] = 1;
+                enemyFourAffinity[nullify] = 2;
+                enemyFourAffinity[resist] = 3;
+            } else {
+                can = false;
+                weak = rng.nextInt(7);
+                resist = rng.nextInt(7);
+                nullify = rng.nextInt(7);
+            }
         }
     }
     /**

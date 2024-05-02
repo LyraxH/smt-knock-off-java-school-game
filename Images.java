@@ -53,29 +53,32 @@ public class Images
     ImageIcon principalitySelected = new ImageIcon("sprites/principalitySelected.png");
     
     // elements and affinities
-    ImageIcon fireIMG = new ImageIcon("elements/fire3.png");
-    ImageIcon waterIMG = new ImageIcon("elements/water3.png");
-    ImageIcon earthIMG = new ImageIcon("elements/earth3.png");
-    ImageIcon airIMG = new ImageIcon("elements/air3.png");
-    ImageIcon sunIMG = new ImageIcon("elements/sun3.png");
-    ImageIcon moonIMG = new ImageIcon("elements/moon3.png");
-    ImageIcon physIMG = new ImageIcon("elements/phys3.png");
-    ImageIcon weakIMG = new ImageIcon("elements/weak3.png");
-    ImageIcon resistIMG = new ImageIcon("elements/resist3.png");
-    ImageIcon nullifyIMG = new ImageIcon("elements/nullify3.png");
-    ImageIcon normalIMG = new ImageIcon("elements/normal3.png");
-    //turning elements and affinites into jlabels
-    JLabel fire = new JLabel(fireIMG);
-    JLabel water = new JLabel(waterIMG);
-    JLabel earth = new JLabel(earthIMG);
-    JLabel air = new JLabel(airIMG);
-    JLabel sun = new JLabel(sunIMG);
-    JLabel moon = new JLabel(moonIMG);
-    JLabel phys = new JLabel(physIMG);
-    JLabel weak = new JLabel(weakIMG);
-    JLabel resist = new JLabel(resistIMG);
-    JLabel nullify = new JLabel(nullifyIMG);
-    
+    ImageIcon fire = new ImageIcon("elements/fire3.png");
+    ImageIcon water = new ImageIcon("elements/water3.png");
+    ImageIcon air = new ImageIcon("elements/air3.png");
+    ImageIcon earth = new ImageIcon("elements/earth3.png");
+    ImageIcon sun = new ImageIcon("elements/sun3.png");
+    ImageIcon moon = new ImageIcon("elements/moon3.png");
+    ImageIcon phys = new ImageIcon("elements/phys3.png");
+    ImageIcon weak = new ImageIcon("elements/weak3.png");
+    ImageIcon resist = new ImageIcon("elements/resist3.png");
+    ImageIcon nullify = new ImageIcon("elements/nullify3.png");
+    ImageIcon normal = new ImageIcon("elements/normal3.png");
+    ImageIcon unknown = new ImageIcon("elements/unknown.png");
+    JLabel elementOne = new JLabel(fire);
+    JLabel elementTwo = new JLabel(water);
+    JLabel elementFour = new JLabel(air);
+    JLabel elementThree = new JLabel(earth);
+    JLabel elementFive = new JLabel(sun);
+    JLabel elementSix = new JLabel(moon);
+    JLabel elementSeven = new JLabel(phys);
+    JLabel affinityOne = new JLabel(unknown);
+    JLabel affinityTwo = new JLabel(unknown);
+    JLabel affinityThree = new JLabel(unknown);
+    JLabel affinityFour = new JLabel(unknown);
+    JLabel affinityFive = new JLabel(unknown);
+    JLabel affinitySix = new JLabel(unknown);
+    JLabel affinitySeven = new JLabel(unknown);
     
     // move icons
     // 0 fire // alchemy symbol: fire
@@ -133,6 +136,10 @@ public class Images
     ImageIcon unDefBoost = new ImageIcon("moves/8buff/defBoostUn.png");
     ImageIcon aglBoost = new ImageIcon("moves/8buff/aglBoost.png");
     ImageIcon unAglBoost = new ImageIcon("moves/8buff/aglBoostUn.png");
+    
+    // 9 items // alchemy symbol potash
+    ImageIcon  oracleLens = new ImageIcon("moves/9item/oracleLens.png"); // reveals affinity of one enemy
+    ImageIcon  unOracleLens = new ImageIcon("moves/9item/oracleLensUn.png"); // reveals affinity of one enemy
     
     // enemy select buttons
     ImageIcon enemyOne = new ImageIcon("buttons/enemyOne.png");
