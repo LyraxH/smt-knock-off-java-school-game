@@ -9,12 +9,26 @@ import java.util.*;
 public class testing
 {
     Random rng  = new Random();
+    /*
     public int weak;
     public int resist;
     public int nullify;
     public boolean can = false;
+    */
     public testing()
     {
+        int a = rng.nextInt(10);
+        System.out.println(a);
+        for (int b = 0; b < 100; b++){
+            a = rng.nextInt(10);
+            System.out.println(a);
+        }
+        if (a > 6){
+            System.out.println("true");
+        } else {
+            System.out.println("False");
+        }
+        /*
         while (!can){
             if (weak != resist && weak != nullify && resist != nullify){
                 can = true;
@@ -30,5 +44,6 @@ public class testing
                 nullify = rng.nextInt(7);
             }
         }
+        */
     }
 }

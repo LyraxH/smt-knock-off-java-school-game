@@ -60,14 +60,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JButton moveButtonFour = new JButton(img.unItemIcon);
 
     // game window variables
-    JLabel allyOneSprite = new JLabel("ally one sprite");
-    JLabel allyTwoSprite = new JLabel("ally two sprite");
-    JLabel allyThreeSprite = new JLabel("ally three sprite");
-    JLabel allyFourSprite = new JLabel("ally four sprite");
-    JLabel enemyOneSprite = new JLabel("enemy one sprite");
-    JLabel enemyTwoSprite = new JLabel("enemy two sprite");
-    JLabel enemyThreeSprite = new JLabel("enemy three sprite");
-    JLabel enemyFourSprite = new JLabel("enemy four sprite");
+    JLabel allyOneSprite = new JLabel();
+    JLabel allyTwoSprite = new JLabel();
+    JLabel allyThreeSprite = new JLabel();
+    JLabel allyFourSprite = new JLabel();
+    JLabel enemyOneSprite = new JLabel();
+    JLabel enemyTwoSprite = new JLabel();
+    JLabel enemyThreeSprite = new JLabel();
+    JLabel enemyFourSprite = new JLabel();
 
     // j menu variables
     JMenuBar menuBar = new JMenuBar();
@@ -75,6 +75,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JMenu music = new JMenu("Music");
     JMenu difficulty = new JMenu("Difficulty");
     JMenu battleLog = new JMenu("Battle Log");
+    JMenuItem goBackItem = new JMenuItem("Go Back");
     JMenuItem quitGame = new JMenuItem("Quit Game");
     JMenuItem nextSong = new JMenuItem("Next Track");
     JMenuItem previousSong = new JMenuItem("Previous Track");
@@ -147,11 +148,15 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         moveWindow.setPreferredSize(new Dimension(0, 200));
 
         // adding variables to game window
-        gameWindow.setLayout(new GridLayout(2, 4, 50, 100));
+        gameWindow.setLayout(new GridLayout(3, 4));
         gameWindow.add(enemyOneSprite);
         gameWindow.add(enemyTwoSprite);
         gameWindow.add(enemyThreeSprite);
         gameWindow.add(enemyFourSprite);
+        gameWindow.add(img.turnIndicatorOne);
+        gameWindow.add(img.turnIndicatorTwo);
+        gameWindow.add(img.turnIndicatorThree);
+        gameWindow.add(img.turnIndicatorFour);
         gameWindow.add(allyOneSprite);
         gameWindow.add(allyTwoSprite);
         gameWindow.add(allyThreeSprite);
@@ -198,6 +203,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         allyFourSprite.setIcon(img.robinHoodSelected);
                         break;
                 }
+                img.turnIndicatorOne.setIcon(img.playerTurnOne);
+                img.turnIndicatorTwo.setIcon(img.playerTurnTwo);
+                img.turnIndicatorThree.setIcon(img.playerTurnThree);
+                img.turnIndicatorFour.setIcon(img.playerTurnFour);
                 break;
             case 1:
                 switch (game.currentCharacter){
@@ -221,7 +230,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         addAndRemove();
                         enemyFourSprite.setIcon(img.principalitySelected);
                         break;
-                }
+                }img.turnIndicatorOne.setIcon(img.enemyTurnOne);
+                img.turnIndicatorTwo.setIcon(img.enemyTurnTwo);
+                img.turnIndicatorThree.setIcon(img.enemyTurnThree);
+                img.turnIndicatorFour.setIcon(img.enemyTurnFour);
                 break;
         }
         
@@ -287,6 +299,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         textUpdateOne.setText(game.textHistory.get(size - 3));
         textUpdateTwo.setText(game.textHistory.get(size - 2));
         textUpdateThree.setText(game.textHistory.get(size - 1));
+        System.out.println(game.textHistory.get(size - 1));
         
         //UPDATE SELECTABLE ICONS
         if (game.turn == 0){ 
@@ -480,26 +493,26 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     switch (game.selected){
                         case 0:
                             moveButtonOne.setIcon(img.oracleLens);
-                            moveButtonTwo.setIcon(img.unOracleLens);
-                            moveButtonThree.setIcon(img.unOracleLens);
+                            moveButtonTwo.setIcon(img.unEverfrost);
+                            moveButtonThree.setIcon(img.unLightningCrash);
                             moveButtonFour.setIcon(img.unOracleLens);
                             break;
                         case 1:
                             moveButtonOne.setIcon(img.unOracleLens);
-                            moveButtonTwo.setIcon(img.oracleLens);
-                            moveButtonThree.setIcon(img.unOracleLens);
+                            moveButtonTwo.setIcon(img.everfrost);
+                            moveButtonThree.setIcon(img.unLightningCrash);
                             moveButtonFour.setIcon(img.unOracleLens);
                             break;
                         case 2:
                             moveButtonOne.setIcon(img.unOracleLens);
-                            moveButtonTwo.setIcon(img.unOracleLens);
-                            moveButtonThree.setIcon(img.oracleLens);
+                            moveButtonTwo.setIcon(img.unEverfrost);
+                            moveButtonThree.setIcon(img.lightningCrash);
                             moveButtonFour.setIcon(img.unOracleLens);
                             break;
                         case 3:
                             moveButtonOne.setIcon(img.unOracleLens);
-                            moveButtonTwo.setIcon(img.unOracleLens);
-                            moveButtonThree.setIcon(img.unOracleLens);
+                            moveButtonTwo.setIcon(img.unEverfrost);
+                            moveButtonThree.setIcon(img.unLightningCrash);
                             moveButtonFour.setIcon(img.oracleLens);
                             break;
                     }
@@ -572,6 +585,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         moveButtonFour.addActionListener(this);
         moveButtonFour.addMouseListener(this);
 
+        goBackItem.addActionListener(this);
         quitGame.addActionListener(this);
         nextSong.addActionListener(this);
         previousSong.addActionListener(this);
@@ -628,8 +642,21 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 
             // items button clicks
             case "itemOne": // oracle lens
-                game.typeOfMove = 6; // set type of move to sweeper
+                game.typeOfMove = 6; // set type of move to item (6 on enemy single select will mean sweeper)
+                game.prevPage = 3;
                 game.page = 1; // set page to select enemy
+                updateUI();
+                break;
+            case "itemTwo": // everfrost
+                game.typeOfMove = 6; // set type of move to item (item on ally single select will mean everfrost)
+                game.prevPage = 3;
+                game.page = 4; // set page to select ally
+                updateUI();
+                break;
+            case "itemThree": // lightning crash
+                game.typeOfMove = 7; // set type of move to item (7 on enemy single select will mean shock)
+                game.prevPage = 3;
+                game.page = 1; // set page to select ally
                 updateUI();
                 break;
                 
@@ -649,6 +676,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.sweeper(0);
                         updateUI();
                         break;
+                    case 7: // lightning crash
+                        game.lightningCrash(0);
+                        updateUI();
+                        break;
                 }
                 break;
             case "enemyTwo":
@@ -663,6 +694,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                     case 6: // sweeper lens
                         game.sweeper(1);
+                        updateUI();
+                        break;
+                    case 7: // lightning crash
+                        game.lightningCrash(1);
                         updateUI();
                         break;
                 }
@@ -681,6 +716,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.sweeper(2);
                         updateUI();
                         break;
+                    case 7: // lightning crash
+                        game.lightningCrash(2);
+                        updateUI();
+                        break;
                 }
                 break;
             case "enemyFour":
@@ -697,6 +736,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.sweeper(3);
                         updateUI();
                         break;
+                    case 7: // lightning crash
+                        game.lightningCrash(3);
+                        updateUI();
+                        break;
                 }
                 break;
                 
@@ -704,49 +747,89 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case "allyOne":
                 switch (game.typeOfMove){
                     case 2: // helaing
-                        game.healing(0);
-                        updateUI();
+                        if (game.hpAllyOne == game.hpMaxAllyOne){
+                            System.out.println("You cannot heal this character, as they are already on full hp");
+                            game.textHistory.add("You cannot heal this character, as they are already on full hp");
+                            updateUI();
+                        } else {
+                            game.healing(0);
+                            updateUI();
+                        }
                         break;
                     case 3,4,5: // buffs
                         game.boost(0);
                         updateUI();
-                        break;  
+                        break;
+                    case 6: // everfrost
+                        game.everfrost(0);
+                        updateUI();
+                        break;
                 }
                 break;
             case "allyTwo":
                 switch (game.typeOfMove){
                     case 2: // healing
-                        game.healing(1);
-                        updateUI();
+                        if (game.hpAllyTwo == game.hpMaxAllyTwo){
+                            System.out.println("You cannot heal this character, as they are already on full hp");
+                            game.textHistory.add("You cannot heal this character, as they are already on full hp");
+                            updateUI();
+                        } else {
+                            game.healing(1);
+                            updateUI();
+                        }
                         break;
                     case 3,4,5: // buffs
                         game.boost(1);
                         updateUI();
-                        break;  
+                        break; 
+                    case 6: // everfrost
+                        game.everfrost(1);
+                        updateUI();
+                        break; 
                 }
                 break;
             case "allyThree":
                 switch (game.typeOfMove){
                     case 2: // healing
-                        game.healing(2);
-                        updateUI();
+                        if (game.hpAllyThree == game.hpMaxAllyThree){
+                            System.out.println("You cannot heal this character, as they are already on full hp");
+                            game.textHistory.add("You cannot heal this character, as they are already on full hp");
+                            updateUI();
+                        } else {
+                            game.healing(2);
+                            updateUI();
+                        }
                         break;
                     case 3,4,5: // buffs
                         game.boost(2);
                         updateUI();
                         break;  
+                    case 6: // everfrost
+                        game.everfrost(2);
+                        updateUI();
+                        break;
                 }
                 break;
             case "allyFour":
                 switch (game.typeOfMove){
                     case 2: // healing
-                        game.healing(3);
-                        updateUI();
+                        if (game.hpAllyFour == game.hpMaxAllyFour){
+                            System.out.println("You cannot heal this character, as they are already on full hp");
+                            game.textHistory.add("You cannot heal this character, as they are already on full hp");
+                            updateUI();
+                        } else {
+                            game.healing(3);
+                            updateUI();
+                        }
                         break;
                     case 3,4,5: // buffs
                         game.boost(3);
                         updateUI();
-                        break;        
+                        break;   
+                    case 6: // everfrost
+                        game.everfrost(3);
+                        updateUI();
+                        break;     
                 }
                 break;
                 
@@ -764,6 +847,9 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 break;
 
             // menu bar clicks
+            case "Go Back":
+                goBack();
+                break;
             case "Quit Game":
                 System.exit(0);
                 break;
@@ -887,11 +973,24 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 break;
         }
         
+        if (keyCode == 27){
+            goBack();
+        }
+        
         if (keyCode == 84){
             game.goNext();
             updateUI();
         }
     }    
+    
+    void goBack(){
+        if (game.page == 2 || game.page == 3){
+            game.page = 0;
+        } else {
+            game.page = game.prevPage;
+        }
+        updateUI();
+    }
     
     void createStatsMenu(String name, int character, int one, int two, int three, int four, int five, int six, int seven){
         JDialog box = new JDialog(this);
@@ -1133,6 +1232,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         menuBar.add(difficulty);
         menuBar.add(battleLog);
 
+        system.add(goBackItem);
         system.add(quitGame);
 
         music.add(nextSong);

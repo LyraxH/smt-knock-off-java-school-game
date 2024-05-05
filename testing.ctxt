@@ -2,4 +2,5 @@
 comment0.target=testing
 comment1.params=
 comment1.target=testing()
+comment1.text=\r\n\ \ \ \ public\ int\ weak;\r\n\ \ \ \ public\ int\ resist;\r\n\ \ \ \ public\ int\ nullify;\r\n\ \ \ \ public\ boolean\ can\ \=\ false;\r\n
 numComments=2

@@ -51,6 +51,18 @@ public class Images
     ImageIcon orpheusSelected = new ImageIcon("sprites/orpheusSelected.png");
     ImageIcon robinHoodSelected = new ImageIcon("sprites/robinHoodSelected.png");
     ImageIcon principalitySelected = new ImageIcon("sprites/principalitySelected.png");
+    ImageIcon playerTurnOne = new ImageIcon("sprites/playerTurnOne.png");
+    ImageIcon playerTurnTwo = new ImageIcon("sprites/playerTurnTwo.png");
+    ImageIcon playerTurnThree = new ImageIcon("sprites/playerTurnThree.png");
+    ImageIcon playerTurnFour = new ImageIcon("sprites/playerTurnFour.png");
+    ImageIcon enemyTurnOne = new ImageIcon("sprites/enemyTurnOne.png");
+    ImageIcon enemyTurnTwo = new ImageIcon("sprites/enemyTurntwo.png");
+    ImageIcon enemyTurnThree = new ImageIcon("sprites/enemyTurnThree.png");
+    ImageIcon enemyTurnFour = new ImageIcon("sprites/enemyTurnFour.png");
+    JLabel turnIndicatorOne = new JLabel(playerTurnOne);
+    JLabel turnIndicatorTwo = new JLabel(playerTurnTwo);
+    JLabel turnIndicatorThree = new JLabel(playerTurnThree);
+    JLabel turnIndicatorFour = new JLabel(playerTurnFour);
     
     // elements and affinities
     ImageIcon fire = new ImageIcon("elements/fire3.png");
@@ -140,6 +152,10 @@ public class Images
     // 9 items // alchemy symbol potash
     ImageIcon  oracleLens = new ImageIcon("moves/9item/oracleLens.png"); // reveals affinity of one enemy
     ImageIcon  unOracleLens = new ImageIcon("moves/9item/oracleLensUn.png"); // reveals affinity of one enemy
+    ImageIcon  everfrost = new ImageIcon("moves/9item/everfrost.png"); // restores mana to ally
+    ImageIcon  unEverfrost = new ImageIcon("moves/9item/everfrostUn.png"); // restores mana to ally
+    ImageIcon  lightningCrash = new ImageIcon("moves/9item/lightningCrash.png"); // shock one enemy
+    ImageIcon  unLightningCrash = new ImageIcon("moves/9item/lightningCrashUn.png"); // shock one enemy
     
     // enemy select buttons
     ImageIcon enemyOne = new ImageIcon("buttons/enemyOne.png");

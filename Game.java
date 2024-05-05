@@ -10,8 +10,13 @@ public class Game
     Random rng = new Random();
     
     // game variables
+    int prevPage = 0;
     int page = 0; // what page you are on, e.g: 0 = home, 1 = attack, 2 = magic, 3 = items (guard doesnt have a page)
     int selected = 0; // what option is currently being hovered, 0-3 left to right
+    int turn = 0; // 0 = ally, 1 = enemy.
+    int currentCharacter = 0; // what out of four characters turn it is
+    // goes turn 0, character 1-2-3-4, then turn 1, character 1-2-3-4. then repeat
+    int move;
     
     // variable for chat
     ArrayList<String> textHistory = new ArrayList<String>();
@@ -37,16 +42,16 @@ public class Game
     int spMaxAllyThree = 150;
     int spMaxAllyFour = 150;
     
-    // first number = attack status, second = defense status, third = accuracy/evasion status. 
-    //2 target stat up, 0.5 is target stat down
+    // first number = attack status, second = defense status, third = accuracy/evasion status. fourth = shock
     double allyOneStats[] = new double[]{0,0,0};
     double allyTwoStats[] = new double[]{0,0,0};
     double allyThreeStats[] = new double[]{0,0,0};
     double allyFourStats[] = new double[]{0,0,0};
-    double enemyOneStats[] = new double[]{0,0,0};
-    double enemyTwoStats[] = new double[]{0,0,0};
-    double enemyThreeStats[] = new double[]{0,0,0};
-    double enemyFourStats [] = new double[]{0,0,0};
+    int concentrate[] = new int[]{0,0,0,0}; // 1 means that characters attack next turn will do more than double damage
+    double enemyOneStats[] = new double[]{0,0,0,0};
+    double enemyTwoStats[] = new double[]{0,0,0,0};
+    double enemyThreeStats[] = new double[]{0,0,0,0};
+    double enemyFourStats [] = new double[]{0,0,0,0};
     // 0 = normal, 1 = weak, 2 = null, 3 = resist, 4 = unknown
     int allyOneAffinity[] = new int[]{1,0,2,3,0,0,0};
     int allyTwoAffinity[] = new int[]{0,2,3,1,0,0,0};
@@ -67,13 +72,9 @@ public class Game
     int hpMaxEnemyThree;
     int hpMaxEnemyFour;
     boolean enemyInjured;
+    int enemyInjuredWho[] = new int[]{0,0,0,0};
     boolean enemyDead;
     
-    // variables for game
-    int turn = 0; // 0 = ally, 1 = enemy.
-    int currentCharacter = 0; // what out of four characters turn it is
-    // goes turn 0, character 1-2-3-4, then turn 1, character 1-2-3-4. then repeat
-    int move;
     int typeOfMove; // 0 = phys, 1 = magic, 2 = healing, 3 = buff atk, 4 = buff def, 5 = buff agl, 6 = sweeper
     int difficulty;
     double damageMultiplier;
@@ -97,15 +98,18 @@ public class Game
                         switch (moveNew){ // what move are they making
                             case 0: // attack
                                 typeOfMove = 0;
+                                prevPage = 0;
                                 page = 1;
                                 break;
                             case 1: // guard
                                 guard("Ame no uzume");
                                 break;
                             case 2: // magic
+                                prevPage = 0;
                                 page = 2;
                                 break;
-                            case 3: // item 
+                            case 3: // item
+                                prevPage = 0;
                                 page = 3;
                                 break;
                         }
@@ -114,15 +118,18 @@ public class Game
                         switch (move){ // what move are they making
                             case 0: // attack
                                 typeOfMove = 0;
+                                prevPage = 0;
                                 page = 1;
                                 break;
                             case 1: // guard
                                 guard("Cendrillon");
                                 break;
                             case 2: // magic
+                                prevPage = 0;
                                 page = 2;
                                 break;
                             case 3: // item
+                                prevPage = 0;
                                 page = 3;
                                 break;
                         }
@@ -131,15 +138,18 @@ public class Game
                         switch (move){ // what move are they making
                             case 0: // attack
                                 typeOfMove = 0;
+                                prevPage = 0;
                                 page = 1;
                                 break;
                             case 1: // guard
                                 guard("Orpheus");
                                 break;
                             case 2: // magic
+                                prevPage = 0;
                                 page = 2;
                                 break;
                             case 3: // item
+                                prevPage = 0;
                                 page = 3;
                                 break;
                         }
@@ -148,15 +158,18 @@ public class Game
                         switch (move){ // what move are they making
                             case 0: // attack
                                 typeOfMove = 0;
+                                prevPage = 0;
                                 page = 1;
                                 break;
                             case 1: // guard
                                 guard("Robin Hood");
                                 break;
                             case 2: // magic
+                                prevPage = 0;
                                 page = 2;
                                 break;
                             case 3: // item
+                                prevPage = 0;
                                 page = 3;
                                 break;
                         }                        
@@ -166,171 +179,50 @@ public class Game
             case 1: // if its an enemies turn
                 switch (currentCharacter){
                     case 0:
-                        int decision = rng.nextInt(4);
-                        if (enemyInjured){ // if enemy is injured and can be healed
-                            if (decision > 2){ // 50 percent chance to use healing skill
-                                textHistory.add("Archangel used healing skill");
-                                System.out.println("Archangel healed everyone");
-                            } else { // if heal was not chosen
-                                decision = rng.nextInt(4);
-                                switch (decision){
-                                    default:
-                                    System.out.println("Archangel magic attack");
-                                    textHistory.add("Archangel magic attack");
-                                    break;
-                                case 1:
-                                    System.out.println("Archangel buff/debuff");
-                                    textHistory.add("Archangel buff/debuff");
-                                    break;
-                                case 2:
-                                    System.out.println("Archangel physical attack");
-                                    textHistory.add("Archangel physical attack");
-                                    break;
+                        boolean skip = false;
+                        if (enemyOneStats[3] == 1){ // if afflicted with shock
+                            int shock = rng.nextInt(10);
+                            if (shock < 7){ // 80% chance you remain shocked
+                                textHistory.add("Archangel is still shocked");
+                                shock = rng.nextInt(10);
+                                if (shock < 5){ // 40% chance you can move anyways
+                                    skip = false;
+                                } else { // 60% chance you cannot move
+                                    skip = true;
                                 }
-                            }
-                        } else { // if enemy is not injured, and no healing spell can be used
-                            decision = rng.nextInt(4);
-                            switch (decision){
-                                default:
-                                    System.out.println("Archangel magic attack");
-                                    textHistory.add("Archangel magic attack");
-                                    break;
-                                case 1:
-                                    System.out.println("Archangel buff/debuff");
-                                    textHistory.add("Archangel buff/debuff");
-                                    break;
-                                case 2:
-                                    System.out.println("Archangel physical attack");
-                                    textHistory.add("Archangel physical attack");
-                                    break;
+                            } else { // 20% chance you remove shock
+                                textHistory.add("Archangel has recovered from shock");
+                                enemyOneStats[3] = 0;
+                                skip = false;
                             }
                         }
-                        break;
-                    case 1:
-                        decision = rng.nextInt(4);
-                        if (enemyInjured){ // if enemy is injured and can be healed
-                            if (decision > 2){ // 50 percent chance to use healing skill
-                                textHistory.add("Jack Frost used healing skill");
-                                System.out.println("Jack Frost healed everyone");
-                            } else { // if heal was not chosen
-                                decision = rng.nextInt(4);
-                                switch (decision){
-                                    default:
-                                    System.out.println("Jack Frost magic attack");
-                                    textHistory.add("Jack Frost magic attack");
-                                    break;
-                                case 1:
-                                    System.out.println("Jack Frost buff/debuff");
-                                    textHistory.add("Jack Frost buff/debuff");
-                                    break;
-                                case 2:
-                                    System.out.println("Jack Frost physical attack");
-                                    textHistory.add("Jack Frost physical attack");
-                                    break;
-                                }
-                            }
-                        } else { // if enemy is not injured, and no healing spell can be used
-                            decision = rng.nextInt(4);
-                            switch (decision){
-                                default:
-                                    System.out.println("Jack Frost magic attack");
-                                    textHistory.add("Jack Frost magic attack");
-                                    break;
-                                case 1:
-                                    System.out.println("Jack Frost buff/debuff");
-                                    textHistory.add("Jack Frost buff/debuff");
-                                    break;
-                                case 2:
-                                    System.out.println("Jack Frost physical attack");
-                                    textHistory.add("Jack Frost physical attack");
-                                    break;
-                            }
-                        }
-                        break;
-                    case 2:
-                        decision = rng.nextInt(4);
-                        if (enemyInjured){ // if enemy is injured and can be healed
-                            if (decision > 2){ // 50 percent chance to use healing skill
-                                textHistory.add("Legion used healing skill");
-                                System.out.println("Legion healed everyone");
-                            } else { // if heal was not chosen
-                                decision = rng.nextInt(4);
-                                switch (decision){
-                                    default:
-                                    System.out.println("Legion magic attack");
-                                    textHistory.add("Legion magic attack");
-                                    break;
-                                case 1:
-                                    System.out.println("Legion buff/debuff");
-                                    textHistory.add("Legion buff/debuff");
-                                    break;
-                                case 2:
-                                    System.out.println("Legion physical attack");
-                                    textHistory.add("Legion physical attack");
-                                    break;
-                                }
-                            }
-                        } else { // if enemy is not injured, and no healing spell can be used
-                            decision = rng.nextInt(4);
-                            switch (decision){
-                                default:
-                                    System.out.println("Legion magic attack");
-                                    textHistory.add("Legion magic attack");
-                                    break;
-                                case 1:
-                                    System.out.println("Legion buff/debuff");
-                                    textHistory.add("Legion buff/debuff");
-                                    break;
-                                case 2:
-                                    System.out.println("Legion physical attack");
-                                    textHistory.add("Legion physical attack");
-                                    break;
-                            }
-                        }
-                        break;
-                    case 3:
-                        decision = rng.nextInt(4);
-                        if (enemyInjured){ // if enemy is injured and can be healed
-                            if (decision > 2){ // 50 percent chance to use healing skill
-                                textHistory.add("Principality used healing skill");
-                                System.out.println("Principality healed everyone");
-                            } else { // if heal was not chosen
-                                decision = rng.nextInt(4);
-                                switch (decision){
-                                    default:
-                                    System.out.println("Principality magic attack");
-                                    textHistory.add("Principality magic attack");
-                                    break;
-                                case 1:
-                                    System.out.println("Principality buff/debuff");
-                                    textHistory.add("Principality buff/debuff");
-                                    break;
-                                case 2:
-                                    System.out.println("Principality physical attack");
-                                    textHistory.add("Principality physical attack");
-                                    break;
-                                }
-                            }
-                        } else { // if enemy is not injured, and no healing spell can be used
-                            decision = rng.nextInt(4);
-                            switch (decision){
-                                default:
-                                    System.out.println("Principality magic attack");
-                                    textHistory.add("Principality magic attack");
-                                    break;
-                                case 1:
-                                    System.out.println("Principality buff/debuff");
-                                    textHistory.add("Principality buff/debuff");
-                                    break;
-                                case 2:
-                                    System.out.println("Principality physical attack");
-                                    textHistory.add("Principality physical attack");
-                                    break;
-                            }
+                        if (skip){
+                            textHistory.add("Archangel is shocked and cannot move");
+                        } else {
+                            enemyTurn(0);
                         }
                         break;
                 }
                 break;
+        }
+    }
+    
+    void enemyTurn(int enemy){
+        int decision = rng.nextInt(4);
+        if (enemyInjured){ // if an "ally"(enemy) is injured
+            if (decision > 1){ // 50% chance to heal
+                
+            } else { // 50% chance to not
+                decision = rng.nextInt(4);
+                switch (decision){
+                    case 0: // 25% chance to buff/debuff
+                        break;
+                    case 1,2: // 50% chance to magic attack
+                        break;
+                    case 3: // 25% chance to phys attack
+                        break;
+                }
+            }
         }
     }
     
@@ -340,19 +232,15 @@ public class Game
                 switch (enemy){
                     case 0:
                         textHistory.add("Ame No Uzume uses a basic attack on Archangel");
-                        System.out.println("Ame No Uzume uses a basic attack on Archangel");
                         break;
                     case 1:
                         textHistory.add("Ame No Uzume uses a basic attack on Jack Frost");
-                        System.out.println("Ame No Uzume uses a basic attack on Jack Frost");
                         break;
                     case 2:
                         textHistory.add("Ame No Uzume uses a basic attack on Legion");
-                        System.out.println("Ame No Uzume uses a basic attack on Legion");
                         break;
                     case 3:
                         textHistory.add("Ame No Uzume uses a basic attack on Principality");
-                        System.out.println("Ame No Uzume uses a basic attack on Principality");
                         break;
                 }
                 break;
@@ -362,19 +250,15 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Cendrillon uses Snip Snip on Archangel");
-                                System.out.println("Cendrillon uses Snip Snip on Archangel");
                                 break;
                             case 1:
                                 textHistory.add("Cendrillon uses Snip Snip on Jack Frost");
-                                System.out.println("Cendrillon uses Snip Snip on Jack Frost");
                                 break;
                             case 2:
                                 textHistory.add("Cendrillon uses Snip Snip on Legion");
-                                System.out.println("Cendrillon uses Snip Snip on Legion");
                                 break;
                             case 3:
                                 textHistory.add("Cendrillon uses Snip Snip on Principality");
-                                System.out.println("Cendrillon uses Snip Snip on Principality");
                                 break;
                         }
                         hpAllyTwo -= 40;
@@ -383,19 +267,15 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Cendrillon uses a basic attack on Archangel");
-                                System.out.println("Cendrillon uses a basic attack on Archangel");
                                 break;
                             case 1:
                                 textHistory.add("Cendrillon uses a basic attack on Jack Frost");
-                                System.out.println("Cendrillon uses a basic attack on Jack Frost");
                                 break;
                             case 2:
                                 textHistory.add("Cendrillon uses a basic attack on Legion");
-                                System.out.println("Cendrillon uses a basic attack on Legion");
                                 break;
                             case 3:
                                 textHistory.add("Cendrillon uses a basic attack on Principality");
-                                System.out.println("Cendrillon uses a basic attack on Principality");
                                 break;
                         }
                         break;
@@ -405,19 +285,15 @@ public class Game
                 switch (enemy){
                     case 0:
                         textHistory.add("Orpheus uses a basic attack on Archangel");
-                        System.out.println("Orpheus uses a basic attack on Archangel");
                         break;
                     case 1:
-                        textHistory.add("Orpheus uses a basic attack on Jack Frost");
-                        System.out.println("Orpheus uses a basic attack on Jack Frost");
+                        textHistory.add("Orpheus uses a basic attack on Jack Frost");                        
                         break;
                     case 2:
                         textHistory.add("Orpheus uses a basic attack on Legion");
-                        System.out.println("Orpheus uses a basic attack on Legion");
                         break;
                     case 3:
                         textHistory.add("Orpheus uses a basic attack on Principality");
-                        System.out.println("Orpheus uses a basic attack on Principality");
                         break;
                 }
                 break;
@@ -425,19 +301,15 @@ public class Game
                 switch (enemy){
                     case 0:
                         textHistory.add("Robin Hood uses a basic attack on Archangel");
-                        System.out.println("Robin Hood uses a basic attack on Archangel");
                         break;
                     case 1:
                         textHistory.add("Robin Hood uses a basic attack on Jack Frost");
-                        System.out.println("Robin Hood uses a basic attack on Jack Frost");
                         break;
                     case 2:
                         textHistory.add("Robin Hood uses a basic attack on Legion");
-                        System.out.println("Robin Hood uses a basic attack on Legion");
                         break;
                     case 3:
                         textHistory.add("Robin Hood uses a basic attack on Principality");
-                        System.out.println("Robin Hood uses a basic attack on Principality");
                         break;
                 }
                 break;
@@ -447,7 +319,6 @@ public class Game
     
     public void guard(String who){ // if from the main menu above you select guard. it will do this
         textHistory.add(who + " Guards");
-        System.out.println("guard" + who);
         goNext();
     }
     
@@ -459,6 +330,7 @@ public class Game
                     case 0: // zephyr
                         if (spAllyOne > 9){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -467,6 +339,7 @@ public class Game
                     case 1: // monsoon
                         if (spAllyOne > 21){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 5; // multi target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -476,6 +349,7 @@ public class Game
                         if (allyInjured){
                             if (spAllyOne > 22){
                                 typeOfMove = 2;
+                                prevPage = 2;
                                 page = 4; // single target ally select
                             } else {
                                 System.out.println("Not Enough SP");
@@ -488,6 +362,7 @@ public class Game
                         if (allyDead){
                             if (spAllyOne > 8){
                                 typeOfMove = 2;
+                                prevPage = 2;
                                 page = 4; // single target ally select
                             } else {
                                 System.out.println("Not Enough SP");
@@ -503,6 +378,7 @@ public class Game
                     case 0: // aqua prison
                         if (spAllyTwo > 9){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -511,6 +387,7 @@ public class Game
                     case 1: // surging tide
                         if (spAllyTwo > 21){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 5; // multi target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -519,6 +396,7 @@ public class Game
                     case 2:
                         if (hpAllyTwo > 40){
                             typeOfMove = 0;
+                            prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
                             System.out.println("Not Enough HP");
@@ -527,6 +405,7 @@ public class Game
                     case 3: // agl boost
                         if (spAllyTwo > 12){
                             typeOfMove = 5;
+                            prevPage = 2;
                             page = 4; // single target
                         } else {
                             System.out.println("Not Enough SP");
@@ -539,6 +418,7 @@ public class Game
                     case 0: // lunar rush
                         if (spAllyThree > 9){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -547,6 +427,7 @@ public class Game
                     case 1: // moonfall
                         if (spAllyThree > 21){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 5; // multi target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -555,6 +436,7 @@ public class Game
                     case 2:
                         if (spAllyThree > 9){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -563,6 +445,7 @@ public class Game
                     case 3: // def boost
                         if (spAllyThree > 12){
                             typeOfMove = 4;
+                            prevPage = 2;
                             page = 4; // single target
                         } else {
                             System.out.println("Not Enough SP");
@@ -575,6 +458,7 @@ public class Game
                     case 0: // zenith blade
                         if (spAllyFour > 9){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -583,6 +467,7 @@ public class Game
                     case 1: // solar flare
                         if (spAllyFour > 21){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 5; // multi target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -591,6 +476,7 @@ public class Game
                     case 2:
                         if (spAllyFour > 9){
                             typeOfMove = 1;
+                            prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
                             System.out.println("Not Enough SP");
@@ -599,6 +485,7 @@ public class Game
                     case 3: // atk boost
                         if (spAllyFour > 12){
                             typeOfMove = 3;
+                            prevPage = 2;
                             page = 4; // single target
                         } else {
                             System.out.println("Not Enough SP");
@@ -617,26 +504,21 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Ame No Uzume uses Zephyr on Archangel");
-                                System.out.println("Ame No Uzume uses Zephyr on Archangel");
                                 break;
                             case 1:
                                 textHistory.add("Ame No Uzume uses Zephyr on Jack Frost");
-                                System.out.println("Ame No Uzume uses Zephyr on Jack Frost");
                                 break;
                             case 2:
                                 textHistory.add("Ame No Uzume uses Zephyr on Legion");
-                                System.out.println("Ame No Uzume uses Zephyr on Legion");
                                 break;
                             case 3:
                                 textHistory.add("Ame No Uzume uses Zephyr on Principality");
-                                System.out.println("Ame No Uzume uses Zephyr on Principality");
                                 break;
                         }
                         spAllyOne -= 9;
                         break;
                     case 1: // monsoon
                         textHistory.add("Ame No Uzume uses Monsoon on every enemy");
-                        System.out.println("Ame No Uzume uses Monsoon on every enemy");
                         spAllyOne -= 21;
                         break;
                     case 2: // redemption
@@ -655,26 +537,21 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Cendrillon uses Aqua Prison on Archangel");
-                                System.out.println("Cendrillon uses Aqua Prison on Archangel");
                                 break;
                             case 1:
                                 textHistory.add("Cendrillon uses Aqua Prison on Jack Frost");
-                                System.out.println("Cendrillon uses Aqua Prison on Jack Frost");
                                 break;
                             case 2:
                                 textHistory.add("Cendrillon uses Aqua Prison on Legion");
-                                System.out.println("Cendrillon uses Aqua Prison on Legion");
                                     break;
                             case 3:
                                 textHistory.add("Cendrillon uses Aqua Prison on Principality");
-                                System.out.println("Cendrillon uses Aqua Prison on Principality");
                                 break;
                         }
                         spAllyTwo -= 9;
                         break;
                     case 1: // surging tide
                         textHistory.add("Cendrillon uses Surging Tide on every enemy");
-                        System.out.println("Cendrillon uses Surging Tide on every enemy");
                         spAllyTwo -= 21;
                         break;
                     case 2: // ability 3
@@ -691,45 +568,36 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Orpheus uses Lunar Rush on Archangel");
-                                System.out.println("Orpheus uses Lunar Rush on Archangel");
                                 break;
                             case 1:
                                 textHistory.add("Orpheus uses Lunar Rush on Jack Frost");
-                                System.out.println("Orpheus uses Lunar Rush on Jack Frost");
                                 break;
                             case 2:
                                 textHistory.add("Orpheus uses Lunar Rush on Legion");
-                                System.out.println("Orpheus uses Lunar Rush on Legion");
                                 break;
                             case 3:
                                 textHistory.add("Orpheus uses Lunar Rush on Principality");
-                                System.out.println("Orpheus uses Lunar Rush on Principality");
                                 break;
                         }
                         spAllyThree -= 9;
                         break;
                     case 1: // moon fall
                         textHistory.add("Orpheus uses Moonfall on every enemy");
-                        System.out.println("Orpheus uses Moonfall on every enemy");
                         spAllyThree -= 21;
                         break;
                     case 2: // shattering strike
                         switch (enemy){
                             case 0:
                                 textHistory.add("Orpheus uses Shattering Strike on Archangel");
-                                System.out.println("Orpheus uses Shattering Strike on Archangel");
                                 break;
                             case 1:
                                 textHistory.add("Orpheus uses Shattering Strike on Jack Frost");
-                                System.out.println("Orpheus uses Shattering Strike on Jack Frost");
                                 break;
                             case 2:
                                 textHistory.add("Orpheus uses Shattering Strike on Legion");
-                                System.out.println("Orpheus uses Shattering Strike on Legion");
                                 break;
                             case 3:
                                 textHistory.add("Orpheus uses Shattering Strike on Principality");
-                                System.out.println("Orpheus uses Shattering Strike on Principality");
                                 break;
                         }
                         spAllyThree -= 9;
@@ -746,45 +614,36 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Robin Hood uses Zenith Blade on Archangel");
-                                System.out.println("Robin Hood uses Zenith Blade on Archangel");
                                 break;
                             case 1:
                                 textHistory.add("Robin Hood uses Zenith Blade on Jack Frost");
-                                System.out.println("Robin Hood uses Zenith Blade on Jack Frost");
                                 break;
                             case 2:
                                 textHistory.add("Robin Hood uses Zenith Blade on Legion");
-                                System.out.println("Robin Hood uses Zenith Blade on Legion");
                                 break;
                             case 3:
                                 textHistory.add("Robin Hood uses Zenith Blade on Principality");
-                                System.out.println("Robin Hood uses Zenith Blade on Principality");
                                 break;
                         }
                         spAllyFour -= 9;
                         break;
                     case 1:  // solar flare
                         textHistory.add("Robin Hood uses Solar Flare on every enemy");
-                        System.out.println("Robin Hood uses Solar Flare on every enemy");
                         spAllyFour -= 21;
                         break;
                     case 2: // 
                         switch (enemy){
                             case 0:
                                 textHistory.add("Robin Hood uses Sear on Archangel");
-                                System.out.println("Robin Hood uses Sear on Archangel");
                                 break;
                             case 1:
                                 textHistory.add("Robin Hood uses Sear on Jack Frost");
-                                System.out.println("Robin Hood uses Sear on Jack Frost");
                                 break;
                             case 2:
                                 textHistory.add("Robin Hood uses Sear on Legion");
-                                System.out.println("Robin Hood uses Sear on Legion");
                                 break;
                             case 3:
                                 textHistory.add("Robin Hood uses Sear on Principality");
-                                System.out.println("Robin Hood uses Sear on Principality");
                                 break;
                         }
                         spAllyFour -= 9;
@@ -805,19 +664,15 @@ public class Game
                 switch (ally){
                     case 0:
                         textHistory.add("Ame No Uzume uses redemption on Ame No Uzume");
-                        System.out.println("Ame No Uzume uses redemption on Ame No Uzume");
                         break;
                     case 1:
                         textHistory.add("Ame No Uzume uses redemption on Cendrillon");
-                        System.out.println("Ame No Uzume uses redemption on Cendrillon");
                         break;
                     case 2:
                         textHistory.add("Ame No Uzume uses redemption on Orpheus");
-                        System.out.println("Ame No Uzume uses redemption on Orpheus");
                         break;
                     case 3:
                         textHistory.add("Ame No Uzume uses redemption on Robin Hood");
-                        System.out.println("Ame No Uzume uses redemption on Robin Hood");
                         break;
                 }
                 spAllyOne -= 8;
@@ -832,19 +687,15 @@ public class Game
                 switch (ally){
                     case 0:
                         textHistory.add("Ame No Uzume uses guardian angel on Ame No Uzume");
-                        System.out.println("Ame No Uzume uses guardian angel on Ame No Uzume");
                         break;
                     case 1:
                         textHistory.add("Ame No Uzume uses guardian angel on Cendrillon");
-                        System.out.println("Ame No Uzume uses guardian angel on Cendrillon");
                         break;
                     case 2:
                         textHistory.add("Ame No Uzume uses guardian angel on Orpheus");
-                        System.out.println("Ame No Uzume uses guardian angel on Orpheus");
                         break;
                     case 3:
                         textHistory.add("Ame No Uzume uses guardian angel on Robin Hood");
-                        System.out.println("Ame No Uzume uses guardian angel on Robin Hood");
                         break;
                 }
                 spAllyOne -= 22;
@@ -873,22 +724,18 @@ public class Game
                         switch (ally){
                             case 0: // boost ame
                                 textHistory.add("Robin Hood boosts Attack of Ame No Uzume");
-                                System.out.println("Robin Hood boosts Attack of Ame No Uzume");
                                 allyOneStats[0] = 2; // multiplying total damage by 2 means more damage, which means higher attack
                                 break;
                             case 1: // boost cendrillon
                                 textHistory.add("Robin Hood boosts Attack of Cendrillon");
-                                System.out.println("Robin Hood boosts Attack of Cendrillon");
                                 allyTwoStats[0] = 2;
                                 break;
                             case 2: // boost orpheus
                                 textHistory.add("Robin Hood boosts Attack of Orpheus");
-                                System.out.println("Robin Hood boosts Attack of Orpheus");
                                 allyThreeStats[0] = 2;
                                 break;
                             case 3: // boost robin hood
                                 textHistory.add("Robin Hood boosts Attack of Robin Hood");
-                                System.out.println("Robin Hood boosts Attack of Robin Hood");
                                 allyFourStats[0] = 2;
                                 break;
                         }
@@ -910,22 +757,18 @@ public class Game
                         switch (ally){
                             case 0: // boost ame
                                 textHistory.add("Orpheus boosts Defense of Ame No Uzume");
-                                System.out.println("Orpheus boosts Defense of Ame No Uzume");
                                 allyOneStats[1] = 0.5; // multiplying total damage by 0.5 means less damage, which means higher defense
                                 break;
                             case 1: // boost cendrillon
                                 textHistory.add("Orpheus boosts Defense of Cendrillon");
-                                System.out.println("Orpheus boosts Defense of Cendrillon");
                                 allyTwoStats[1] = 0.5;
                                 break;
                             case 2: // boost orpheus
                                 textHistory.add("Orpheus boosts Defense of Orpheus");
-                                System.out.println("Orpheus boosts Defense of Orpheus");
                                 allyThreeStats[1] = 0.5;
                                 break;
                             case 3: // boost robin hood
                                 textHistory.add("Orpheus boosts Defense of Robin Hood");
-                                System.out.println("Orpheus boosts Defense of Robin Hood");
                                 allyFourStats[1] = 0.5;
                                 break;
                         }
@@ -947,22 +790,18 @@ public class Game
                         switch (ally){
                             case 0: // boost ame
                                 textHistory.add("Cendrillon boosts Agility of Ame No Uzume");
-                                System.out.println("Cendrillon boosts Agility of Ame No Uzume");
                                 allyOneStats[2] = 2;
                                 break;
                             case 1: // boost cendrillon
                                 textHistory.add("Cendrillon boosts Agility of Cendrillon");
-                                System.out.println("Cendrillon boosts Agility of Cendrillon");
                                 allyTwoStats[2] = 2;
                                 break;
                             case 2: // boost orpheus
                                 textHistory.add("Cendrillon boosts Agility of Orpheus");
-                                System.out.println("Cendrillon boosts Agility of Orpheus");
                                 allyThreeStats[2] = 2;
                                 break;
                             case 3: // boost robin hood
                                 textHistory.add("Cendrillon boosts Agility of Robin Hood");
-                                System.out.println("Cendrillon boosts Agility of Robin Hood");
                                 allyFourStats[2] = 2;
                                 break;
                         }
@@ -987,7 +826,6 @@ public class Game
             case 0:
                 if (affinitiesKnown[0] == 0){ // if we dont know the affinities
                     textHistory.add("Oracle Lens Used. Affinities for Enemy One revealed.");
-                    System.out.println("Oracle Lens Used. Affinities for Enemy One revealed.");
                     affinitiesKnown[0] = 1;
                     goNext();
                 } else {
@@ -997,7 +835,6 @@ public class Game
             case 1:
                 if (affinitiesKnown[1] == 0){ // if we dont know the affinities
                     textHistory.add("Oracle Lens Used. Affinities for Enemy Two revealed.");
-                    System.out.println("Oracle Lens Used. Affinities for Enemy Two revealed.");
                     affinitiesKnown[1] = 1;
                     goNext();
                 } else {
@@ -1007,7 +844,6 @@ public class Game
             case 2:
                 if (affinitiesKnown[2] == 0){ // if we dont know the affinities
                     textHistory.add("Oracle Lens Used. Affinities for Enemy Three revealed.");
-                    System.out.println("Oracle Lens Used. Affinities for Enemy Three revealed.");
                     affinitiesKnown[2] = 1;
                     goNext();
                 } else {
@@ -1017,7 +853,6 @@ public class Game
             case 3:
                 if (affinitiesKnown[3] == 0){ // if we dont know the affinities
                     textHistory.add("Oracle Lens Used. Affinities for Enemy Four revealed.");
-                    System.out.println("Oracle Lens Used. Affinities for Enemy Four revealed.");
                     affinitiesKnown[3] = 1;
                     goNext();
                 } else {
@@ -1027,8 +862,82 @@ public class Game
         }
     }
     
-    public void goNext(){
-        // the script that decides whos turn is next, and basically advances the game
+    void everfrost(int ally){
+        switch (ally){
+            case 0:
+                if (spAllyOne == spMaxAllyOne){
+                    System.out.println("This ally already has max SP");
+                } else {
+                    spAllyOne += 30;
+                    if (spAllyOne > spMaxAllyOne){
+                        spAllyOne = spMaxAllyOne;
+                    }
+                    textHistory.add("Restored 30 SP to Ally One");
+                    goNext();
+                }
+                break;
+            case 1:
+                if (spAllyTwo == spMaxAllyTwo){
+                    System.out.println("This Ally already has max SP");
+                } else {
+                    spAllyTwo += 30;
+                    if (spAllyTwo > spMaxAllyTwo){
+                        spAllyTwo = spMaxAllyTwo;
+                    }
+                    textHistory.add("Restored 30 SP to Ally Two");
+                    goNext();
+                }
+                break;
+            case 2:
+                if (spAllyThree == spMaxAllyThree){
+                    System.out.println("This Ally already has max SP");
+                } else {
+                    spAllyThree += 30;
+                    if (spAllyThree > spMaxAllyThree){
+                        spAllyThree = spMaxAllyThree;
+                    }
+                    textHistory.add("Restored 30 SP to Ally Three");
+                    goNext();
+                }
+                break;
+            case 3:
+                if (spAllyFour == spMaxAllyFour){
+                    System.out.println("This ally already has max SP");
+                } else {
+                    spAllyFour += 30;
+                    if (spAllyFour > spMaxAllyFour){
+                        spAllyFour = spMaxAllyFour;
+                    }
+                    textHistory.add("Restored 30 SP to Ally Four");
+                    goNext();
+                }
+                break;
+        }
+    }
+    
+    void lightningCrash(int enemy){
+        switch (enemy){
+            case 0:
+                enemyOneStats[3] = 1;
+                textHistory.add("Applied shock to enemy One");
+                break;
+            case 1:
+                enemyTwoStats[3] = 1;
+                textHistory.add("Applied shock to enemy Two");
+                break;
+            case 2:
+                enemyThreeStats[3] = 1;
+                textHistory.add("Applied shock to enemy Three");
+                break;
+            case 3:
+                enemyFourStats[3] = 1;
+                textHistory.add("Applied shock to enemy Four");
+                break;
+        }
+        goNext();
+    }
+    
+    public void goNext(){ // the script that decides whos turn is next, and basically advances the game
         if (currentCharacter < 3 && turn == 0){
             currentCharacter++;
             page = 0;
@@ -1055,20 +964,17 @@ public class Game
         } else {
             enemyInjured = false;
         }
-        
         if (hpAllyOne < hpMaxAllyOne || hpAllyTwo < hpMaxAllyTwo || hpAllyThree < hpMaxAllyThree || hpAllyFour < hpMaxAllyFour){
             allyInjured = true;
         } else {
             allyInjured = false;
         }
-        
-        if (hpEnemyOne == 0 || hpEnemyTwo == 0 || hpEnemyThree == 0 || hpEnemyFour == 0){
+        if (hpEnemyOne <= 0 || hpEnemyTwo <= 0 || hpEnemyThree <= 0 || hpEnemyFour <= 0){
             enemyDead = true;
         } else {
             enemyDead = false;
         }
-        
-        if (hpAllyOne == 0 || hpAllyTwo == 0 || hpAllyThree == 0 || hpAllyFour == 0){
+        if (hpAllyOne <= 0 || hpAllyTwo <= 0 || hpAllyThree <= 0 || hpAllyFour <= 0){
             allyDead = true;
         } else {
             allyDead = false;
