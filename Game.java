@@ -820,12 +820,539 @@ public class Game
                 }
                 break;
             case 1: // enemies turn
+                switch (currentCharacter){
+                    case 0: // archangel
+                        switch (receiver){
+                            case 0: // if enemy one was the target
+                                switch (allyOneAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyOneStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyOneStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyOneStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 1: // if enemy two was the target
+                                switch (allyTwoAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyOneStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyOneStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyOneStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 2: // if three two was the target
+                                switch (allyThreeAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyOneStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyOneStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyOneStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 3: // if enemy four was the target
+                                switch (allyFourAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyOneStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyOneStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyOneStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case 1: // jack frost
+                        switch (receiver){
+                            case 0: // if enemy one was the target
+                                switch (allyOneAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyTwoStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyTwoStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyTwoStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 1: // if enemy two was the target
+                                switch (allyTwoAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyTwoStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyTwoStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyTwoStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 2: // if three two was the target
+                                switch (allyThreeAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyTwoStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyTwoStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyTwoStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 3: // if enemy four was the target
+                                switch (allyFourAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyTwoStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyTwoStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyTwoStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case 2: // legion
+                        switch (receiver){
+                            case 0: // if enemy one was the target
+                                switch (allyOneAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyThreeStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyThreeStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyThreeStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 1: // if enemy two was the target
+                                switch (allyTwoAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyThreeStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyThreeStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyThreeStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 2: // if three two was the target
+                                switch (allyThreeAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyThreeStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyThreeStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyThreeStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 3: // if enemy four was the target
+                                switch (enemyFourAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyThreeStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyThreeStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyThreeStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case 3: // principality
+                        switch (receiver){
+                            case 0: // if enemy one was the target
+                                switch (allyOneAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyFourStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyFourStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyOneStats[1] * allyFourStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 1: // if enemy two was the target
+                                switch (allyTwoAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyFourStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyFourStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyTwoStats[1] * allyFourStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 2: // if three two was the target
+                                switch (allyThreeAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyFourStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyFourStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyThreeStats[1] * allyFourStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 3: // if enemy four was the target
+                                switch (allyFourAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyFourStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyFourStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * allyFourStats[1] * allyFourStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpAlly[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                }
                 break;
         }
     }
     
-    void calculateHealing(int caster, int reciever){
-        
+    void calculateHealing(int reciever, String recieverName, int amount){
+        switch (turn){
+            case 0: // allies turn
+                switch (currentCharacter){
+                    case 0:
+                        switch (reciever){ // whos recieving the heal
+                            case 0:
+                                if ((hpMaxAlly[reciever] - hpAlly[reciever]) < amount){ // if difference between hp and max hp is less than the amount healing for
+                                    amount = hpMaxAlly[reciever] - hpAlly[reciever];
+                                }
+                                hpAlly[reciever] += amount;
+                                textHistory.add(recieverName + " was healed for " + amount);
+                                break;
+                            case 1:
+                                if ((hpMaxAlly[reciever] - hpAlly[reciever]) < amount){ // if difference between hp and max hp is less than the amount healing for
+                                    amount = hpMaxAlly[reciever] - hpAlly[reciever];
+                                }
+                                hpAlly[reciever] += amount;
+                                textHistory.add(recieverName + " was healed for " + amount);
+                                break;
+                            case 2:
+                                if ((hpMaxAlly[reciever] - hpAlly[reciever]) < amount){ // if difference between hp and max hp is less than the amount healing for
+                                    amount = hpMaxAlly[reciever] - hpAlly[reciever];
+                                }
+                                hpAlly[reciever] += amount;
+                                textHistory.add(recieverName + " was healed for " + amount);
+                                break;
+                            case 3:
+                                if ((hpMaxAlly[reciever] - hpAlly[reciever]) < amount){ // if difference between hp and max hp is less than the amount healing for
+                                    amount = hpMaxAlly[reciever] - hpAlly[reciever];
+                                }
+                                hpAlly[reciever] += amount;
+                                textHistory.add(recieverName + " was healed for " + amount);
+                                break;
+                        }
+                        break;
+                    case 1: // this character cannot heal, this should never be in effect
+                        System.out.println("If you get here youve done something wrong");
+                        break;  
+                    case 2: // this character cannot heal, this should never be in effect
+                        System.out.println("If you get here youve done something wrong");
+                        break;
+                    case 3: // this character cannot heal, this should never be in effect
+                        System.out.println("If you get here youve done something wrong");
+                        break;
+                }
+                break;
+        }
     }
     
     public void move(int moveNew){ // you start here, from main menu page = 0. decisions will move you to next methods
@@ -1108,15 +1635,19 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("archangel targets ally one with a magic attack of affinity " + affinity);
+                                calculateDamage(0, "Ame No Uzume", affinity, 75, affinityRNG);
                                 break;
                             case 1:
                                 textHistory.add("jack frost targets ally one with a magic attack of affinity " + affinity);
+                                calculateDamage(0, "Ame No Uzume", affinity, 75, affinityRNG);
                                 break;
                             case 2:
                                 textHistory.add("legion targets ally one with a magic attack of affinity " + affinity);
+                                calculateDamage(0, "Ame No Uzume", affinity, 75, affinityRNG);
                                 break;
                             case 3:
                                 textHistory.add("principality targets ally one with a magic attack of affinity " + affinity);
+                                calculateDamage(0, "Ame No Uzume", affinity, 75, affinityRNG);
                                 break;
                         }
                         break;
@@ -1124,15 +1655,19 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("archangel targets ally two with a magic attack of affinity " + affinity);
+                                calculateDamage(1, "Cendrillon", affinity, 75, affinityRNG);
                                 break;
                             case 1:
                                 textHistory.add("jack frost targets ally two with a magic attack of affinity " + affinity);
+                                calculateDamage(1, "Cendrillon", affinity, 75, affinityRNG);
                                 break;
                             case 2:
                                 textHistory.add("legion targets ally two with a magic attack of affinity " + affinity);
+                                calculateDamage(1, "Cendrillon", affinity, 75, affinityRNG);
                                 break;
                             case 3:
                                 textHistory.add("principality targets ally two with a magic attack of affinity " + affinity);
+                                calculateDamage(1, "Cendrillon", affinity, 75, affinityRNG);
                                 break;
                         }
                         break;
@@ -1140,15 +1675,19 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("archangel targets ally three with a magic attack of affinity " + affinity);
+                                calculateDamage(2, "Orpheus", affinity, 75, affinityRNG);
                                 break;
                             case 1:
                                 textHistory.add("jack frost targets ally three with a magic attack of affinity " + affinity);
+                                calculateDamage(2, "Orpheus", affinity, 75, affinityRNG);
                                 break;
                             case 2:
                                 textHistory.add("legion targets ally three with a magic attack of affinity " + affinity);
+                                calculateDamage(2, "Orpheus", affinity, 75, affinityRNG);
                                 break;
                             case 3:
                                 textHistory.add("principality targets ally three with a magic attack of affinity " + affinity);
+                                calculateDamage(2, "Orpheus", affinity, 75, affinityRNG);
                                 break;
                         }
                         break;
@@ -1156,15 +1695,19 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("archangel targets ally four with a magic attack of affinity " + affinity);
+                                calculateDamage(3, "Robin Hood", affinity, 75, affinityRNG);
                                 break;
                             case 1:
                                 textHistory.add("jack frost targets ally four with a magic attack of affinity " + affinity);
+                                calculateDamage(3, "Robin Hood", affinity, 75, affinityRNG);
                                 break;
                             case 2:
                                 textHistory.add("legion targets ally four with a magic attack of affinity " + affinity);
+                                calculateDamage(3, "Robin Hood", affinity, 75, affinityRNG);
                                 break;
                             case 3:
                                 textHistory.add("principality targets ally four with a magic attack of affinity " + affinity);
+                                calculateDamage(3, "Robin Hood", affinity, 75, affinityRNG);
                                 break;
                         }
                         break;
@@ -1176,64 +1719,80 @@ public class Game
                     case 0:
                         switch (enemy){
                             case 0:
-                                textHistory.add("archangel targets ally one with a physical attack");
+                                textHistory.add("archangel targets ally one with a basic attack");
+                                calculateDamage(0, "Ame No Uzume", "Physical", 55, 6);
                                 break;
                             case 1:
-                                textHistory.add("jack frost targets ally one with a physical attack");
+                                textHistory.add("jack frost targets ally one with a basic attack");
+                                calculateDamage(0, "Ame No Uzume", "Physical", 55, 6);
                                 break;
                             case 2:
-                                textHistory.add("legion targets ally one with a physical attack");
+                                textHistory.add("legion targets ally one with a basic attack");
+                                calculateDamage(0, "Ame No Uzume", "Physical", 55, 6);
                                 break;
                             case 3:
-                                textHistory.add("principality targets ally one with a physical attack");
+                                textHistory.add("principality targets ally one with a basic attack");
+                                calculateDamage(0, "Ame No Uzume", "Physical", 55, 6);
                                 break;
                         }
                         break;
                     case 1:
                         switch (enemy){
                             case 0:
-                                textHistory.add("archangel targets ally two with a physical attack");
+                                textHistory.add("archangel targets ally two with a basic attack");
+                                calculateDamage(1, "Cendrillon", "Physical", 55, 6);
                                 break;
                             case 1:
-                                textHistory.add("jack frost targets ally two with a physical attack");
+                                textHistory.add("jack frost targets ally two with a basic attack");
+                                calculateDamage(1, "Cendrillon", "Physical", 55, 6);
                                 break;
                             case 2:
-                                textHistory.add("legion targets ally two with a physical attack");
+                                textHistory.add("legion targets ally two with a basic attack");
+                                calculateDamage(1, "Cendrillon", "Physical", 55, 6);
                                 break;
                             case 3:
-                                textHistory.add("principality targets ally two with a physical attack");
+                                textHistory.add("principality targets ally two with a basic attack");
+                                calculateDamage(1, "Cendrillon", "Physical", 55, 6);
                                 break;
                         }
                         break;
                     case 2:
                         switch (enemy){
                             case 0:
-                                textHistory.add("archangel targets ally three with a physical attack");
+                                textHistory.add("archangel targets ally three with a basic attack");
+                                calculateDamage(2, "Orpheus", "Physical", 55, 6);
                                 break;
                             case 1:
-                                textHistory.add("jack frost targets ally three with a physical attack");
+                                textHistory.add("jack frost targets ally three with a basic attack");
+                                calculateDamage(2, "Orpheus", "Physical", 55, 6);
                                 break;
                             case 2:
-                                textHistory.add("legion targets ally three with a physical attack");
+                                textHistory.add("legion targets ally three with a basic attack");
+                                calculateDamage(2, "Orpheus", "Physical", 55, 6);
                                 break;
                             case 3:
-                                textHistory.add("principality targets ally three with a physical attack");
+                                textHistory.add("principality targets ally three with a basic attack");
+                                calculateDamage(2, "Orpheus", "Physical", 55, 6);
                                 break;
                         }
                         break;
                     case 3:
                         switch (enemy){
                             case 0:
-                                textHistory.add("archangel targets ally four with a physical attack");
+                                textHistory.add("archangel targets ally four with a basic attack");
+                                calculateDamage(3, "Robin Hood", "Physical", 55, 6);
                                 break;
                             case 1:
-                                textHistory.add("jack frost targets ally four with a physical attack");
+                                textHistory.add("jack frost targets ally four with a basic attack");
+                                calculateDamage(3, "Robin Hood", "Physical", 55, 6);
                                 break;
                             case 2:
-                                textHistory.add("legion targets ally four with a physical attack");
+                                textHistory.add("legion targets ally four with a basic attack");
+                                calculateDamage(3, "Robin Hood", "Physical", 55, 6);
                                 break;
                             case 3:
-                                textHistory.add("principality targets ally four with a physical attack");
+                                textHistory.add("principality targets ally four with a basic attack");
+                                calculateDamage(3, "Robin Hood", "Physical", 55, 6);
                                 break;
                         }
                         break;
@@ -2206,15 +2765,19 @@ public class Game
                 switch (ally){
                     case 0:
                         textHistory.add("Ame No Uzume uses redemption on Ame No Uzume");
+                        calculateHealing(0, "Ame No Uzume", 80);
                         break;
                     case 1:
                         textHistory.add("Ame No Uzume uses redemption on Cendrillon");
+                        calculateHealing(1, "Cendrillon", 80);
                         break;
                     case 2:
                         textHistory.add("Ame No Uzume uses redemption on Orpheus");
+                        calculateHealing(2, "Orpheus", 0);
                         break;
                     case 3:
                         textHistory.add("Ame No Uzume uses redemption on Robin Hood");
+                        calculateHealing(3, "Robin Hood", 80);
                         break;
                 }
                 spAlly[0] -= 8;
