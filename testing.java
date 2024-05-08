@@ -17,18 +17,16 @@ public class testing
     */
     public testing()
     {
-        int a = rng.nextInt(10);
-        System.out.println(a);
-        for (int b = 0; b < 100; b++){
-            a = rng.nextInt(10);
-            System.out.println(a);
-        }
-        if (a > 6){
-            System.out.println("true");
-        } else {
-            System.out.println("False");
-        }
+        double a = 100 * 1.6 * 0.6 * 1;
+        int b = (int)Math.round(a);
+        System.out.println(b);
         /*
+        System.out.println(a);
+        while (true){
+            int b = rng.nextInt(a);
+            System.out.println(b);
+        }
+        
         while (!can){
             if (weak != resist && weak != nullify && resist != nullify){
                 can = true;

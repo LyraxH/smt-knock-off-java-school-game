@@ -22,36 +22,24 @@ public class Game
     ArrayList<String> textHistory = new ArrayList<String>();
     
     // varialbes for characters
-    int hpAllyOne;
-    int hpAllyTwo;
-    int hpAllyThree;
-    int hpAllyFour;
-    int hpMaxAllyOne = 500;
-    int hpMaxAllyTwo = 500;
-    int hpMaxAllyThree = 500;
-    int hpMaxAllyFour = 500;
+    int hpMaxAlly[] = new int[]{500,500,500,500};
+    int hpAlly[] = new int[]{hpMaxAlly[0],hpMaxAlly[1],hpMaxAlly[2],hpMaxAlly[3]};
     boolean allyInjured = false;
     boolean allyDead = false;
     
-    int spAllyOne;
-    int spAllyTwo;
-    int spAllyThree;
-    int spAllyFour;
-    int spMaxAllyOne = 150;
-    int spMaxAllyTwo = 150;
-    int spMaxAllyThree = 150;
-    int spMaxAllyFour = 150;
+    int spMaxAlly[] = new int[]{150,150,150,150};
+    int spAlly[] = new int[]{spMaxAlly[0],spMaxAlly[1],spMaxAlly[2],spMaxAlly[3]};
     
     // first number = attack status, second = defense status, third = accuracy/evasion status. fourth = shock
-    double allyOneStats[] = new double[]{0,0,0};
-    double allyTwoStats[] = new double[]{0,0,0};
-    double allyThreeStats[] = new double[]{0,0,0};
-    double allyFourStats[] = new double[]{0,0,0};
+    double allyOneStats[] = new double[]{1,1,0};
+    double allyTwoStats[] = new double[]{1,1,0};
+    double allyThreeStats[] = new double[]{1,1,0};
+    double allyFourStats[] = new double[]{1,1,0};
     int concentrate[] = new int[]{0,0,0,0}; // 1 means that characters attack next turn will do more than double damage
-    double enemyOneStats[] = new double[]{0,0,0,0};
-    double enemyTwoStats[] = new double[]{0,0,0,0};
-    double enemyThreeStats[] = new double[]{0,0,0,0};
-    double enemyFourStats [] = new double[]{0,0,0,0};
+    double enemyOneStats[] = new double[]{1,1,1,0};
+    double enemyTwoStats[] = new double[]{1,1,1,0};
+    double enemyThreeStats[] = new double[]{1,1,1,0};
+    double enemyFourStats [] = new double[]{1,1,1,0};
     // 0 = normal, 1 = weak, 2 = null, 3 = resist, 4 = unknown
     int allyOneAffinity[] = new int[]{1,0,2,3,0,0,0};
     int allyTwoAffinity[] = new int[]{0,2,3,1,0,0,0};
@@ -61,16 +49,12 @@ public class Game
     int enemyTwoAffinity[] = new int[]{0,0,0,0,0,0,0};
     int enemyThreeAffinity[] = new int[]{0,0,0,0,0,0,0};
     int enemyFourAffinity[] = new int[]{0,0,0,0,0,0,0};
+    String affinity = "o";
+    int affinityRNG = 4;
     int affinitiesKnown[] = new int[]{0,0,0,0}; // 1 unknown affinities, 1 = known affinities.
     
-    int hpEnemyOne;
-    int hpEnemyTwo;
-    int hpEnemyThree;
-    int hpEnemyFour;
-    int hpMaxEnemyOne;
-    int hpMaxEnemyTwo;
-    int hpMaxEnemyThree;
-    int hpMaxEnemyFour;
+    int hpMaxEnemy[] = new int[]{800,800,800,800};
+    int hpEnemy[] = new int[]{hpMaxEnemy[0],hpMaxEnemy[1],hpMaxEnemy[2],hpMaxEnemy[3]};
     boolean enemyInjured;
     int enemyInjuredWho[] = new int[]{0,0,0,0};
     boolean enemyDead;
@@ -79,6 +63,8 @@ public class Game
     int difficulty;
     double damageMultiplier;
     double damageTakenMultiplier;
+    public int battleDamage = 0;
+    double preBattleDamage = 420.69;
 
     public void Start(){
         initializeAffinities();
@@ -87,6 +73,759 @@ public class Game
         textHistory.add("made by taison");
         textHistory.add("xdd");
         setDifficulty(1);
+    }
+    
+    void calculateDamage(int receiver, String receiverName, String toAffinity, int baseDamage, int moveAffinity){
+        preBattleDamage = 0;
+        battleDamage = 0;
+        switch (turn){
+            case 0: // allies turn
+                switch (currentCharacter){
+                    case 0: // ame no uzume
+                        switch (receiver){
+                            case 0: // if enemy one was the target
+                                switch (enemyOneAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyOneStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyOneStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyOneStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 1: // if enemy two was the target
+                                switch (enemyTwoAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyOneStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyOneStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyOneStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 2: // if three two was the target
+                                switch (enemyThreeAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyOneStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyOneStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyOneStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 3: // if enemy four was the target
+                                switch (enemyFourAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyOneStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyOneStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyOneStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[0] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[0] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case 1: // cendrillon
+                        switch (receiver){
+                            case 0: // if enemy one was the target
+                                switch (enemyOneAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyTwoStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyTwoStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyTwoStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 1: // if enemy two was the target
+                                switch (enemyTwoAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyTwoStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyTwoStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyTwoStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 2: // if three two was the target
+                                switch (enemyThreeAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyTwoStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyTwoStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyTwoStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 3: // if enemy four was the target
+                                switch (enemyFourAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyTwoStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyTwoStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyTwoStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[1] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[1] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case 2: // orpheus
+                        switch (receiver){
+                            case 0: // if enemy one was the target
+                                switch (enemyOneAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyThreeStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyThreeStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyThreeStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 1: // if enemy two was the target
+                                switch (enemyTwoAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyThreeStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyThreeStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyThreeStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 2: // if three two was the target
+                                switch (enemyThreeAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyThreeStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyThreeStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyThreeStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 3: // if enemy four was the target
+                                switch (enemyFourAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyThreeStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyThreeStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyThreeStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[2] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[2] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case 3: //robin hood
+                        switch (receiver){
+                            case 0: // if enemy one was the target
+                                switch (enemyOneAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyFourStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyFourStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyOneStats[1] * allyFourStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 1: // if enemy two was the target
+                                switch (enemyTwoAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyFourStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyFourStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyTwoStats[1] * allyFourStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 2: // if three two was the target
+                                switch (enemyThreeAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyFourStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyFourStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyThreeStats[1] * allyFourStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                            case 3: // if enemy four was the target
+                                switch (enemyFourAffinity[moveAffinity]){
+                                    case 0: // if normal move hit
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyFourStats[0] * damageMultiplier;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 1: // if weak
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyFourStats[0] * damageMultiplier * 1.45;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * weakness multiplier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 2: // if null
+                                        preBattleDamage = 0;
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // LOLOLOL IMAGINE THROWING YOUR CONCENTRATED ATTACK INTO A NULL LOLOLOLOL
+                                        }
+                                        textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                    case 3: // if resist
+                                        preBattleDamage = baseDamage * enemyFourStats[1] * allyFourStats[0] * damageMultiplier * 0.69;
+                                        // damage = base * enemy defense * ally attack * difficulty damage multiploier * resist multiplier
+                                        if (concentrate[3] == 1){ // if concentrated
+                                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
+                                            concentrate[3] = 0; // reset the concentrate so you cant use it twice in a row
+                                        }
+                                        battleDamage = (int)Math.round(preBattleDamage);
+                                        hpEnemy[receiver] -= battleDamage;
+                                        textHistory.add(receiverName + " is resists " + toAffinity + ", and takes " + battleDamage + " damage.");
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case 1: // enemies turn
+                break;
+        }
+    }
+    
+    void calculateHealing(int caster, int reciever){
+        
     }
     
     public void move(int moveNew){ // you start here, from main menu page = 0. decisions will move you to next methods
@@ -199,7 +938,115 @@ public class Game
                         if (skip){
                             textHistory.add("Archangel is shocked and cannot move");
                         } else {
-                            enemyTurn(0);
+                            if (enemyInjured){ // if "ally" (enemy) injured
+                                int decision = rng.nextInt(3);
+                                if (decision == 1){ // 33% chance to heal
+                                    enemyHeal("Archangel");
+                                } else { // 66% you just attack anyways
+                                    enemyAttack(0);
+                                }
+                            } else { // other wise if no one is injured just attack
+                                enemyAttack(0);
+                            }
+                        }
+                        break;
+                    case 1:
+                        skip = false;
+                        if (enemyTwoStats[3] == 1){ // if afflicted with shock
+                            int shock = rng.nextInt(10);
+                            if (shock < 7){ // 80% chance you remain shocked
+                                textHistory.add("Jack Frost is still shocked");
+                                shock = rng.nextInt(10);
+                                if (shock < 5){ // 40% chance you can move anyways
+                                    skip = false;
+                                } else { // 60% chance you cannot move
+                                    skip = true;
+                                }
+                            } else { // 20% chance you remove shock
+                                textHistory.add("Jack Frost has recovered from shock");
+                                enemyTwoStats[3] = 0;
+                                skip = false;
+                            }
+                        }
+                        if (skip){
+                            textHistory.add("Jack Frost is shocked and cannot move");
+                        } else {
+                            if (enemyInjured){ // if "ally" (enemy) injured
+                                int decision = rng.nextInt(3);
+                                if (decision == 1){ // 33% chance to heal
+                                    enemyHeal("Jack Frost");
+                                } else { // 66% you just attack anyways
+                                    enemyAttack(1);
+                                }
+                            } else { // other wise if no one is injured just attack
+                                enemyAttack(1);
+                            }
+                        }
+                        break;
+                    case 2:
+                        skip = false;
+                        if (enemyThreeStats[3] == 1){ // if afflicted with shock
+                            int shock = rng.nextInt(10);
+                            if (shock < 7){ // 80% chance you remain shocked
+                                textHistory.add("Legion is still shocked");
+                                shock = rng.nextInt(10);
+                                if (shock < 5){ // 40% chance you can move anyways
+                                    skip = false;
+                                } else { // 60% chance you cannot move
+                                    skip = true;
+                                }
+                            } else { // 20% chance you remove shock
+                                textHistory.add("Legion has recovered from shock");
+                                enemyThreeStats[3] = 0;
+                                skip = false;
+                            }
+                        }
+                        if (skip){
+                            textHistory.add("Legion is shocked and cannot move");
+                        } else {
+                            if (enemyInjured){ // if "ally" (enemy) injured
+                                int decision = rng.nextInt(3);
+                                if (decision == 1){ // 33% chance to heal
+                                    enemyHeal("Legion");
+                                } else { // 66% you just attack anyways
+                                    enemyAttack(2);
+                                }
+                            } else { // other wise if no one is injured just attack
+                                enemyAttack(2);
+                            }
+                        }
+                        break;
+                    case 3:
+                        skip = false;
+                        if (enemyFourStats[3] == 1){ // if afflicted with shock
+                            int shock = rng.nextInt(10);
+                            if (shock < 7){ // 80% chance you remain shocked
+                                textHistory.add("Principality is still shocked");
+                                shock = rng.nextInt(10);
+                                if (shock < 5){ // 40% chance you can move anyways
+                                    skip = false;
+                                } else { // 60% chance you cannot move
+                                    skip = true;
+                                }
+                            } else { // 20% chance you remove shock
+                                textHistory.add("Principality has recovered from shock");
+                                enemyFourStats[3] = 0;
+                                skip = false;
+                            }
+                        }
+                        if (skip){
+                            textHistory.add("Principality is shocked and cannot move");
+                        } else {
+                            if (enemyInjured){ // if "ally" (enemy) injured
+                                int decision = rng.nextInt(3);
+                                if (decision == 1){ // 66% chance to heal
+                                    enemyHeal("Principality");
+                                } else { // 33% you just attack anyways
+                                    enemyAttack(3);
+                                }
+                            } else { // other wise if no one is injured just attack
+                                enemyAttack(3);
+                            }
                         }
                         break;
                 }
@@ -207,22 +1054,655 @@ public class Game
         }
     }
     
-    void enemyTurn(int enemy){
+    void setAffinity(int toAffinity){
+        switch (affinityRNG){
+            case 0:
+                affinity = "Fire";
+                break;
+            case 1:
+                affinity = "Water";
+                break;
+            case 2:
+                affinity = "Air";
+                break;
+            case 3:
+                affinity = "Earth";
+                break;
+            case 4:
+                affinity = "Sun";
+                break;
+            case 5:
+                affinity = "Moon";
+                break;
+        }
+    }
+    
+    void enemyAttack(int enemy){
         int decision = rng.nextInt(4);
-        if (enemyInjured){ // if an "ally"(enemy) is injured
-            if (decision > 1){ // 50% chance to heal
-                
-            } else { // 50% chance to not
-                decision = rng.nextInt(4);
-                switch (decision){
-                    case 0: // 25% chance to buff/debuff
+        affinityRNG = rng.nextInt(6);
+        switch (decision){
+            case 0,1: // magic attack
+                switch (affinityRNG){
+                    case 0:
+                        affinity = "Fire";
                         break;
-                    case 1,2: // 50% chance to magic attack
+                    case 1:
+                        affinity = "Water";
                         break;
-                    case 3: // 25% chance to phys attack
+                    case 2:
+                        affinity = "Air";
+                        break;
+                    case 3:
+                        affinity = "Earth";
+                        break;
+                    case 4:
+                        affinity = "Sun";
+                        break;
+                    case 5:
+                        affinity = "Moon";
                         break;
                 }
-            }
+                decision = rng.nextInt(4);
+                switch (decision){ // which "enemy" (ally) to target
+                    case 0:
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("archangel targets ally one with a magic attack of affinity " + affinity);
+                                break;
+                            case 1:
+                                textHistory.add("jack frost targets ally one with a magic attack of affinity " + affinity);
+                                break;
+                            case 2:
+                                textHistory.add("legion targets ally one with a magic attack of affinity " + affinity);
+                                break;
+                            case 3:
+                                textHistory.add("principality targets ally one with a magic attack of affinity " + affinity);
+                                break;
+                        }
+                        break;
+                    case 1:
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("archangel targets ally two with a magic attack of affinity " + affinity);
+                                break;
+                            case 1:
+                                textHistory.add("jack frost targets ally two with a magic attack of affinity " + affinity);
+                                break;
+                            case 2:
+                                textHistory.add("legion targets ally two with a magic attack of affinity " + affinity);
+                                break;
+                            case 3:
+                                textHistory.add("principality targets ally two with a magic attack of affinity " + affinity);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("archangel targets ally three with a magic attack of affinity " + affinity);
+                                break;
+                            case 1:
+                                textHistory.add("jack frost targets ally three with a magic attack of affinity " + affinity);
+                                break;
+                            case 2:
+                                textHistory.add("legion targets ally three with a magic attack of affinity " + affinity);
+                                break;
+                            case 3:
+                                textHistory.add("principality targets ally three with a magic attack of affinity " + affinity);
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("archangel targets ally four with a magic attack of affinity " + affinity);
+                                break;
+                            case 1:
+                                textHistory.add("jack frost targets ally four with a magic attack of affinity " + affinity);
+                                break;
+                            case 2:
+                                textHistory.add("legion targets ally four with a magic attack of affinity " + affinity);
+                                break;
+                            case 3:
+                                textHistory.add("principality targets ally four with a magic attack of affinity " + affinity);
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case 2: // physical attack
+                decision = rng.nextInt(4);
+                switch (decision){ // which "enemy" (ally) to target
+                    case 0:
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("archangel targets ally one with a physical attack");
+                                break;
+                            case 1:
+                                textHistory.add("jack frost targets ally one with a physical attack");
+                                break;
+                            case 2:
+                                textHistory.add("legion targets ally one with a physical attack");
+                                break;
+                            case 3:
+                                textHistory.add("principality targets ally one with a physical attack");
+                                break;
+                        }
+                        break;
+                    case 1:
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("archangel targets ally two with a physical attack");
+                                break;
+                            case 1:
+                                textHistory.add("jack frost targets ally two with a physical attack");
+                                break;
+                            case 2:
+                                textHistory.add("legion targets ally two with a physical attack");
+                                break;
+                            case 3:
+                                textHistory.add("principality targets ally two with a physical attack");
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("archangel targets ally three with a physical attack");
+                                break;
+                            case 1:
+                                textHistory.add("jack frost targets ally three with a physical attack");
+                                break;
+                            case 2:
+                                textHistory.add("legion targets ally three with a physical attack");
+                                break;
+                            case 3:
+                                textHistory.add("principality targets ally three with a physical attack");
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch (enemy){
+                            case 0:
+                                textHistory.add("archangel targets ally four with a physical attack");
+                                break;
+                            case 1:
+                                textHistory.add("jack frost targets ally four with a physical attack");
+                                break;
+                            case 2:
+                                textHistory.add("legion targets ally four with a physical attack");
+                                break;
+                            case 3:
+                                textHistory.add("principality targets ally four with a physical attack");
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case 3: // buff / debuff
+                decision = rng.nextInt(2);
+                if (decision == 1){ // debuff "enemies" (allies)
+                    decision = rng.nextInt(3);
+                    switch (decision){ // which debuff
+                        case 0: // attack
+                            decision = rng.nextInt(4);
+                            switch (decision){ // which ally to target
+                                case 0: // ally one
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally one with an attack debuff");
+                                            allyOneStats[0] = 0.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally one with an attack debuff");
+                                            allyOneStats[0] = 0.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally one with an attack debuff");
+                                            allyOneStats[0] = 0.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally one with an attack debuff");
+                                            allyOneStats[0] = 0.6;
+                                            break;
+                                    }
+                                    break;
+                                case 1:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally two with an attack debuff");
+                                            allyTwoStats[0] = 0.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally two with an attack debuff");
+                                            allyTwoStats[0] = 0.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally two with an attack debuff");
+                                            allyTwoStats[0] = 0.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally two with an attack debuff");
+                                            allyTwoStats[0] = 0.6;
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally three with an attack debuff");
+                                            allyThreeStats[0] = 0.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally three with an attack debuff");
+                                            allyThreeStats[0] = 0.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally three with an attack debuff");
+                                            allyThreeStats[0] = 0.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally three with an attack debuff");
+                                            allyThreeStats[0] = 0.6;
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally four with an attack debuff");
+                                            allyFourStats[0] = 0.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally four with an attack debuff");
+                                            allyFourStats[0] = 0.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally four with an attack debuff");
+                                            allyFourStats[0] = 0.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally four with an attack debuff");
+                                            allyFourStats[0] = 0.6;
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 1: // defense
+                            decision = rng.nextInt(4);
+                            switch (decision){ // which ally to target
+                                case 0: // ally one
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally one with an defense debuff");
+                                            allyOneStats[1] = 1.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally one with an defense debuff");
+                                            allyOneStats[1] = 1.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally one with an defense debuff");
+                                            allyOneStats[1] = 1.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally one with an defense debuff");
+                                            allyOneStats[1] = 1.6;
+                                            break;
+                                    }
+                                    break;
+                                case 1:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally two with an defense debuff");
+                                            allyTwoStats[1] = 1.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally two with an defense debuff");
+                                            allyTwoStats[1] = 1.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally two with an defense debuff");
+                                            allyTwoStats[1] = 1.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally two with an defense debuff");
+                                            allyTwoStats[1] = 1.6;
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally three with an defense debuff");
+                                            allyThreeStats[1] = 1.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally three with an defense debuff");
+                                            allyThreeStats[1] = 1.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally three with an defense debuff");
+                                            allyThreeStats[1] = 1.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally three with an defense debuff");
+                                            allyThreeStats[1] = 1.6;
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally four with an defense debuff");
+                                            allyFourStats[1] = 1.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally four with an defense debuff");
+                                            allyFourStats[1] = 1.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally four with an defense debuff");
+                                            allyFourStats[1] = 1.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally four with an defense debuff");
+                                            allyFourStats[1] = 1.6;
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 2: // agility
+                            decision = rng.nextInt(4);
+                            switch (decision){ // which ally to target
+                                case 0: // ally one
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally one with an agility debuff");
+                                            allyOneStats[2] = 0.5;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally one with an agility debuff");
+                                            allyOneStats[2] = 0.5;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally one with an agility debuff");
+                                            allyOneStats[2] = 0.5;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally one with an agility debuff");
+                                            allyOneStats[2] = 0.5;
+                                            break;
+                                    }
+                                    break;
+                                case 1:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally two with an agility debuff");
+                                            allyTwoStats[2] = 0.5;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally two with an agility debuff");
+                                            allyTwoStats[2] = 0.5;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally two with an agility debuff");
+                                            allyTwoStats[2] = 0.5;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally two with an agility debuff");
+                                            allyTwoStats[2] = 0.5;
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally three with an agility debuff");
+                                            allyThreeStats[2] = 0.5;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally three with an agility debuff");
+                                            allyThreeStats[2] = 0.5;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally three with an agility debuff");
+                                            allyThreeStats[2] = 0.5;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally three with an agility debuff");
+                                            allyThreeStats[2] = 0.5;
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets ally four with an agility debuff");
+                                            allyFourStats[2] = 0.5;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets ally four with an agility debuff");
+                                            allyFourStats[2] = 0.5;
+                                            break;
+                                        case 2:textHistory.add("Legion targets ally four with an agility debuff");
+                                            allyFourStats[2] = 0.5;
+                                            break;
+                                        case 3:textHistory.add("Principality targets ally four with an agility debuff");
+                                            allyFourStats[0] = 0.5;
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                } else { // buff "allies" (enemies)
+                    decision = rng.nextInt(3);
+                    switch (decision){ // which buff
+                        case 0: // attack
+                            decision = rng.nextInt(4);
+                            switch (decision){ // which enemy to target
+                                case 0: // enemy one
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy one with an attack buff");
+                                            enemyOneStats[0] = 1.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy one with an attack buff");
+                                            enemyOneStats[0] = 1.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy one with an attack buff");
+                                            enemyOneStats[0] = 1.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy one with an attack buff");
+                                            enemyOneStats[0] = 1.6;
+                                            break;
+                                    }
+                                    break;
+                                case 1:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy two with an attack buff");
+                                            enemyTwoStats[0] = 1.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy two with an attack buff");
+                                            enemyTwoStats[0] = 1.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy two with an attack buff");
+                                            enemyTwoStats[0] = 1.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy two with an attack buff");
+                                            enemyTwoStats[0] = 1.6;
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy three with an attack buff");
+                                            enemyThreeStats[0] = 1.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy three with an attack buff");
+                                            enemyThreeStats[0] = 1.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy three with an attack buff");
+                                            enemyThreeStats[0] = 1.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy three with an attack buff");
+                                            enemyThreeStats[0] = 1.6;
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy four with an attack buff");
+                                            enemyFourStats[0] = 1.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy four with an attack buff");
+                                            enemyFourStats[0] = 1.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy four with an attack buff");
+                                            enemyFourStats[0] = 1.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy four with an attack buff");
+                                            enemyFourStats[0] = 1.6;
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 1: // defense
+                            decision = rng.nextInt(4);
+                            switch (decision){ // which enemy to target
+                                case 0: // enemy one
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy one with an defense buff");
+                                            enemyOneStats[1] = 0.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy one with an defense buff");
+                                            enemyOneStats[1] = 0.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy one with an defense buff");
+                                            enemyOneStats[1] = 0.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy one with an defense buff");
+                                            enemyOneStats[1] = 0.6;
+                                            break;
+                                    }
+                                    break;
+                                case 1:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy two with an defense buff");
+                                            enemyTwoStats[1] = 0.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy two with an defense buff");
+                                            enemyTwoStats[1] = 0.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy two with an defense buff");
+                                            enemyTwoStats[1] = 0.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy two with an defense buff");
+                                            enemyTwoStats[1] = 0.6;
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy three with an defense buff");
+                                            enemyThreeStats[1] = 0.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy three with an defense buff");
+                                            enemyThreeStats[1] = 0.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy three with an defense buff");
+                                            enemyThreeStats[1] = 0.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy three with an defense buff");
+                                            enemyThreeStats[1] = 0.6;
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy four with an defense buff");
+                                            enemyFourStats[1] = 0.6;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy four with an defense buff");
+                                            enemyFourStats[1] = 0.6;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy four with an defense buff");
+                                            enemyFourStats[1] = 0.6;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy four with an defense buff");
+                                            enemyFourStats[1] = 0.6;
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 2: // agility
+                            decision = rng.nextInt(4);
+                            switch (decision){ // which enemy to target
+                                case 0: // enemy one
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy one with an agility buff");
+                                            enemyOneStats[2] = 2;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy one with an agility buff");
+                                            enemyOneStats[2] = 2;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy one with an agility buff");
+                                            enemyOneStats[2] = 2;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy one with an agility buff");
+                                            enemyOneStats[2] = 2;
+                                            break;
+                                    }
+                                    break;
+                                case 1:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy two with an agility buff");
+                                            enemyTwoStats[2] = 2;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy two with an agility buff");
+                                            enemyTwoStats[2] = 2;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy two with an agility buff");
+                                            enemyTwoStats[2] = 2;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy two with an agility buff");
+                                            enemyTwoStats[2] = 2;
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy three with an agility buff");
+                                            enemyThreeStats[2] = 2;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy three with an agility buff");
+                                            enemyThreeStats[2] = 2;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy three with an agility buff");
+                                            enemyThreeStats[2] = 2;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy three with an agility buff");
+                                            enemyThreeStats[2] = 2;
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (enemy){
+                                        case 0:
+                                            textHistory.add("Archangel targets enemy four with an agility buff");
+                                            enemyFourStats[2] = 2;
+                                            break;
+                                        case 1:textHistory.add("Jack Frost targets enemy four with an agility buff");
+                                            enemyFourStats[2] = 2;
+                                            break;
+                                        case 2:textHistory.add("Legion targets enemy four with an agility buff");
+                                            enemyFourStats[2] = 2;
+                                            break;
+                                        case 3:textHistory.add("Principality targets enemy four with an agility buff");
+                                            enemyFourStats[0] = 2;
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                break;
+        }
+    }
+    
+    void enemyHeal(String enemy){
+        // i know this is linear, i also know it is possibly exploitable as it will always search for injuries left to right, but if you
+        // know you can pull that off you deserve to be able to abuse this mechanic.
+        if (enemyInjuredWho[0] == 1){
+            textHistory.add(enemy + " has healed enemy one");
+        } else if (enemyInjuredWho[1] == 1){
+            textHistory.add(enemy + " has healed enemy two");
+        } else if (enemyInjuredWho[2] == 1){
+            textHistory.add(enemy + " has healed enemy three");
+        } else if (enemyInjuredWho[3] == 1){
+            textHistory.add(enemy + " has healed enemy four");
         }
     }
     
@@ -232,15 +1712,19 @@ public class Game
                 switch (enemy){
                     case 0:
                         textHistory.add("Ame No Uzume uses a basic attack on Archangel");
+                        calculateDamage(0, "Archangel", "Physical", 45, 6);
                         break;
                     case 1:
                         textHistory.add("Ame No Uzume uses a basic attack on Jack Frost");
+                        calculateDamage(1, "Jack Frost", "Physical", 45, 6);
                         break;
                     case 2:
                         textHistory.add("Ame No Uzume uses a basic attack on Legion");
+                        calculateDamage(2, "Legion", "Physical", 45, 6);
                         break;
                     case 3:
                         textHistory.add("Ame No Uzume uses a basic attack on Principality");
+                        calculateDamage(3, "Principality", "Physical", 45, 6);
                         break;
                 }
                 break;
@@ -250,32 +1734,40 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Cendrillon uses Snip Snip on Archangel");
+                                calculateDamage(0, "Archangel", "Physical", 85, 6);
                                 break;
                             case 1:
                                 textHistory.add("Cendrillon uses Snip Snip on Jack Frost");
+                                calculateDamage(1, "Jack Frost", "Physical", 85, 6);
                                 break;
                             case 2:
                                 textHistory.add("Cendrillon uses Snip Snip on Legion");
+                                calculateDamage(2, "Legion", "Physical", 85, 6);
                                 break;
                             case 3:
                                 textHistory.add("Cendrillon uses Snip Snip on Principality");
+                                calculateDamage(3, "Principality", "Physical", 85, 6);
                                 break;
                         }
-                        hpAllyTwo -= 40;
+                        hpAlly[1] -= 40;
                         break;
                     default:
                         switch (enemy){
                             case 0:
                                 textHistory.add("Cendrillon uses a basic attack on Archangel");
+                                calculateDamage(0, "Archangel", "Physical", 45, 6);
                                 break;
                             case 1:
                                 textHistory.add("Cendrillon uses a basic attack on Jack Frost");
+                                calculateDamage(1, "Jack Frost", "Physical", 45, 6);
                                 break;
                             case 2:
                                 textHistory.add("Cendrillon uses a basic attack on Legion");
+                                calculateDamage(2, "Legion", "Physical", 45, 6);
                                 break;
                             case 3:
                                 textHistory.add("Cendrillon uses a basic attack on Principality");
+                                calculateDamage(3, "Principality", "Physical", 45, 6);
                                 break;
                         }
                         break;
@@ -285,15 +1777,19 @@ public class Game
                 switch (enemy){
                     case 0:
                         textHistory.add("Orpheus uses a basic attack on Archangel");
+                        calculateDamage(0, "Archangel", "Physical", 45, 6);
                         break;
                     case 1:
-                        textHistory.add("Orpheus uses a basic attack on Jack Frost");                        
+                        textHistory.add("Orpheus uses a basic attack on Jack Frost"); 
+                        calculateDamage(1, "Jack Frost", "Physical", 45, 6);                       
                         break;
                     case 2:
                         textHistory.add("Orpheus uses a basic attack on Legion");
+                        calculateDamage(2, "Legion", "Physical", 45, 6);
                         break;
                     case 3:
                         textHistory.add("Orpheus uses a basic attack on Principality");
+                        calculateDamage(3, "Principality", "Physical", 45, 6);
                         break;
                 }
                 break;
@@ -301,15 +1797,19 @@ public class Game
                 switch (enemy){
                     case 0:
                         textHistory.add("Robin Hood uses a basic attack on Archangel");
+                        calculateDamage(0, "Archangel", "Physical", 45, 6);
                         break;
                     case 1:
                         textHistory.add("Robin Hood uses a basic attack on Jack Frost");
+                        calculateDamage(1, "Jack Frost", "Physical", 45, 6);
                         break;
                     case 2:
                         textHistory.add("Robin Hood uses a basic attack on Legion");
+                        calculateDamage(2, "Legion", "Physical", 45, 6);
                         break;
                     case 3:
                         textHistory.add("Robin Hood uses a basic attack on Principality");
+                        calculateDamage(3, "Principality", "Physical", 45, 6);
                         break;
                 }
                 break;
@@ -328,7 +1828,7 @@ public class Game
             case 0: // ame moves
                 switch (move){
                     case 0: // zephyr
-                        if (spAllyOne > 9){
+                        if (spAlly[0] > 9){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
@@ -337,7 +1837,7 @@ public class Game
                         }
                         break;
                     case 1: // monsoon
-                        if (spAllyOne > 21){
+                        if (spAlly[0] > 21){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 5; // multi target enemy select
@@ -347,7 +1847,7 @@ public class Game
                         break;
                     case 2: // redemption
                         if (allyInjured){
-                            if (spAllyOne > 22){
+                            if (spAlly[0] > 22){
                                 typeOfMove = 2;
                                 prevPage = 2;
                                 page = 4; // single target ally select
@@ -360,7 +1860,7 @@ public class Game
                         break;
                     case 3: // guardian angel
                         if (allyDead){
-                            if (spAllyOne > 8){
+                            if (spAlly[0] > 8){
                                 typeOfMove = 2;
                                 prevPage = 2;
                                 page = 4; // single target ally select
@@ -376,7 +1876,7 @@ public class Game
             case 1: // cendrillon moves
                 switch (move){
                     case 0: // aqua prison
-                        if (spAllyTwo > 9){
+                        if (spAlly[1] > 9){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
@@ -385,7 +1885,7 @@ public class Game
                         }
                         break;
                     case 1: // surging tide
-                        if (spAllyTwo > 21){
+                        if (spAlly[1] > 21){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 5; // multi target enemy select
@@ -394,7 +1894,7 @@ public class Game
                         }
                         break;
                     case 2:
-                        if (hpAllyTwo > 40){
+                        if (hpAlly[1] > 40){
                             typeOfMove = 0;
                             prevPage = 2;
                             page = 1; // single target enemy select
@@ -403,7 +1903,7 @@ public class Game
                         }
                         break;
                     case 3: // agl boost
-                        if (spAllyTwo > 12){
+                        if (spAlly[1] > 12){
                             typeOfMove = 5;
                             prevPage = 2;
                             page = 4; // single target
@@ -416,7 +1916,7 @@ public class Game
             case 2: // orpheus moves
                 switch (move){
                     case 0: // lunar rush
-                        if (spAllyThree > 9){
+                        if (spAlly[2] > 9){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
@@ -425,7 +1925,7 @@ public class Game
                         }
                         break;
                     case 1: // moonfall
-                        if (spAllyThree > 21){
+                        if (spAlly[2] > 21){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 5; // multi target enemy select
@@ -434,7 +1934,7 @@ public class Game
                         }
                         break;
                     case 2:
-                        if (spAllyThree > 9){
+                        if (spAlly[2] > 9){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
@@ -443,7 +1943,7 @@ public class Game
                         }
                         break;
                     case 3: // def boost
-                        if (spAllyThree > 12){
+                        if (spAlly[2] > 12){
                             typeOfMove = 4;
                             prevPage = 2;
                             page = 4; // single target
@@ -456,7 +1956,7 @@ public class Game
             case 3: // robin hood moves 
                 switch (move){
                     case 0: // zenith blade
-                        if (spAllyFour > 9){
+                        if (spAlly[3] > 9){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
@@ -465,7 +1965,7 @@ public class Game
                         }
                         break;
                     case 1: // solar flare
-                        if (spAllyFour > 21){
+                        if (spAlly[3] > 21){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 5; // multi target enemy select
@@ -474,7 +1974,7 @@ public class Game
                         }
                         break;
                     case 2:
-                        if (spAllyFour > 9){
+                        if (spAlly[3] > 9){
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
@@ -483,7 +1983,7 @@ public class Game
                         }
                         break;
                     case 3: // atk boost
-                        if (spAllyFour > 12){
+                        if (spAlly[3] > 12){
                             typeOfMove = 3;
                             prevPage = 2;
                             page = 4; // single target
@@ -504,22 +2004,30 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Ame No Uzume uses Zephyr on Archangel");
+                                calculateDamage(0, "Archangel", "Wind", 85, 2);
                                 break;
                             case 1:
                                 textHistory.add("Ame No Uzume uses Zephyr on Jack Frost");
+                                calculateDamage(1, "Jack Frost", "Wind", 85, 2);
                                 break;
                             case 2:
                                 textHistory.add("Ame No Uzume uses Zephyr on Legion");
+                                calculateDamage(2, "Legion", "Wind", 85, 2);
                                 break;
                             case 3:
                                 textHistory.add("Ame No Uzume uses Zephyr on Principality");
+                                calculateDamage(3, "Principality", "Wind", 85, 2);
                                 break;
                         }
-                        spAllyOne -= 9;
+                        spAlly[0] -= 9;
                         break;
                     case 1: // monsoon
                         textHistory.add("Ame No Uzume uses Monsoon on every enemy");
-                        spAllyOne -= 21;
+                        calculateDamage(0, "Archangel", "Wind", 85, 2);
+                        calculateDamage(1, "Jack Frost", "Wind", 85, 2);
+                        calculateDamage(2, "Legion", "Wind", 85, 2);
+                        calculateDamage(3, "Principality", "Wind", 85, 2);
+                        spAlly[0] -= 21;
                         break;
                     case 2: // redemption
                         // this is a heal ability managed by another method, if you got here you did something wrong
@@ -537,24 +2045,34 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Cendrillon uses Aqua Prison on Archangel");
+                                calculateDamage(0, "Archangel", "Water", 85, 1);
                                 break;
                             case 1:
                                 textHistory.add("Cendrillon uses Aqua Prison on Jack Frost");
+                                calculateDamage(1, "Jack Frost", "Water", 85, 1);
                                 break;
                             case 2:
                                 textHistory.add("Cendrillon uses Aqua Prison on Legion");
-                                    break;
+                                calculateDamage(2, "Legion", "Water", 85, 1);
+                                break;
                             case 3:
                                 textHistory.add("Cendrillon uses Aqua Prison on Principality");
+                                calculateDamage(3, "Principality", "Water", 85, 1);
                                 break;
                         }
-                        spAllyTwo -= 9;
+                        spAlly[1] -= 9;
                         break;
                     case 1: // surging tide
                         textHistory.add("Cendrillon uses Surging Tide on every enemy");
-                        spAllyTwo -= 21;
+                        calculateDamage(0, "Archangel", "Water", 65, 1);
+                        calculateDamage(1, "Jack Frost", "Water", 65, 1);
+                        calculateDamage(2, "Legion", "Water", 65, 1);
+                        calculateDamage(3, "Principality", "Water", 65, 1);
+                        spAlly[1] -= 21;
                         break;
                     case 2: // ability 3
+                        // this is a physical ability managed by another script
+                        System.out.println("if youre here youve done something wrong");
                         break;
                     case 3: // ability 4
                         // this is a buff ability managed by another method, if you got here you did something wrong
@@ -568,39 +2086,51 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Orpheus uses Lunar Rush on Archangel");
+                                calculateDamage(0, "Archangel", "Moon", 85, 5);
                                 break;
                             case 1:
                                 textHistory.add("Orpheus uses Lunar Rush on Jack Frost");
+                                calculateDamage(1, "Jack Frost", "Moon", 85, 5);
                                 break;
                             case 2:
                                 textHistory.add("Orpheus uses Lunar Rush on Legion");
+                                calculateDamage(2, "Legion", "Moon", 85, 5);
                                 break;
                             case 3:
                                 textHistory.add("Orpheus uses Lunar Rush on Principality");
+                                calculateDamage(3, "Principality", "Moon", 85, 5);
                                 break;
                         }
-                        spAllyThree -= 9;
+                        spAlly[2] -= 9;
                         break;
                     case 1: // moon fall
                         textHistory.add("Orpheus uses Moonfall on every enemy");
-                        spAllyThree -= 21;
+                        calculateDamage(0, "Archangel", "Moon", 65, 5);
+                        calculateDamage(1, "Jack Frost", "Moon", 65, 5);
+                        calculateDamage(2, "Legion", "Moon", 65, 5);
+                        calculateDamage(3, "Principality", "Moon", 65, 5);
+                        spAlly[2] -= 21;
                         break;
                     case 2: // shattering strike
                         switch (enemy){
                             case 0:
                                 textHistory.add("Orpheus uses Shattering Strike on Archangel");
+                                calculateDamage(0, "Archangel", "Earth", 85, 3);
                                 break;
                             case 1:
                                 textHistory.add("Orpheus uses Shattering Strike on Jack Frost");
+                                calculateDamage(1, "Jack Frost", "Earth", 85, 3);
                                 break;
                             case 2:
                                 textHistory.add("Orpheus uses Shattering Strike on Legion");
+                                calculateDamage(2, "Legion", "Earth", 85, 3);
                                 break;
                             case 3:
                                 textHistory.add("Orpheus uses Shattering Strike on Principality");
+                                calculateDamage(3, "Principality", "Earth", 85, 3);
                                 break;
                         }
-                        spAllyThree -= 9;
+                        spAlly[2] -= 9;
                         break;
                     case 3: // ability 4
                         // this is a buff ability managed by another method, if you got here you did something wrong
@@ -614,39 +2144,51 @@ public class Game
                         switch (enemy){
                             case 0:
                                 textHistory.add("Robin Hood uses Zenith Blade on Archangel");
+                                calculateDamage(0, "Archangel", "Sun", 85, 4);
                                 break;
                             case 1:
                                 textHistory.add("Robin Hood uses Zenith Blade on Jack Frost");
+                                calculateDamage(1, "Jack Frost", "Sun", 85, 4);
                                 break;
                             case 2:
                                 textHistory.add("Robin Hood uses Zenith Blade on Legion");
+                                calculateDamage(2, "Legion", "Sun", 85, 4);
                                 break;
                             case 3:
                                 textHistory.add("Robin Hood uses Zenith Blade on Principality");
+                                calculateDamage(3, "Principality", "Sun", 85, 4);
                                 break;
                         }
-                        spAllyFour -= 9;
+                        spAlly[3] -= 9;
                         break;
                     case 1:  // solar flare
                         textHistory.add("Robin Hood uses Solar Flare on every enemy");
-                        spAllyFour -= 21;
+                        calculateDamage(0, "Archangel", "Sun", 65, 4);
+                        calculateDamage(1, "Jack Frost", "Sun", 55, 4);
+                        calculateDamage(2, "Legion", "Sun", 65, 4);
+                        calculateDamage(3, "Principality", "Sun", 65, 4);
+                        spAlly[3] -= 21;
                         break;
                     case 2: // 
                         switch (enemy){
                             case 0:
                                 textHistory.add("Robin Hood uses Sear on Archangel");
+                                calculateDamage(0, "Archangel", "Fire", 85, 0);
                                 break;
                             case 1:
                                 textHistory.add("Robin Hood uses Sear on Jack Frost");
+                                calculateDamage(1, "Jack Frost", "Fire", 85, 0);
                                 break;
                             case 2:
                                 textHistory.add("Robin Hood uses Sear on Legion");
+                                calculateDamage(2, "Legion", "Fire", 85, 0);
                                 break;
                             case 3:
                                 textHistory.add("Robin Hood uses Sear on Principality");
+                                calculateDamage(3, "Principality", "Fire", 85, 0);
                                 break;
                         }
-                        spAllyFour -= 9;
+                        spAlly[3] -= 9;
                         break;
                     case 3: // ability 4
                         // this is a buff ability managed by another method, if you got here you did something wrong
@@ -675,7 +2217,7 @@ public class Game
                         textHistory.add("Ame No Uzume uses redemption on Robin Hood");
                         break;
                 }
-                spAllyOne -= 8;
+                spAlly[0] -= 8;
                 break;
         }
         goNext();
@@ -698,7 +2240,7 @@ public class Game
                         textHistory.add("Ame No Uzume uses guardian angel on Robin Hood");
                         break;
                 }
-                spAllyOne -= 22;
+                spAlly[0] -= 22;
                 break;
         }
         goNext();
@@ -739,7 +2281,7 @@ public class Game
                                 allyFourStats[0] = 2;
                                 break;
                         }
-                        spAllyFour -= 12;
+                        spAlly[3] -= 12;
                         break;
                 }
                 break;
@@ -772,7 +2314,7 @@ public class Game
                                 allyFourStats[1] = 0.5;
                                 break;
                         }
-                        spAllyThree -= 12;
+                        spAlly[2] -= 12;
                         break;
                     case 3:
                         System.out.println("if you got here you fucked something up");
@@ -805,7 +2347,7 @@ public class Game
                                 allyFourStats[2] = 2;
                                 break;
                         }
-                        spAllyTwo -= 12;
+                        spAlly[1] -= 12;
                         break;
                     case 2:
                         System.out.println("if you got here you fucked something up");
@@ -865,48 +2407,48 @@ public class Game
     void everfrost(int ally){
         switch (ally){
             case 0:
-                if (spAllyOne == spMaxAllyOne){
+                if (spAlly[0] == spMaxAlly[0]){
                     System.out.println("This ally already has max SP");
                 } else {
-                    spAllyOne += 30;
-                    if (spAllyOne > spMaxAllyOne){
-                        spAllyOne = spMaxAllyOne;
+                    spAlly[0] += 30;
+                    if (spAlly[0] > spMaxAlly[0]){
+                        spAlly[0] = spMaxAlly[0];
                     }
                     textHistory.add("Restored 30 SP to Ally One");
                     goNext();
                 }
                 break;
             case 1:
-                if (spAllyTwo == spMaxAllyTwo){
+                if (spAlly[1] == spMaxAlly[1]){
                     System.out.println("This Ally already has max SP");
                 } else {
-                    spAllyTwo += 30;
-                    if (spAllyTwo > spMaxAllyTwo){
-                        spAllyTwo = spMaxAllyTwo;
+                    spAlly[1] += 30;
+                    if (spAlly[1] > spMaxAlly[1]){
+                        spAlly[1] = spMaxAlly[1];
                     }
                     textHistory.add("Restored 30 SP to Ally Two");
                     goNext();
                 }
                 break;
             case 2:
-                if (spAllyThree == spMaxAllyThree){
+                if (spAlly[2] == spMaxAlly[2]){
                     System.out.println("This Ally already has max SP");
                 } else {
-                    spAllyThree += 30;
-                    if (spAllyThree > spMaxAllyThree){
-                        spAllyThree = spMaxAllyThree;
+                    spAlly[2] += 30;
+                    if (spAlly[2] > spMaxAlly[2]){
+                        spAlly[2] = spMaxAlly[2];
                     }
                     textHistory.add("Restored 30 SP to Ally Three");
                     goNext();
                 }
                 break;
             case 3:
-                if (spAllyFour == spMaxAllyFour){
+                if (spAlly[3] == spMaxAlly[3]){
                     System.out.println("This ally already has max SP");
                 } else {
-                    spAllyFour += 30;
-                    if (spAllyFour > spMaxAllyFour){
-                        spAllyFour = spMaxAllyFour;
+                    spAlly[3] += 30;
+                    if (spAlly[3] > spMaxAlly[3]){
+                        spAlly[3] = spMaxAlly[3];
                     }
                     textHistory.add("Restored 30 SP to Ally Four");
                     goNext();
@@ -938,18 +2480,18 @@ public class Game
     }
     
     public void goNext(){ // the script that decides whos turn is next, and basically advances the game
-        if (currentCharacter < 3 && turn == 0){
+        if (currentCharacter < 3 && turn == 0){ // if not end of rotation and player turn
             currentCharacter++;
             page = 0;
-        } else if (currentCharacter < 3 && turn == 1){
+        } else if (currentCharacter < 3 && turn == 1){ // else if not end of rotation and enemy turn 
             currentCharacter++;
             move(69);
-        } else if (currentCharacter == 3 && turn == 1){
+        } else if (currentCharacter == 3 && turn == 1){ // else if end of rotation and enemy turn
             page = 0;
             currentCharacter = 0;
             turn = 0;
             //System.out.println("turn " + turn);
-        } else if (currentCharacter == 3 && turn  == 0){
+        } else if (currentCharacter == 3 && turn  == 0){ // else if end of rotation and player turn
             page = 420;
             currentCharacter = 0;
             turn = 1;
@@ -959,25 +2501,37 @@ public class Game
     }
     
     public void checkInjured(){
-        if (hpEnemyOne < hpMaxEnemyOne || hpEnemyTwo < hpMaxEnemyTwo || hpEnemyThree < hpMaxEnemyThree || hpEnemyFour < hpMaxEnemyFour){
+        if (hpEnemy[0] < hpMaxEnemy[0] || hpEnemy[1] < hpMaxEnemy[1] || hpEnemy[2] < hpMaxEnemy[2] || hpEnemy[3] < hpMaxEnemy[3]){
             enemyInjured = true;
         } else {
             enemyInjured = false;
         }
-        if (hpAllyOne < hpMaxAllyOne || hpAllyTwo < hpMaxAllyTwo || hpAllyThree < hpMaxAllyThree || hpAllyFour < hpMaxAllyFour){
+        if (hpAlly[0] < hpMaxAlly[0] || hpAlly[1] < hpMaxAlly[1] || hpAlly[2] < hpMaxAlly[2] || hpAlly[3] < hpMaxAlly[3]){
             allyInjured = true;
         } else {
             allyInjured = false;
         }
-        if (hpEnemyOne <= 0 || hpEnemyTwo <= 0 || hpEnemyThree <= 0 || hpEnemyFour <= 0){
+        if (hpEnemy[0] <= 0 || hpEnemy[1] <= 0 || hpEnemy[2] <= 0 || hpEnemy[3] <= 0){
             enemyDead = true;
         } else {
             enemyDead = false;
         }
-        if (hpAllyOne <= 0 || hpAllyTwo <= 0 || hpAllyThree <= 0 || hpAllyFour <= 0){
+        if (hpAlly[0] <= 0 || hpAlly[1] <= 0 || hpAlly[2] <= 0 || hpAlly[3] <= 0){
             allyDead = true;
         } else {
             allyDead = false;
+        }
+        if (hpEnemy[0] < hpMaxEnemy[0]){
+            enemyInjuredWho[0] = 1;
+        }
+        if (hpEnemy[1] < hpMaxEnemy[1]){
+            enemyInjuredWho[1] = 1;
+        }
+        if (hpEnemy[2] < hpMaxEnemy[2]){
+            enemyInjuredWho[2] = 1;
+        }
+        if (hpEnemy[3] < hpMaxEnemy[3]){
+            enemyInjuredWho[3] = 1;
         }
     }
     
@@ -1005,16 +2559,6 @@ public class Game
     }
     
     public void initializeAffinities(){
-        // this isnt technically a part of affinities, but i moved it here to get it out of the early method, cuz this only happens once
-        hpAllyOne = hpMaxAllyOne;
-        hpAllyTwo = hpMaxAllyTwo;
-        hpAllyThree = hpMaxAllyThree;
-        hpAllyFour = hpMaxAllyFour;
-        spAllyOne = spMaxAllyOne;
-        spAllyTwo = spMaxAllyTwo;
-        spAllyThree = spMaxAllyThree;
-        spAllyFour = spMaxAllyFour;
-        
         boolean can = false;
         int weak = 0;
         int resist = 0;
@@ -1116,6 +2660,6 @@ public class Game
      * 4 = select ally (single target for healing n buffs n such)
      * 5 = select enemy (multi target)
      * 6 = select ally (multi target for healing)
-     * 
+     * //calculateDamage(target, target name, move affinity, base damage, move affinity number);
      */
 }

@@ -285,21 +285,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         }
         
         // UPDATE HP AND SP
-        allyOneHPText.setText("HP: " + game.hpAllyOne + " / " + game.hpMaxAllyOne);
-        allyOneSPText.setText("SP: " + game.spAllyOne + " / " + game.spMaxAllyOne);
-        allyTwoHPText.setText("HP: " + game.hpAllyTwo + " / " + game.hpMaxAllyTwo);
-        allyTwoSPText.setText("SP: " + game.spAllyTwo + " / " + game.spMaxAllyTwo);
-        allyThreeHPText.setText("HP: " + game.hpAllyThree + " / " + game.hpMaxAllyThree);
-        allyThreeSPText.setText("SP: " + game.spAllyThree + " / " + game.spMaxAllyThree);
-        allyFourHPText.setText("HP: " + game.hpAllyFour + " / " + game.hpMaxAllyFour);
-        allyFourSPText.setText("SP: " + game.spAllyFour + " / " + game.spMaxAllyFour);
+        allyOneHPText.setText("HP: " + game.hpAlly[0] + " / " + game.hpMaxAlly[0]);
+        allyOneSPText.setText("SP: " + game.spAlly[0] + " / " + game.spMaxAlly[0]);
+        allyTwoHPText.setText("HP: " + game.hpAlly[1] + " / " + game.hpMaxAlly[1]);
+        allyTwoSPText.setText("SP: " + game.spAlly[1] + " / " + game.spMaxAlly[1]);
+        allyThreeHPText.setText("HP: " + game.hpAlly[2] + " / " + game.hpMaxAlly[2]);
+        allyThreeSPText.setText("SP: " + game.spAlly[2] + " / " + game.spMaxAlly[2]);
+        allyFourHPText.setText("HP: " + game.hpAlly[3] + " / " + game.hpMaxAlly[3]);
+        allyFourSPText.setText("SP: " + game.spAlly[3] + " / " + game.spMaxAlly[3]);
+        enemyOneHPText.setText("HP: " + game.hpEnemy[0] + " / " + game.hpMaxEnemy[0]);
+        enemyTwoHPText.setText("HP: " + game.hpEnemy[1] + " / " + game.hpMaxEnemy[1]);
+        enemyThreeHPText.setText("HP: " + game.hpEnemy[2] + " / " + game.hpMaxEnemy[2]);
+        enemyFourHPText.setText("HP: " + game.hpEnemy[3] + " / " + game.hpMaxEnemy[3]);
         
         //UPDATE TEXT HISTORY
         int size = game.textHistory.size();
         textUpdateOne.setText(game.textHistory.get(size - 3));
         textUpdateTwo.setText(game.textHistory.get(size - 2));
         textUpdateThree.setText(game.textHistory.get(size - 1));
-        System.out.println(game.textHistory.get(size - 1));
+        //System.out.println(game.textHistory.get(size - 1));
         
         //UPDATE SELECTABLE ICONS
         if (game.turn == 0){ 
@@ -747,7 +751,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case "allyOne":
                 switch (game.typeOfMove){
                     case 2: // helaing
-                        if (game.hpAllyOne == game.hpMaxAllyOne){
+                        if (game.hpAlly[0] == game.hpMaxAlly[0]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
                             game.textHistory.add("You cannot heal this character, as they are already on full hp");
                             updateUI();
@@ -769,7 +773,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case "allyTwo":
                 switch (game.typeOfMove){
                     case 2: // healing
-                        if (game.hpAllyTwo == game.hpMaxAllyTwo){
+                        if (game.hpAlly[1] == game.hpMaxAlly[1]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
                             game.textHistory.add("You cannot heal this character, as they are already on full hp");
                             updateUI();
@@ -791,7 +795,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case "allyThree":
                 switch (game.typeOfMove){
                     case 2: // healing
-                        if (game.hpAllyThree == game.hpMaxAllyThree){
+                        if (game.hpAlly[2] == game.hpMaxAlly[2]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
                             game.textHistory.add("You cannot heal this character, as they are already on full hp");
                             updateUI();
@@ -813,7 +817,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case "allyFour":
                 switch (game.typeOfMove){
                     case 2: // healing
-                        if (game.hpAllyFour == game.hpMaxAllyFour){
+                        if (game.hpAlly[3] == game.hpMaxAlly[3]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
                             game.textHistory.add("You cannot heal this character, as they are already on full hp");
                             updateUI();
