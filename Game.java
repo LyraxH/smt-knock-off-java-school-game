@@ -33,6 +33,7 @@ public class Game
     // first number = attack status, second = defense status, third = accuracy/evasion status
     double allyStats[][] = new double[4][3];
     int concentrate[] = new int[]{0,0,0,0}; // 1 means that characters attack next turn will do more than double damage
+    int guard[] = new int[]{0,0,0,0}; // 1 means that you take half damage next round
     // first number = attack status, second = defense status, third = accuracy/evasion status. fourth = shock
     double enemyStats[][] = new double[4][4];
     // 0 = normal, 1 = weak, 2 = null, 3 = resist, 4 = unknown
@@ -129,28 +130,28 @@ public class Game
                     case 0: // if ally is normal to move affinity
                         preBattleDamage = baseDamage * allyStats[receiver][1] * enemyStats[currentCharacter][0] * damageTakenMultiplier;
                         battleDamage = (int)Math.round(preBattleDamage);
-                        hpEnemy[receiver] -= battleDamage;
+                        hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
                         setStatus(receiver + 4, 5);
                         break;
                     case 1: // if ally is weak to move affinity
                         preBattleDamage = baseDamage * allyStats[receiver][1] * enemyStats[currentCharacter][0] * damageTakenMultiplier * 1.45;
                         battleDamage = (int)Math.round(preBattleDamage);
-                        hpEnemy[receiver] -= battleDamage;
+                        hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
                         setStatus(receiver + 4, 0);
                         break;
                     case 2: // if ally resists move affinity
                         preBattleDamage = baseDamage * allyStats[receiver][1] * enemyStats[currentCharacter][0] * damageTakenMultiplier * 0.69;
                         battleDamage = (int)Math.round(preBattleDamage);
-                        hpEnemy[receiver] -= battleDamage;
+                        hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " resists " + toAffinity + ", and takes " + battleDamage + " damage.");
                         setStatus(receiver + 4, 1);
                         break;
                     case 3: // if ally is null to move affinity
                         preBattleDamage = 0;
                         battleDamage = (int)Math.round(preBattleDamage);
-                        hpEnemy[receiver] -= battleDamage;
+                        hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
                         setStatus(receiver + 4, 2);
                         break;
@@ -432,6 +433,8 @@ public class Game
         affinityRNG = rng.nextInt(6);
         switch (decision){
             case 0,1: // magic attack
+                String target = "o";
+                String who = "o";
                 switch (affinityRNG){
                     case 0:
                         affinity = "Fire";
@@ -453,179 +456,76 @@ public class Game
                         break;
                 }
                 decision = rng.nextInt(4);
-                switch (decision){ // which "enemy" (ally) to target
+                switch (decision){
                     case 0:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("archangel targets ally one with a magic attack of affinity " + affinity);
-                                calculateDamage(0, "Ame No Uzume", affinity, 75, affinityRNG);
-                                break;
-                            case 1:
-                                textHistory.add("jack frost targets ally one with a magic attack of affinity " + affinity);
-                                calculateDamage(0, "Ame No Uzume", affinity, 75, affinityRNG);
-                                break;
-                            case 2:
-                                textHistory.add("legion targets ally one with a magic attack of affinity " + affinity);
-                                calculateDamage(0, "Ame No Uzume", affinity, 75, affinityRNG);
-                                break;
-                            case 3:
-                                textHistory.add("principality targets ally one with a magic attack of affinity " + affinity);
-                                calculateDamage(0, "Ame No Uzume", affinity, 75, affinityRNG);
-                                break;
-                        }
+                        target = "Ame No Uzume";
                         break;
                     case 1:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("archangel targets ally two with a magic attack of affinity " + affinity);
-                                calculateDamage(1, "Cendrillon", affinity, 75, affinityRNG);
-                                break;
-                            case 1:
-                                textHistory.add("jack frost targets ally two with a magic attack of affinity " + affinity);
-                                calculateDamage(1, "Cendrillon", affinity, 75, affinityRNG);
-                                break;
-                            case 2:
-                                textHistory.add("legion targets ally two with a magic attack of affinity " + affinity);
-                                calculateDamage(1, "Cendrillon", affinity, 75, affinityRNG);
-                                break;
-                            case 3:
-                                textHistory.add("principality targets ally two with a magic attack of affinity " + affinity);
-                                calculateDamage(1, "Cendrillon", affinity, 75, affinityRNG);
-                                break;
-                        }
+                        target = "Cendrillon";
                         break;
                     case 2:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("archangel targets ally three with a magic attack of affinity " + affinity);
-                                calculateDamage(2, "Orpheus", affinity, 75, affinityRNG);
-                                break;
-                            case 1:
-                                textHistory.add("jack frost targets ally three with a magic attack of affinity " + affinity);
-                                calculateDamage(2, "Orpheus", affinity, 75, affinityRNG);
-                                break;
-                            case 2:
-                                textHistory.add("legion targets ally three with a magic attack of affinity " + affinity);
-                                calculateDamage(2, "Orpheus", affinity, 75, affinityRNG);
-                                break;
-                            case 3:
-                                textHistory.add("principality targets ally three with a magic attack of affinity " + affinity);
-                                calculateDamage(2, "Orpheus", affinity, 75, affinityRNG);
-                                break;
-                        }
+                        target = "Orpheus";
                         break;
                     case 3:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("archangel targets ally four with a magic attack of affinity " + affinity);
-                                calculateDamage(3, "Robin Hood", affinity, 75, affinityRNG);
-                                break;
-                            case 1:
-                                textHistory.add("jack frost targets ally four with a magic attack of affinity " + affinity);
-                                calculateDamage(3, "Robin Hood", affinity, 75, affinityRNG);
-                                break;
-                            case 2:
-                                textHistory.add("legion targets ally four with a magic attack of affinity " + affinity);
-                                calculateDamage(3, "Robin Hood", affinity, 75, affinityRNG);
-                                break;
-                            case 3:
-                                textHistory.add("principality targets ally four with a magic attack of affinity " + affinity);
-                                calculateDamage(3, "Robin Hood", affinity, 75, affinityRNG);
-                                break;
-                        }
+                        target = "Robin Hood";
                         break;
                 }
+                switch (currentCharacter){
+                    case 0:
+                        who = "Archangel";
+                        break;
+                    case 1:
+                        who = "Jack Frost";
+                        break;
+                    case 2:
+                        who = "Legion";
+                        break;
+                    case 3:
+                        who = "Principality";
+                        break;
+                }
+                textHistory.add(who + " targets " + target + " with a magic attack of affinity " + affinity);
+                calculateDamage(decision, target, affinity, 75, affinityRNG);
                 break;
             case 2: // physical attack
                 decision = rng.nextInt(4);
-                switch (decision){ // which "enemy" (ally) to target
+                who = "o";
+                target = "o";
+                switch (currentCharacter){
                     case 0:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("archangel targets ally one with a basic attack");
-                                calculateDamage(0, "Ame No Uzume", "Physical", 55, 6);
-                                break;
-                            case 1:
-                                textHistory.add("jack frost targets ally one with a basic attack");
-                                calculateDamage(0, "Ame No Uzume", "Physical", 55, 6);
-                                break;
-                            case 2:
-                                textHistory.add("legion targets ally one with a basic attack");
-                                calculateDamage(0, "Ame No Uzume", "Physical", 55, 6);
-                                break;
-                            case 3:
-                                textHistory.add("principality targets ally one with a basic attack");
-                                calculateDamage(0, "Ame No Uzume", "Physical", 55, 6);
-                                break;
-                        }
+                        who = "Archangel";
                         break;
                     case 1:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("archangel targets ally two with a basic attack");
-                                calculateDamage(1, "Cendrillon", "Physical", 55, 6);
-                                break;
-                            case 1:
-                                textHistory.add("jack frost targets ally two with a basic attack");
-                                calculateDamage(1, "Cendrillon", "Physical", 55, 6);
-                                break;
-                            case 2:
-                                textHistory.add("legion targets ally two with a basic attack");
-                                calculateDamage(1, "Cendrillon", "Physical", 55, 6);
-                                break;
-                            case 3:
-                                textHistory.add("principality targets ally two with a basic attack");
-                                calculateDamage(1, "Cendrillon", "Physical", 55, 6);
-                                break;
-                        }
+                        who = "Jack Frost";
                         break;
                     case 2:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("archangel targets ally three with a basic attack");
-                                calculateDamage(2, "Orpheus", "Physical", 55, 6);
-                                break;
-                            case 1:
-                                textHistory.add("jack frost targets ally three with a basic attack");
-                                calculateDamage(2, "Orpheus", "Physical", 55, 6);
-                                break;
-                            case 2:
-                                textHistory.add("legion targets ally three with a basic attack");
-                                calculateDamage(2, "Orpheus", "Physical", 55, 6);
-                                break;
-                            case 3:
-                                textHistory.add("principality targets ally three with a basic attack");
-                                calculateDamage(2, "Orpheus", "Physical", 55, 6);
-                                break;
-                        }
+                        who = "Legion";
                         break;
                     case 3:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("archangel targets ally four with a basic attack");
-                                calculateDamage(3, "Robin Hood", "Physical", 55, 6);
-                                break;
-                            case 1:
-                                textHistory.add("jack frost targets ally four with a basic attack");
-                                calculateDamage(3, "Robin Hood", "Physical", 55, 6);
-                                break;
-                            case 2:
-                                textHistory.add("legion targets ally four with a basic attack");
-                                calculateDamage(3, "Robin Hood", "Physical", 55, 6);
-                                break;
-                            case 3:
-                                textHistory.add("principality targets ally four with a basic attack");
-                                calculateDamage(3, "Robin Hood", "Physical", 55, 6);
-                                break;
-                        }
+                        who = "Principality";
                         break;
                 }
-                break;
+                switch (decision){
+                    case 0:
+                        target = "Ame No Uzume";
+                        break;
+                    case 1:
+                        target = "Cendrillon";
+                        break;
+                    case 2:
+                        target = "Orpheus";
+                        break;
+                    case 3:
+                        target = "Robin Hood";
+                        break;
+                }
+                textHistory.add(who + " targets " + target + " with a basic attack");
+                calculateDamage(decision, target, "Physical", 55, 6);
             case 3: // buff / debuff
                 decision = rng.nextInt(2);
                 if (decision == 0){
-                    String who = "o";
-                    String target = "o";
+                    who = "o";
+                    target = "o";
                     String what = "o";
                     int targetInt = rng.nextInt(4);
                     int whatInt = rng.nextInt(3);
@@ -673,8 +573,8 @@ public class Game
                     }
                     textHistory.add(who + " targets " + target + " with " + what);
                 } else {
-                    String who = "o";
-                    String target = "o";
+                    who = "o";
+                    target = "o";
                     String what = "o";
                     int targetInt = rng.nextInt(4);
                     int whatInt = rng.nextInt(3);
@@ -744,113 +644,51 @@ public class Game
     }
     
     void physical(int enemy){ // if from the main menu above you select attack, it will do a normal attack based on who you select
+        String who = "o";
+        String what = "o";
+        String target = "o";
+        int damage = 0;
         switch (currentCharacter){
-            case 0: // ame
-                switch (enemy){
-                    case 0:
-                        textHistory.add("Ame No Uzume uses a basic attack on Archangel");
-                        calculateDamage(0, "Archangel", "Physical", 45, 6);
-                        break;
-                    case 1:
-                        textHistory.add("Ame No Uzume uses a basic attack on Jack Frost");
-                        calculateDamage(1, "Jack Frost", "Physical", 45, 6);
-                        break;
-                    case 2:
-                        textHistory.add("Ame No Uzume uses a basic attack on Legion");
-                        calculateDamage(2, "Legion", "Physical", 45, 6);
-                        break;
-                    case 3:
-                        textHistory.add("Ame No Uzume uses a basic attack on Principality");
-                        calculateDamage(3, "Principality", "Physical", 45, 6);
-                        break;
-                }
+            case 0:
+                who = "Ame No Uzume";
                 break;
-            case 1: // cendrillon
-                switch (move){
-                    case 2:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("Cendrillon uses Snip Snip on Archangel");
-                                calculateDamage(0, "Archangel", "Physical", 85, 6);
-                                break;
-                            case 1:
-                                textHistory.add("Cendrillon uses Snip Snip on Jack Frost");
-                                calculateDamage(1, "Jack Frost", "Physical", 85, 6);
-                                break;
-                            case 2:
-                                textHistory.add("Cendrillon uses Snip Snip on Legion");
-                                calculateDamage(2, "Legion", "Physical", 85, 6);
-                                break;
-                            case 3:
-                                textHistory.add("Cendrillon uses Snip Snip on Principality");
-                                calculateDamage(3, "Principality", "Physical", 85, 6);
-                                break;
-                        }
-                        hpAlly[1] -= 40;
-                        break;
-                    default:
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("Cendrillon uses a basic attack on Archangel");
-                                calculateDamage(0, "Archangel", "Physical", 45, 6);
-                                break;
-                            case 1:
-                                textHistory.add("Cendrillon uses a basic attack on Jack Frost");
-                                calculateDamage(1, "Jack Frost", "Physical", 45, 6);
-                                break;
-                            case 2:
-                                textHistory.add("Cendrillon uses a basic attack on Legion");
-                                calculateDamage(2, "Legion", "Physical", 45, 6);
-                                break;
-                            case 3:
-                                textHistory.add("Cendrillon uses a basic attack on Principality");
-                                calculateDamage(3, "Principality", "Physical", 45, 6);
-                                break;
-                        }
-                        break;
-                }
+            case 1:
+                who = "Cendrillon";
                 break;
-            case 2: // orpheus
-                switch (enemy){
-                    case 0:
-                        textHistory.add("Orpheus uses a basic attack on Archangel");
-                        calculateDamage(0, "Archangel", "Physical", 45, 6);
-                        break;
-                    case 1:
-                        textHistory.add("Orpheus uses a basic attack on Jack Frost"); 
-                        calculateDamage(1, "Jack Frost", "Physical", 45, 6);                       
-                        break;
-                    case 2:
-                        textHistory.add("Orpheus uses a basic attack on Legion");
-                        calculateDamage(2, "Legion", "Physical", 45, 6);
-                        break;
-                    case 3:
-                        textHistory.add("Orpheus uses a basic attack on Principality");
-                        calculateDamage(3, "Principality", "Physical", 45, 6);
-                        break;
-                }
+            case 2:
+                who = "Orpheus";
                 break;
-            case 3: // robin hood
-                switch (enemy){
-                    case 0:
-                        textHistory.add("Robin Hood uses a basic attack on Archangel");
-                        calculateDamage(0, "Archangel", "Physical", 45, 6);
-                        break;
-                    case 1:
-                        textHistory.add("Robin Hood uses a basic attack on Jack Frost");
-                        calculateDamage(1, "Jack Frost", "Physical", 45, 6);
-                        break;
-                    case 2:
-                        textHistory.add("Robin Hood uses a basic attack on Legion");
-                        calculateDamage(2, "Legion", "Physical", 45, 6);
-                        break;
-                    case 3:
-                        textHistory.add("Robin Hood uses a basic attack on Principality");
-                        calculateDamage(3, "Principality", "Physical", 45, 6);
-                        break;
-                }
+            case 3:
+                who = "Robin Hood";
                 break;
         }
+        switch (move){
+            case 2:
+                what = "Snip Snip";
+                damage = 85;
+                hpAlly[1] -= 40;
+                break;
+            default:
+                what = "a basic attack";
+                damage = 45;
+                break;
+        }
+        switch (enemy){
+            case 0:
+                target = "Archangel";
+                break;
+            case 1:
+                target = "Jack Frost";
+                break;
+            case 2:
+                target = "Legion";
+                break;
+            case 3:
+                target = "Principality";
+                break;
+        }
+        textHistory.add(who + " uses " + what + " on " + target);
+        calculateDamage(enemy, target, "Physical", damage, 6);
         goNext();
     }
     
@@ -1034,205 +872,131 @@ public class Game
     }  
     
     void magic(int enemy){
+        String who = "o";
+        String what = "o";
+        String target = "o";
+        int affinityInt = 0;
+        String affinityString = "o";
+        int damage = 0;
+        targetAll = false;
+        
         switch (currentCharacter){
-            case 0: // ame
+            case 0:
+                who = "Ame no uzume";
                 switch (move){
-                    case 0: // zephyr
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("Ame No Uzume uses Zephyr on Archangel");
-                                calculateDamage(0, "Archangel", "Wind", 85, 2);
-                                break;
-                            case 1:
-                                textHistory.add("Ame No Uzume uses Zephyr on Jack Frost");
-                                calculateDamage(1, "Jack Frost", "Wind", 85, 2);
-                                break;
-                            case 2:
-                                textHistory.add("Ame No Uzume uses Zephyr on Legion");
-                                calculateDamage(2, "Legion", "Wind", 85, 2);
-                                break;
-                            case 3:
-                                textHistory.add("Ame No Uzume uses Zephyr on Principality");
-                                calculateDamage(3, "Principality", "Wind", 85, 2);
-                                break;
-                        }
-                        spAlly[0] -= 9;
+                    case 0:
+                        damage = 85;
+                        what = "Zephyr";
+                        affinityInt = 2;
+                        affinityString = "Wind";
+                        targetAll = false;
                         break;
-                    case 1: // monsoon
-                        textHistory.add("Ame No Uzume uses Monsoon on every enemy");
-                        calculateDamage(0, "Archangel", "Wind", 85, 2);
-                        calculateDamage(1, "Jack Frost", "Wind", 85, 2);
-                        calculateDamage(2, "Legion", "Wind", 85, 2);
-                        calculateDamage(3, "Principality", "Wind", 85, 2);
-                        spAlly[0] -= 21;
-                        break;
-                    case 2: // redemption
-                        // this is a heal ability managed by another method, if you got here you did something wrong
-                        System.out.println("if youre here youve done something wrong");
-                        break;
-                    case 3: // guardian angel
-                        // this is a heal ability managed by another method, if you got here you did something wrong
-                        System.out.println("if youre here youve done something wrong");
+                    case 1:
+                        damage = 65;
+                        what = "Monsoon";
+                        affinityInt = 2;
+                        affinityString = "Wind";
+                        targetAll = true;
                         break;
                 }
                 break;
-            case 1: // cendrillon
+            case 1:
+                who = "Cendrillon";
                 switch (move){
-                    case 0: // aqua prison
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("Cendrillon uses Aqua Prison on Archangel");
-                                calculateDamage(0, "Archangel", "Water", 85, 1);
-                                break;
-                            case 1:
-                                textHistory.add("Cendrillon uses Aqua Prison on Jack Frost");
-                                calculateDamage(1, "Jack Frost", "Water", 85, 1);
-                                break;
-                            case 2:
-                                textHistory.add("Cendrillon uses Aqua Prison on Legion");
-                                calculateDamage(2, "Legion", "Water", 85, 1);
-                                break;
-                            case 3:
-                                textHistory.add("Cendrillon uses Aqua Prison on Principality");
-                                calculateDamage(3, "Principality", "Water", 85, 1);
-                                break;
-                        }
-                        spAlly[1] -= 9;
+                    case 0: // 
+                        damage = 85;
+                        what = "Aqua Prison";
+                        affinityInt = 1;
+                        affinityString = "Water";
+                        targetAll = false;
                         break;
-                    case 1: // surging tide
-                        textHistory.add("Cendrillon uses Surging Tide on every enemy");
-                        calculateDamage(0, "Archangel", "Water", 65, 1);
-                        calculateDamage(1, "Jack Frost", "Water", 65, 1);
-                        calculateDamage(2, "Legion", "Water", 65, 1);
-                        calculateDamage(3, "Principality", "Water", 65, 1);
-                        spAlly[1] -= 21;
-                        break;
-                    case 2: // ability 3
-                        // this is a physical ability managed by another script
-                        System.out.println("if youre here youve done something wrong");
-                        break;
-                    case 3: // ability 4
-                        // this is a buff ability managed by another method, if you got here you did something wrong
-                        System.out.println("if youre here youve done something wrong");
+                    case 1:
+                        damage = 65;
+                        what = "Surging Tide";
+                        affinityInt = 1;
+                        affinityString = "Water";
+                        targetAll = true;
                         break;
                 }
                 break;
-            case 2: // orpheus
+            case 2:
+                who = "Orpheus";
                 switch (move){
-                    case 0: // lunar rush
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("Orpheus uses Lunar Rush on Archangel");
-                                calculateDamage(0, "Archangel", "Moon", 85, 5);
-                                break;
-                            case 1:
-                                textHistory.add("Orpheus uses Lunar Rush on Jack Frost");
-                                calculateDamage(1, "Jack Frost", "Moon", 85, 5);
-                                break;
-                            case 2:
-                                textHistory.add("Orpheus uses Lunar Rush on Legion");
-                                calculateDamage(2, "Legion", "Moon", 85, 5);
-                                break;
-                            case 3:
-                                textHistory.add("Orpheus uses Lunar Rush on Principality");
-                                calculateDamage(3, "Principality", "Moon", 85, 5);
-                                break;
-                        }
-                        spAlly[2] -= 9;
+                    case 0: // 
+                        damage = 85;
+                        what = "Lunar Rush";
+                        affinityInt = 5;
+                        affinityString = "Moon";
+                        targetAll = false;
                         break;
-                    case 1: // moon fall
-                        textHistory.add("Orpheus uses Moonfall on every enemy");
-                        calculateDamage(0, "Archangel", "Moon", 65, 5);
-                        calculateDamage(1, "Jack Frost", "Moon", 65, 5);
-                        calculateDamage(2, "Legion", "Moon", 65, 5);
-                        calculateDamage(3, "Principality", "Moon", 65, 5);
-                        spAlly[2] -= 21;
+                    case 1:
+                        damage = 65;
+                        what = "Moonfall";
+                        affinityInt = 5;
+                        affinityString = "Moon";
+                        targetAll = true;
                         break;
-                    case 2: // shattering strike
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("Orpheus uses Shattering Strike on Archangel");
-                                calculateDamage(0, "Archangel", "Earth", 85, 3);
-                                break;
-                            case 1:
-                                textHistory.add("Orpheus uses Shattering Strike on Jack Frost");
-                                calculateDamage(1, "Jack Frost", "Earth", 85, 3);
-                                break;
-                            case 2:
-                                textHistory.add("Orpheus uses Shattering Strike on Legion");
-                                calculateDamage(2, "Legion", "Earth", 85, 3);
-                                break;
-                            case 3:
-                                textHistory.add("Orpheus uses Shattering Strike on Principality");
-                                calculateDamage(3, "Principality", "Earth", 85, 3);
-                                break;
-                        }
-                        spAlly[2] -= 9;
-                        break;
-                    case 3: // ability 4
-                        // this is a buff ability managed by another method, if you got here you did something wrong
-                        System.out.println("if youre here youve done something wrong");
+                    case 2:
+                        damage = 85;
+                        what = "Shattering Strike";
+                        affinityInt = 3;
+                        affinityString = "Earth";
+                        targetAll = false;
                         break;
                 }
                 break;
-            case 3: // robin hood
+            case 3:
+                who = "Robin Hood";
                 switch (move){
-                    case 0: // zenith blade
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("Robin Hood uses Zenith Blade on Archangel");
-                                calculateDamage(0, "Archangel", "Sun", 85, 4);
-                                break;
-                            case 1:
-                                textHistory.add("Robin Hood uses Zenith Blade on Jack Frost");
-                                calculateDamage(1, "Jack Frost", "Sun", 85, 4);
-                                break;
-                            case 2:
-                                textHistory.add("Robin Hood uses Zenith Blade on Legion");
-                                calculateDamage(2, "Legion", "Sun", 85, 4);
-                                break;
-                            case 3:
-                                textHistory.add("Robin Hood uses Zenith Blade on Principality");
-                                calculateDamage(3, "Principality", "Sun", 85, 4);
-                                break;
-                        }
-                        spAlly[3] -= 9;
+                    case 0: // 
+                        damage = 85;
+                        what = "Zenith Blade";
+                        affinityInt = 4;
+                        affinityString = "Sun";
+                        targetAll = false;
                         break;
-                    case 1:  // solar flare
-                        textHistory.add("Robin Hood uses Solar Flare on every enemy");
-                        calculateDamage(0, "Archangel", "Sun", 65, 4);
-                        calculateDamage(1, "Jack Frost", "Sun", 55, 4);
-                        calculateDamage(2, "Legion", "Sun", 65, 4);
-                        calculateDamage(3, "Principality", "Sun", 65, 4);
-                        spAlly[3] -= 21;
+                    case 1:
+                        damage = 65;
+                        what = "Solar Flare";
+                        affinityInt = 4;
+                        affinityString = "Sun";
+                        targetAll = true;
                         break;
-                    case 2: // 
-                        switch (enemy){
-                            case 0:
-                                textHistory.add("Robin Hood uses Sear on Archangel");
-                                calculateDamage(0, "Archangel", "Fire", 85, 0);
-                                break;
-                            case 1:
-                                textHistory.add("Robin Hood uses Sear on Jack Frost");
-                                calculateDamage(1, "Jack Frost", "Fire", 85, 0);
-                                break;
-                            case 2:
-                                textHistory.add("Robin Hood uses Sear on Legion");
-                                calculateDamage(2, "Legion", "Fire", 85, 0);
-                                break;
-                            case 3:
-                                textHistory.add("Robin Hood uses Sear on Principality");
-                                calculateDamage(3, "Principality", "Fire", 85, 0);
-                                break;
-                        }
-                        spAlly[3] -= 9;
-                        break;
-                    case 3: // ability 4
-                        // this is a buff ability managed by another method, if you got here you did something wrong
-                        System.out.println("if youre here youve done something wrong");
+                    case 2:
+                        damage = 85;
+                        what = "Sear";
+                        affinityInt = 0;
+                        affinityString = "Fire";
+                        targetAll = false;
                         break;
                 }
                 break;
+        }
+        switch (enemy){
+            case 0:
+                target = "Archangel";
+                break;
+            case 1:
+                target = "Jack Frost";
+                break;
+            case 2:
+                target = "Legion";
+                break;
+            case 3:
+                target = "Principality";
+                break;
+        }
+        textHistory.add(who + " uses " + what + " on " + target);
+        if (targetAll){
+            textHistory.add("Ame No Uzume uses Monsoon on every enemy");
+            calculateDamage(0, "Archangel", affinityString, damage, affinityInt);
+            calculateDamage(1, "Jack Frost", affinityString, damage, affinityInt);
+            calculateDamage(2, "Legion", affinityString, damage, affinityInt);
+            calculateDamage(3, "Principality", affinityString, damage, affinityInt);
+            spAlly[currentCharacter] -= 21;
+        } else {
+            calculateDamage(enemy, target, affinityString, damage, affinityInt);
+            spAlly[currentCharacter] -= 9;
         }
         goNext();
     }

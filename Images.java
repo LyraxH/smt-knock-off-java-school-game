@@ -173,6 +173,8 @@ public class Images
     ImageIcon  unEverfrost = new ImageIcon("moves/9item/everfrostUn.png"); // restores mana to ally
     ImageIcon  lightningCrash = new ImageIcon("moves/9item/lightningCrash.png"); // shock one enemy
     ImageIcon  unLightningCrash = new ImageIcon("moves/9item/lightningCrashUn.png"); // shock one enemy
+    ImageIcon  focus = new ImageIcon("moves/9item/focus.png"); // shock one enemy
+    ImageIcon  unFocus = new ImageIcon("moves/9item/focusUn.png"); // shock one enemy
     
     // enemy select buttons
     ImageIcon enemyOne = new ImageIcon("buttons/enemyOne.png");

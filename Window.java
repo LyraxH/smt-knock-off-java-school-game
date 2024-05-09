@@ -650,25 +650,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             moveButtonOne.setIcon(img.oracleLens);
                             moveButtonTwo.setIcon(img.unEverfrost);
                             moveButtonThree.setIcon(img.unLightningCrash);
-                            moveButtonFour.setIcon(img.unOracleLens);
+                            moveButtonFour.setIcon(img.unFocus);
                             break;
                         case 1:
                             moveButtonOne.setIcon(img.unOracleLens);
                             moveButtonTwo.setIcon(img.everfrost);
                             moveButtonThree.setIcon(img.unLightningCrash);
-                            moveButtonFour.setIcon(img.unOracleLens);
+                            moveButtonFour.setIcon(img.unFocus);
                             break;
                         case 2:
                             moveButtonOne.setIcon(img.unOracleLens);
                             moveButtonTwo.setIcon(img.unEverfrost);
                             moveButtonThree.setIcon(img.lightningCrash);
-                            moveButtonFour.setIcon(img.unOracleLens);
+                            moveButtonFour.setIcon(img.unFocus);
                             break;
                         case 3:
                             moveButtonOne.setIcon(img.unOracleLens);
                             moveButtonTwo.setIcon(img.unEverfrost);
                             moveButtonThree.setIcon(img.unLightningCrash);
-                            moveButtonFour.setIcon(img.oracleLens);
+                            moveButtonFour.setIcon(img.focus);
                             break;
                     }
                     break;
