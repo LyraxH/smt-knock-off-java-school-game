@@ -79,8 +79,8 @@ public class Images
     ImageIcon unknown = new ImageIcon("elements/unknown.png");
     JLabel elementOne = new JLabel(fire);
     JLabel elementTwo = new JLabel(water);
-    JLabel elementFour = new JLabel(air);
-    JLabel elementThree = new JLabel(earth);
+    JLabel elementThree = new JLabel(air);
+    JLabel elementFour = new JLabel(earth);
     JLabel elementFive = new JLabel(sun);
     JLabel elementSix = new JLabel(moon);
     JLabel elementSeven = new JLabel(phys);
@@ -91,6 +91,23 @@ public class Images
     JLabel affinityFive = new JLabel(unknown);
     JLabel affinitySix = new JLabel(unknown);
     JLabel affinitySeven = new JLabel(unknown);
+    
+    // game window overlay affinity weakness hitting notice thing
+    ImageIcon weakOverlay = new ImageIcon("elements/popUpWeak.png");
+    ImageIcon resistOverlay = new ImageIcon("elements/popUpResist.png");
+    ImageIcon nullOverlay = new ImageIcon("elements/popUpNull.png");
+    JLabel enemyOneAffinity = new JLabel();
+    JLabel enemyTwoAffinity = new JLabel();
+    JLabel enemyThreeAffinity = new JLabel();
+    JLabel enemyFourAffinity = new JLabel();
+    JLabel blankOne = new JLabel();
+    JLabel blankTwo = new JLabel();
+    JLabel blankThree = new JLabel();
+    JLabel blankFour = new JLabel();
+    JLabel allyOneAffinity = new JLabel();
+    JLabel allyTwoAffinity = new JLabel();
+    JLabel allyThreeAffinity = new JLabel();
+    JLabel allyFourAffinity = new JLabel();
     
     // move icons
     // 0 fire // alchemy symbol: fire
