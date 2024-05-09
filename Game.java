@@ -623,454 +623,105 @@ public class Game
                 break;
             case 3: // buff / debuff
                 decision = rng.nextInt(2);
-                if (decision == 1){ // debuff "enemies" (allies)
-                    decision = rng.nextInt(3);
-                    switch (decision){ // which debuff
-                        case 0: // attack
-                            decision = rng.nextInt(4);
-                            switch (decision){ // which ally to target
-                                case 0: // ally one
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally one with an attack debuff");
-                                            allyStats[0][0] = 0.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally one with an attack debuff");
-                                            allyStats[0][0] = 0.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally one with an attack debuff");
-                                            allyStats[0][0] = 0.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally one with an attack debuff");
-                                            allyStats[0][0] = 0.6;
-                                            break;
-                                    }
-                                    break;
-                                case 1:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally two with an attack debuff");
-                                            allyStats[1][0] = 0.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally two with an attack debuff");
-                                            allyStats[1][0] = 0.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally two with an attack debuff");
-                                            allyStats[1][0] = 0.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally two with an attack debuff");
-                                            allyStats[1][0] = 0.6;
-                                            break;
-                                    }
-                                    break;
-                                case 2:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally three with an attack debuff");
-                                            allyStats[2][0] = 0.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally three with an attack debuff");
-                                            allyStats[2][0] = 0.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally three with an attack debuff");
-                                            allyStats[2][0] = 0.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally three with an attack debuff");
-                                            allyStats[2][0] = 0.6;
-                                            break;
-                                    }
-                                    break;
-                                case 3:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally four with an attack debuff");
-                                            allyStats[3][0] = 0.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally four with an attack debuff");
-                                            allyStats[3][0] = 0.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally four with an attack debuff");
-                                            allyStats[3][0] = 0.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally four with an attack debuff");
-                                            allyStats[3][0] = 0.6;
-                                            break;
-                                    }
-                                    break;
-                            }
+                if (decision == 0){
+                    String who = "o";
+                    String target = "o";
+                    String what = "o";
+                    int targetInt = rng.nextInt(4);
+                    int whatInt = rng.nextInt(3);
+                    switch (enemy){
+                        case 0:
+                            who = "Archangel";
                             break;
-                        case 1: // defense
-                            decision = rng.nextInt(4);
-                            switch (decision){ // which ally to target
-                                case 0: // ally one
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally one with an defense debuff");
-                                            allyStats[0][1] = 1.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally one with an defense debuff");
-                                            allyStats[0][1] = 1.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally one with an defense debuff");
-                                            allyStats[0][1] = 1.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally one with an defense debuff");
-                                            allyStats[0][1] = 1.6;
-                                            break;
-                                    }
-                                    break;
-                                case 1:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally two with an defense debuff");
-                                            allyStats[1][1] = 1.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally two with an defense debuff");
-                                            allyStats[1][1] = 1.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally two with an defense debuff");
-                                            allyStats[1][1] = 1.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally two with an defense debuff");
-                                            allyStats[1][1] = 1.6;
-                                            break;
-                                    }
-                                    break;
-                                case 2:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally three with an defense debuff");
-                                            allyStats[2][1] = 1.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally three with an defense debuff");
-                                            allyStats[2][1] = 1.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally three with an defense debuff");
-                                            allyStats[2][1] = 1.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally three with an defense debuff");
-                                            allyStats[2][1] = 1.6;
-                                            break;
-                                    }
-                                    break;
-                                case 3:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally four with an defense debuff");
-                                            allyStats[3][1] = 1.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally four with an defense debuff");
-                                            allyStats[3][1] = 1.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally four with an defense debuff");
-                                            allyStats[3][1] = 1.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally four with an defense debuff");
-                                            allyStats[3][1] = 1.6;
-                                            break;
-                                    }
-                                    break;
-                            }
+                        case 1:
+                            who = "Jack Frost";
                             break;
-                        case 2: // agility
-                            decision = rng.nextInt(4);
-                            switch (decision){ // which ally to target
-                                case 0: // ally one
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally one with an agility debuff");
-                                            allyStats[0][2] = 0.5;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally one with an agility debuff");
-                                            allyStats[0][2] = 0.5;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally one with an agility debuff");
-                                            allyStats[0][2] = 0.5;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally one with an agility debuff");
-                                            allyStats[0][2] = 0.5;
-                                            break;
-                                    }
-                                    break;
-                                case 1:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally two with an agility debuff");
-                                            allyStats[1][2] = 0.5;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally two with an agility debuff");
-                                            allyStats[1][2] = 0.5;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally two with an agility debuff");
-                                            allyStats[1][2] = 0.5;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally two with an agility debuff");
-                                            allyStats[1][2] = 0.5;
-                                            break;
-                                    }
-                                    break;
-                                case 2:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally three with an agility debuff");
-                                            allyStats[2][2] = 0.5;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally three with an agility debuff");
-                                            allyStats[2][2] = 0.5;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally three with an agility debuff");
-                                            allyStats[2][2] = 0.5;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally three with an agility debuff");
-                                            allyStats[2][2] = 0.5;
-                                            break;
-                                    }
-                                    break;
-                                case 3:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets ally four with an agility debuff");
-                                            allyStats[3][2] = 0.5;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets ally four with an agility debuff");
-                                            allyStats[3][2] = 0.5;
-                                            break;
-                                        case 2:textHistory.add("Legion targets ally four with an agility debuff");
-                                            allyStats[3][2] = 0.5;
-                                            break;
-                                        case 3:textHistory.add("Principality targets ally four with an agility debuff");
-                                            allyStats[3][0] = 0.5;
-                                            break;
-                                    }
-                                    break;
-                            }
+                        case 2:
+                            who = "Legion";
+                            break;
+                        case 3:
+                            who = "Principality";
                             break;
                     }
-                } else { // buff "allies" (enemies)
-                    decision = rng.nextInt(3);
-                    switch (decision){ // which buff
-                        case 0: // attack
-                            decision = rng.nextInt(4);
-                            switch (decision){ // which enemy to target
-                                case 0: // enemy one
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy one with an attack buff");
-                                            enemyStats[0][0] = 1.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy one with an attack buff");
-                                            enemyStats[0][0] = 1.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy one with an attack buff");
-                                            enemyStats[0][0] = 1.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy one with an attack buff");
-                                            enemyStats[0][0] = 1.6;
-                                            break;
-                                    }
-                                    break;
-                                case 1:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy two with an attack buff");
-                                            enemyStats[1][0] = 1.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy two with an attack buff");
-                                            enemyStats[1][0] = 1.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy two with an attack buff");
-                                            enemyStats[1][0] = 1.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy two with an attack buff");
-                                            enemyStats[1][0] = 1.6;
-                                            break;
-                                    }
-                                    break;
-                                case 2:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy three with an attack buff");
-                                            enemyStats[2][0] = 1.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy three with an attack buff");
-                                            enemyStats[2][0] = 1.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy three with an attack buff");
-                                            enemyStats[2][0] = 1.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy three with an attack buff");
-                                            enemyStats[2][0] = 1.6;
-                                            break;
-                                    }
-                                    break;
-                                case 3:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy four with an attack buff");
-                                            enemyStats[3][0] = 1.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy four with an attack buff");
-                                            enemyStats[3][0] = 1.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy four with an attack buff");
-                                            enemyStats[3][0] = 1.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy four with an attack buff");
-                                            enemyStats[3][0] = 1.6;
-                                            break;
-                                    }
-                                    break;
-                            }
+                    switch (whatInt){
+                        case 0:
+                            allyStats[targetInt][whatInt] = 0.6;
+                            what = "an attack debuff";
                             break;
-                        case 1: // defense
-                            decision = rng.nextInt(4);
-                            switch (decision){ // which enemy to target
-                                case 0: // enemy one
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy one with an defense buff");
-                                            enemyStats[0][1] = 0.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy one with an defense buff");
-                                            enemyStats[0][1] = 0.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy one with an defense buff");
-                                            enemyStats[0][1] = 0.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy one with an defense buff");
-                                            enemyStats[0][1] = 0.6;
-                                            break;
-                                    }
-                                    break;
-                                case 1:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy two with an defense buff");
-                                            enemyStats[1][1] = 0.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy two with an defense buff");
-                                            enemyStats[1][1] = 0.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy two with an defense buff");
-                                            enemyStats[1][1] = 0.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy two with an defense buff");
-                                            enemyStats[1][1] = 0.6;
-                                            break;
-                                    }
-                                    break;
-                                case 2:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy three with an defense buff");
-                                            enemyStats[2][1] = 0.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy three with an defense buff");
-                                            enemyStats[2][1] = 0.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy three with an defense buff");
-                                            enemyStats[2][1] = 0.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy three with an defense buff");
-                                            enemyStats[2][1] = 0.6;
-                                            break;
-                                    }
-                                    break;
-                                case 3:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy four with an defense buff");
-                                            enemyStats[3][1] = 0.6;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy four with an defense buff");
-                                            enemyStats[3][1] = 0.6;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy four with an defense buff");
-                                            enemyStats[3][1] = 0.6;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy four with an defense buff");
-                                            enemyStats[3][1] = 0.6;
-                                            break;
-                                    }
-                                    break;
-                            }
+                        case 1:
+                            what = "a defense debuff";
+                            allyStats[targetInt][whatInt] = 1.6;
                             break;
-                        case 2: // agility
-                            decision = rng.nextInt(4);
-                            switch (decision){ // which enemy to target
-                                case 0: // enemy one
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy one with an agility buff");
-                                            enemyStats[0][2] = 2;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy one with an agility buff");
-                                            enemyStats[0][2] = 2;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy one with an agility buff");
-                                            enemyStats[0][2] = 2;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy one with an agility buff");
-                                            enemyStats[0][2] = 2;
-                                            break;
-                                    }
-                                    break;
-                                case 1:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy two with an agility buff");
-                                            enemyStats[1][2] = 2;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy two with an agility buff");
-                                            enemyStats[1][2] = 2;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy two with an agility buff");
-                                            enemyStats[1][2] = 2;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy two with an agility buff");
-                                            enemyStats[1][2] = 2;
-                                            break;
-                                    }
-                                    break;
-                                case 2:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy three with an agility buff");
-                                            enemyStats[2][2] = 2;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy three with an agility buff");
-                                            enemyStats[2][2] = 2;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy three with an agility buff");
-                                            enemyStats[2][2] = 2;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy three with an agility buff");
-                                            enemyStats[2][2] = 2;
-                                            break;
-                                    }
-                                    break;
-                                case 3:
-                                    switch (enemy){
-                                        case 0:
-                                            textHistory.add("Archangel targets enemy four with an agility buff");
-                                            enemyStats[3][2] = 2;
-                                            break;
-                                        case 1:textHistory.add("Jack Frost targets enemy four with an agility buff");
-                                            enemyStats[3][2] = 2;
-                                            break;
-                                        case 2:textHistory.add("Legion targets enemy four with an agility buff");
-                                            enemyStats[3][2] = 2;
-                                            break;
-                                        case 3:textHistory.add("Principality targets enemy four with an agility buff");
-                                            enemyStats[3][0] = 2;
-                                            break;
-                                    }
-                                    break;
-                            }
+                        case 2:
+                            what = "an agility debuff";
+                            allyStats[targetInt][whatInt] = 0.5;
                             break;
                     }
+                    switch (targetInt){
+                        case 0:
+                            target = "Ame No Uzume";
+                            break;
+                        case 1:
+                            target = "Cendrillon";
+                            break;
+                        case 2:
+                            target = "Orpheus";
+                            break;
+                        case 3:
+                            target = "Robin Hood";
+                            break;
+                    }
+                    textHistory.add(who + " targets " + target + " with " + what);
+                } else {
+                    String who = "o";
+                    String target = "o";
+                    String what = "o";
+                    int targetInt = rng.nextInt(4);
+                    int whatInt = rng.nextInt(3);
+                    switch (enemy){
+                        case 0:
+                            who = "Archangel";
+                            break;
+                        case 1:
+                            who = "Jack Frost";
+                            break;
+                        case 2:
+                            who = "Legion";
+                            break;
+                        case 3:
+                            who = "Principality";
+                            break;
+                    }
+                    switch (whatInt){
+                        case 0:
+                            enemyStats[targetInt][whatInt] = 1.6;
+                            what = "an attack buff";
+                            break;
+                        case 1:
+                            what = "a defense buff";
+                            enemyStats[targetInt][whatInt] = 0.6;
+                            break;
+                        case 2:
+                            what = "an agility buff";
+                            enemyStats[targetInt][whatInt] = 2;
+                            break;
+                    }
+                    switch (targetInt){
+                        case 0:
+                            target = "Archangel";
+                            break;
+                        case 1:
+                            target = "Jack Frost";
+                            break;
+                        case 2:
+                            target = "Legion";
+                            break;
+                        case 3:
+                            target = "Principality";
+                            break;
+                    }
+                    textHistory.add(who + " targets " + target + " with " + what);
                 }
-                break;
         }
     }
     
@@ -1636,120 +1287,53 @@ public class Game
         goNext();
     }
     
-    void boost(int ally){
-        switch (typeOfMove){
-            case 3: // attack boosts
-                switch (currentCharacter){ // who is giving the boost
-                    case 0: // ame
-                        System.out.println("if you got here you fucked something up");
-                        // ame has no boost moves, so if you got here something went wrong
-                        break;
-                    case 1:
-                        System.out.println("if you got here you fucked something up");
-                        // cendrillon cant boost attack
-                        break;
-                    case 2:
-                        System.out.println("if you got here you fucked something up");
-                        // orpheus cannot boost attack
-                        break;
-                    case 3: // robin hood can boost attack
-                        switch (ally){
-                            case 0: // boost ame
-                                textHistory.add("Robin Hood boosts Attack of Ame No Uzume");
-                                allyStats[0][0] = 2; // multiplying total damage by 2 means more damage, which means higher attack
-                                break;
-                            case 1: // boost cendrillon
-                                textHistory.add("Robin Hood boosts Attack of Cendrillon");
-                                allyStats[1][0] = 2;
-                                break;
-                            case 2: // boost orpheus
-                                textHistory.add("Robin Hood boosts Attack of Orpheus");
-                                allyStats[2][0] = 2;
-                                break;
-                            case 3: // boost robin hood
-                                textHistory.add("Robin Hood boosts Attack of Robin Hood");
-                                allyStats[3][0] = 2;
-                                break;
-                        }
-                        spAlly[3] -= 12;
-                        break;
-                }
+    void boost(int target){
+        String what = "o";
+        String from = "o";
+        String who = "o";
+        switch (currentCharacter){
+            case 0:
+                from = "Ame No Uzume";
                 break;
-            case 4: // defense boosts 
-                switch (currentCharacter){ // who is giving the boost
-                    case 0: // ame
-                        System.out.println("if you got here you fucked something up");
-                        // ame has no boost moves, so if you got here something went wrong
-                        break;
-                    case 1:
-                        System.out.println("if you got here you fucked something up");
-                        // cendrillon cant boost defesne
-                        break;
-                    case 2:
-                        switch (ally){
-                            case 0: // boost ame
-                                textHistory.add("Orpheus boosts Defense of Ame No Uzume");
-                                allyStats[0][1] = 0.5; // multiplying total damage by 0.5 means less damage, which means higher defense
-                                break;
-                            case 1: // boost cendrillon
-                                textHistory.add("Orpheus boosts Defense of Cendrillon");
-                                allyStats[1][1] = 0.5;
-                                break;
-                            case 2: // boost orpheus
-                                textHistory.add("Orpheus boosts Defense of Orpheus");
-                                allyStats[2][1] = 0.5;
-                                break;
-                            case 3: // boost robin hood
-                                textHistory.add("Orpheus boosts Defense of Robin Hood");
-                                allyStats[3][1] = 0.5;
-                                break;
-                        }
-                        spAlly[2] -= 12;
-                        break;
-                    case 3:
-                        System.out.println("if you got here you fucked something up");
-                        // robin hood cant boost defense
-                        break;
-                }
+            case 1:
+                from = "Cendrillon";
                 break;
-            case 5: // agility boosts
-                switch (currentCharacter){ // who is giving the boost
-                    case 0: // ame
-                        System.out.println("if you got here you fucked something up");
-                        // ame has no boost moves, so if you got here something went wrong
-                        break;
-                    case 1:
-                        switch (ally){
-                            case 0: // boost ame
-                                textHistory.add("Cendrillon boosts Agility of Ame No Uzume");
-                                allyStats[0][2] = 2;
-                                break;
-                            case 1: // boost cendrillon
-                                textHistory.add("Cendrillon boosts Agility of Cendrillon");
-                                allyStats[1][2] = 2;
-                                break;
-                            case 2: // boost orpheus
-                                textHistory.add("Cendrillon boosts Agility of Orpheus");
-                                allyStats[2][2] = 2;
-                                break;
-                            case 3: // boost robin hood
-                                textHistory.add("Cendrillon boosts Agility of Robin Hood");
-                                allyStats[3][2] = 2;
-                                break;
-                        }
-                        spAlly[1] -= 12;
-                        break;
-                    case 2:
-                        System.out.println("if you got here you fucked something up");
-                        // orpheus cant boost agility
-                        break;
-                    case 3:
-                        System.out.println("if you got here you fucked something up");
-                        // robin hood cant boost agility
-                        break;
-                }
+            case 2:
+                from = "Orpheus";
+                break;
+            case 3:
+                from = "Robin Hood";
                 break;
         }
+        switch (typeOfMove){
+            case 3:
+                what = "Attack";
+                allyStats[target][0] = 1.6;
+                break;
+            case 4:
+                what = "Defense";
+                allyStats[target][1] = 0.6;
+                break;
+            case 5:
+                what = "Agility";
+                allyStats[target][2] = 2;
+                break;
+        }
+        switch (target){
+            case 0:
+                who = "Ame No Uzume";
+                break;
+            case 1:
+                who = "Cendrillon";
+                break;
+            case 2:
+                who = "Orpheus";
+                break;
+            case 3:
+                who = "Robin Hood";
+                break;
+        }
+        textHistory.add(from + " Boosts the " + what + " of " + who);
         goNext();
     }
     
