@@ -23,9 +23,18 @@ public class Game
     
     // varialbes for characters
     int hpMaxAlly[] = new int[]{500,500,500,500};
-    int hpAlly[] = new int[]{hpMaxAlly[0],hpMaxAlly[1],hpMaxAlly[2],hpMaxAlly[3]};
-    boolean allyInjured = false;
-    boolean allyDead = false;
+    int hpAlly[] = new int[]{hpMaxAlly[0],hpMaxAlly[1] - 300,hpMaxAlly[2],hpMaxAlly[3]};
+    boolean isAllyInjured = false;
+    int allyInjured[] = new int[]{0,0,0,0};
+    boolean isAllyDead = false;
+    int allyDead[] = new int[]{0,0,0,0};
+    
+    int hpMaxEnemy[] = new int[]{800,800,800,800};
+    int hpEnemy[] = new int[]{hpMaxEnemy[0],hpMaxEnemy[1] - 500,hpMaxEnemy[2] - 500,hpMaxEnemy[3]};
+    boolean isEnemyInjured = false;
+    int enemyInjured[] = new int[]{0,0,0,0};
+    boolean isEnemyDead = false;
+    int enemyDead[] = new int[]{0,0,0,0};
     
     int spMaxAlly[] = new int[]{150,150,150,150};
     int spAlly[] = new int[]{spMaxAlly[0],spMaxAlly[1],spMaxAlly[2],spMaxAlly[3]};
@@ -42,12 +51,6 @@ public class Game
     String affinity = "o";
     int affinityRNG = 4;
     int affinitiesKnown[] = new int[]{0,0,0,0}; // 1 unknown affinities, 1 = known affinities.
-    
-    int hpMaxEnemy[] = new int[]{800,800,800,800};
-    int hpEnemy[] = new int[]{hpMaxEnemy[0],hpMaxEnemy[1],hpMaxEnemy[2],hpMaxEnemy[3]};
-    boolean enemyInjured;
-    int enemyInjuredWho[] = new int[]{0,0,0,0};
-    boolean enemyDead;
     
     int typeOfMove; // 0 = phys, 1 = magic, 2 = healing, 3 = buff atk, 4 = buff def, 5 = buff agl, 6 = sweeper
     int difficulty;
@@ -129,6 +132,10 @@ public class Game
                 switch (allyAffinities[receiver][moveAffinity]){
                     case 0: // if ally is normal to move affinity
                         preBattleDamage = baseDamage * allyStats[receiver][1] * enemyStats[currentCharacter][0] * damageTakenMultiplier;
+                        if (guard[receiver] == 1){
+                            preBattleDamage = preBattleDamage / 2;
+                            guard[receiver] = 0;
+                        }
                         battleDamage = (int)Math.round(preBattleDamage);
                         hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
@@ -137,6 +144,10 @@ public class Game
                     case 1: // if ally is weak to move affinity
                         preBattleDamage = baseDamage * allyStats[receiver][1] * enemyStats[currentCharacter][0] * damageTakenMultiplier * 1.45;
                         battleDamage = (int)Math.round(preBattleDamage);
+                        if (guard[receiver] == 1){
+                            preBattleDamage = preBattleDamage / 2;
+                            guard[receiver] = 0;
+                        }
                         hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
                         setStatus(receiver + 4, 0);
@@ -144,6 +155,10 @@ public class Game
                     case 2: // if ally resists move affinity
                         preBattleDamage = baseDamage * allyStats[receiver][1] * enemyStats[currentCharacter][0] * damageTakenMultiplier * 0.69;
                         battleDamage = (int)Math.round(preBattleDamage);
+                        if (guard[receiver] == 1){
+                            preBattleDamage = preBattleDamage / 2;
+                            guard[receiver] = 0;
+                        }
                         hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " resists " + toAffinity + ", and takes " + battleDamage + " damage.");
                         setStatus(receiver + 4, 1);
@@ -151,6 +166,10 @@ public class Game
                     case 3: // if ally is null to move affinity
                         preBattleDamage = 0;
                         battleDamage = (int)Math.round(preBattleDamage);
+                        if (guard[receiver] == 1){
+                            preBattleDamage = preBattleDamage / 2;
+                            guard[receiver] = 0;
+                        }
                         hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
                         setStatus(receiver + 4, 2);
@@ -183,247 +202,180 @@ public class Game
         move = moveNew;
         switch (turn){
             case 0: // if its an allies turn
-                switch (currentCharacter){ // which ally is it
-                    case 0: // ame no uzume, wind
-                        switch (moveNew){ // what move are they making
-                            case 0: // attack
-                                typeOfMove = 0;
-                                prevPage = 0;
-                                page = 1;
-                                break;
-                            case 1: // guard
-                                guard("Ame no uzume");
-                                break;
-                            case 2: // magic
-                                prevPage = 0;
-                                page = 2;
-                                break;
-                            case 3: // item
-                                prevPage = 0;
-                                page = 3;
-                                break;
-                        }
+                switch (move){ // what move are they making
+                    case 0: // attack
+                        typeOfMove = 0;
+                        prevPage = 0;
+                        page = 1;
                         break;
-                    case 1: // cendrillon, water damage
-                        switch (move){ // what move are they making
-                            case 0: // attack
-                                typeOfMove = 0;
-                                prevPage = 0;
-                                page = 1;
-                                break;
-                            case 1: // guard
-                                guard("Cendrillon");
-                                break;
-                            case 2: // magic
-                                prevPage = 0;
-                                page = 2;
-                                break;
-                            case 3: // item
-                                prevPage = 0;
-                                page = 3;
-                                break;
-                        }
+                    case 1: // guard
+                        guard(currentCharacter);
                         break;
-                    case 2: // orpheus, moon damage
-                        switch (move){ // what move are they making
-                            case 0: // attack
-                                typeOfMove = 0;
-                                prevPage = 0;
-                                page = 1;
-                                break;
-                            case 1: // guard
-                                guard("Orpheus");
-                                break;
-                            case 2: // magic
-                                prevPage = 0;
-                                page = 2;
-                                break;
-                            case 3: // item
-                                prevPage = 0;
-                                page = 3;
-                                break;
-                        }
+                    case 2: // magic
+                        prevPage = 0;
+                        page = 2;
                         break;
-                    case 3: // robin hood, sun damage
-                        switch (move){ // what move are they making
-                            case 0: // attack
-                                typeOfMove = 0;
-                                prevPage = 0;
-                                page = 1;
-                                break;
-                            case 1: // guard
-                                guard("Robin Hood");
-                                break;
-                            case 2: // magic
-                                prevPage = 0;
-                                page = 2;
-                                break;
-                            case 3: // item
-                                prevPage = 0;
-                                page = 3;
-                                break;
-                        }                        
+                    case 3: // item
+                        prevPage = 0;
+                        page = 3;
                         break;
-                }
+                }      
                 break;
             case 1: // if its an enemies turn
                 switch (currentCharacter){
                     case 0:
                         boolean skip = false;
-                        if (enemyStats[0][3] == 1){ // if afflicted with shock
-                            int shock = rng.nextInt(10);
-                            if (shock < 7){ // 80% chance you remain shocked
-                                textHistory.add("Archangel is still shocked");
-                                shock = rng.nextInt(10);
-                                if (shock < 5){ // 40% chance you can move anyways
+                        if (hpEnemy[currentCharacter] > 0){ // if not dead do the thing
+                            if (enemyStats[0][3] == 1){ // if afflicted with shock
+                                int shock = rng.nextInt(10);
+                                if (shock < 7){ // 80% chance you remain shocked
+                                    textHistory.add("Archangel is still shocked");
+                                    shock = rng.nextInt(10);
+                                    if (shock < 5){ // 40% chance you can move anyways
+                                        skip = false;
+                                    } else { // 60% chance you cannot move
+                                        skip = true;
+                                    }
+                                } else { // 20% chance you remove shock
+                                    textHistory.add("Archangel has recovered from shock");
+                                    enemyStats[0][3] = 0;
                                     skip = false;
-                                } else { // 60% chance you cannot move
-                                    skip = true;
                                 }
-                            } else { // 20% chance you remove shock
-                                textHistory.add("Archangel has recovered from shock");
-                                enemyStats[0][3] = 0;
-                                skip = false;
                             }
-                        }
-                        if (skip){
-                            textHistory.add("Archangel is shocked and cannot move");
-                        } else {
-                            if (enemyInjured){ // if "ally" (enemy) injured
-                                int decision = rng.nextInt(5);
-                                if (decision == 1){
-                                    enemyHeal("Archangel");
-                                } else { // 66% you just attack anyways
+                            if (skip){
+                                textHistory.add("Archangel is shocked and cannot move");
+                            } else {
+                                if (isEnemyInjured){ // if "ally" (enemy) injured
+                                    int decision = rng.nextInt(5);
+                                    if (decision == 1){
+                                        enemyHeal("Archangel");
+                                    } else { // 66% you just attack anyways
+                                        enemyAttack(0);
+                                    }
+                                } else { // other wise if no one is injured just attack
                                     enemyAttack(0);
                                 }
-                            } else { // other wise if no one is injured just attack
-                                enemyAttack(0);
                             }
+                        } else { // if dead skip turn
+                            goNext();
+                            System.out.println("dead");
                         }
                         break;
                     case 1:
                         skip = false;
-                        if (enemyStats[1][3] == 1){ // if afflicted with shock
-                            int shock = rng.nextInt(10);
-                            if (shock < 7){ // 80% chance you remain shocked
-                                textHistory.add("Jack Frost is still shocked");
-                                shock = rng.nextInt(10);
-                                if (shock < 5){ // 40% chance you can move anyways
+                        if (hpEnemy[currentCharacter] > 0){ // if not dead do the thing
+                            if (enemyStats[1][3] == 1){ // if afflicted with shock
+                                int shock = rng.nextInt(10);
+                                if (shock < 7){ // 80% chance you remain shocked
+                                    textHistory.add("Jack Frost is still shocked");
+                                    shock = rng.nextInt(10);
+                                    if (shock < 5){ // 40% chance you can move anyways
+                                        skip = false;
+                                    } else { // 60% chance you cannot move
+                                        skip = true;
+                                    }
+                                } else { // 20% chance you remove shock
+                                    textHistory.add("Jack Frost has recovered from shock");
+                                    enemyStats[1][3] = 0;
                                     skip = false;
-                                } else { // 60% chance you cannot move
-                                    skip = true;
                                 }
-                            } else { // 20% chance you remove shock
-                                textHistory.add("Jack Frost has recovered from shock");
-                                enemyStats[1][3] = 0;
-                                skip = false;
                             }
-                        }
-                        if (skip){
-                            textHistory.add("Jack Frost is shocked and cannot move");
-                        } else {
-                            if (enemyInjured){ // if "ally" (enemy) injured
-                                int decision = rng.nextInt(5);
-                                if (decision == 1){
-                                    enemyHeal("Jack Frost");
-                                } else { // 66% you just attack anyways
+                            if (skip){
+                                textHistory.add("Jack Frost is shocked and cannot move");
+                            } else {
+                                if (isEnemyInjured){ // if "ally" (enemy) injured
+                                    int decision = rng.nextInt(5);
+                                    if (decision == 1){
+                                        enemyHeal("Jack Frost");
+                                    } else { // 66% you just attack anyways
+                                        enemyAttack(1);
+                                    }
+                                } else { // other wise if no one is injured just attack
                                     enemyAttack(1);
                                 }
-                            } else { // other wise if no one is injured just attack
-                                enemyAttack(1);
                             }
+                        } else { // if dead skip turn
+                            goNext();
+                            System.out.println("dead");
                         }
                         break;
                     case 2:
                         skip = false;
-                        if (enemyStats[2][3] == 1){ // if afflicted with shock
-                            int shock = rng.nextInt(10);
-                            if (shock < 7){ // 80% chance you remain shocked
-                                textHistory.add("Legion is still shocked");
-                                shock = rng.nextInt(10);
-                                if (shock < 5){ // 40% chance you can move anyways
+                        if (hpEnemy[currentCharacter] > 0){ // if not dead do the thing
+                            if (enemyStats[2][3] == 1){ // if afflicted with shock
+                                int shock = rng.nextInt(10);
+                                if (shock < 7){ // 80% chance you remain shocked
+                                    textHistory.add("Legion is still shocked");
+                                    shock = rng.nextInt(10);
+                                    if (shock < 5){ // 40% chance you can move anyways
+                                        skip = false;
+                                    } else { // 60% chance you cannot move
+                                        skip = true;
+                                    }
+                                } else { // 20% chance you remove shock
+                                    textHistory.add("Legion has recovered from shock");
+                                    enemyStats[2][3] = 0;
                                     skip = false;
-                                } else { // 60% chance you cannot move
-                                    skip = true;
                                 }
-                            } else { // 20% chance you remove shock
-                                textHistory.add("Legion has recovered from shock");
-                                enemyStats[2][3] = 0;
-                                skip = false;
                             }
-                        }
-                        if (skip){
-                            textHistory.add("Legion is shocked and cannot move");
-                        } else {
-                            if (enemyInjured){ // if "ally" (enemy) injured
-                                int decision = rng.nextInt(5);
-                                if (decision == 1){ // 33% rng.nextInt(5)
-                                    enemyHeal("Legion");
-                                } else { // 66% you just attack anyways
+                            if (skip){
+                                textHistory.add("Legion is shocked and cannot move");
+                            } else {
+                                if (isEnemyInjured){ // if "ally" (enemy) injured
+                                    int decision = rng.nextInt(5);
+                                    if (decision == 1){ // 33% rng.nextInt(5)
+                                        enemyHeal("Legion");
+                                    } else { // 66% you just attack anyways
+                                        enemyAttack(2);
+                                    }
+                                } else { // other wise if no one is injured just attack
                                     enemyAttack(2);
                                 }
-                            } else { // other wise if no one is injured just attack
-                                enemyAttack(2);
                             }
+                        } else {
+                            goNext();
+                            System.out.println("dead");
                         }
                         break;
                     case 3:
                         skip = false;
-                        if (enemyStats[3][3] == 1){ // if afflicted with shock
-                            int shock = rng.nextInt(10);
-                            if (shock < 7){ // 80% chance you remain shocked
-                                textHistory.add("Principality is still shocked");
-                                shock = rng.nextInt(10);
-                                if (shock < 5){ // 40% chance you can move anyways
+                        if (hpEnemy[currentCharacter] > 0){ // if not dead do the thing
+                            if (enemyStats[3][3] == 1){ // if afflicted with shock
+                                int shock = rng.nextInt(10);
+                                if (shock < 7){ // 80% chance you remain shocked
+                                    textHistory.add("Principality is still shocked");
+                                    shock = rng.nextInt(10);
+                                    if (shock < 5){ // 40% chance you can move anyways
+                                        skip = false;
+                                    } else { // 60% chance you cannot move
+                                        skip = true;
+                                    }
+                                } else { // 20% chance you remove shock
+                                    textHistory.add("Principality has recovered from shock");
+                                    enemyStats[3][3] = 0;
                                     skip = false;
-                                } else { // 60% chance you cannot move
-                                    skip = true;
                                 }
-                            } else { // 20% chance you remove shock
-                                textHistory.add("Principality has recovered from shock");
-                                enemyStats[3][3] = 0;
-                                skip = false;
                             }
-                        }
-                        if (skip){
-                            textHistory.add("Principality is shocked and cannot move");
-                        } else {
-                            if (enemyInjured){ // if "ally" (enemy) injured
-                                int decision = rng.nextInt(5);
-                                if (decision == 1){
-                                    enemyHeal("Principality");
-                                } else { // 33% you just attack anyways
+                            if (skip){
+                                textHistory.add("Principality is shocked and cannot move");
+                            } else {
+                                if (isEnemyInjured){ // if "ally" (enemy) injured
+                                    int decision = rng.nextInt(5);
+                                    if (decision == 1){
+                                        enemyHeal("Principality");
+                                    } else { // 33% you just attack anyways
+                                        enemyAttack(3);
+                                    }
+                                } else { // other wise if no one is injured just attack
                                     enemyAttack(3);
                                 }
-                            } else { // other wise if no one is injured just attack
-                                enemyAttack(3);
                             }
+                        } else {
+                            goNext();
+                            System.out.println("dead");
                         }
                         break;
                 }
-                break;
-        }
-    }
-    
-    void setAffinity(int toAffinity){
-        switch (affinityRNG){
-            case 0:
-                affinity = "Fire";
-                break;
-            case 1:
-                affinity = "Water";
-                break;
-            case 2:
-                affinity = "Air";
-                break;
-            case 3:
-                affinity = "Earth";
-                break;
-            case 4:
-                affinity = "Sun";
-                break;
-            case 5:
-                affinity = "Moon";
                 break;
         }
     }
@@ -521,6 +473,7 @@ public class Game
                 }
                 textHistory.add(who + " targets " + target + " with a basic attack");
                 calculateDamage(decision, target, "Physical", 55, 6);
+                break;
             case 3: // buff / debuff
                 decision = rng.nextInt(2);
                 if (decision == 0){
@@ -545,8 +498,8 @@ public class Game
                     }
                     switch (whatInt){
                         case 0:
-                            allyStats[targetInt][whatInt] = 0.6;
                             what = "an attack debuff";
+                            allyStats[targetInt][whatInt] = 0.6;
                             break;
                         case 1:
                             what = "a defense debuff";
@@ -572,6 +525,7 @@ public class Game
                             break;
                     }
                     textHistory.add(who + " targets " + target + " with " + what);
+                    break;
                 } else {
                     who = "o";
                     target = "o";
@@ -621,6 +575,7 @@ public class Game
                             break;
                     }
                     textHistory.add(who + " targets " + target + " with " + what);
+                    break;
                 }
         }
     }
@@ -628,16 +583,16 @@ public class Game
     void enemyHeal(String enemy){
         // i know this is linear, i also know it is possibly exploitable as it will always search for injuries left to right, but if you
         // know you can pull that off you deserve to be able to abuse this mechanic.
-        if (enemyInjuredWho[0] == 1){
+        if (enemyInjured[0] == 1 && enemyDead[0] == 0){
             textHistory.add(enemy + " has healed enemy one");
             calculateHealing(0, "Archangel", 100);
-        } else if (enemyInjuredWho[1] == 1){
+        } else if (enemyInjured[1] == 1 && enemyDead[1] == 0){
             textHistory.add(enemy + " has healed enemy two");
             calculateHealing(1, "Jack Frost", 100);
-        } else if (enemyInjuredWho[2] == 1){
+        } else if (enemyInjured[2] == 1 && enemyDead[2] == 0){
             textHistory.add(enemy + " has healed enemy three");
             calculateHealing(2, "Legion", 100);
-        } else if (enemyInjuredWho[3] == 1){
+        } else if (enemyInjured[3] == 1 && enemyDead[3] == 0){
             textHistory.add(enemy + " has healed enemy four");
             calculateHealing(3, "Principality", 100);
         }
@@ -692,8 +647,25 @@ public class Game
         goNext();
     }
     
-    public void guard(String who){ // if from the main menu above you select guard. it will do this
-        textHistory.add(who + " Guards");
+    public void guard(int who){ // if from the main menu above you select guard. it will do this
+        switch (who){
+            case 0:
+                guard[who] = 1;
+                textHistory.add("Ame No Uzume Guards");
+                break;
+            case 1:
+                guard[who] = 1;
+                textHistory.add("Cendrillon Guards");
+                break;
+            case 2:
+                guard[who] = 1;
+                textHistory.add("Orpheus Guards");
+                break;
+            case 3:
+                guard[who] = 1;
+                textHistory.add("Robin Hood Guards");
+                break;
+        }
         goNext();
     }
     
@@ -701,7 +673,7 @@ public class Game
         move = moveNew;
         switch (currentCharacter){ //depending on who is choosing to magic attack, display different moves
             case 0: // ame moves
-                switch (move){
+                switch (move){ 
                     case 0: // zephyr
                         if (spAlly[0] > 9){
                             typeOfMove = 1;
@@ -721,7 +693,7 @@ public class Game
                         }
                         break;
                     case 2: // redemption
-                        if (allyInjured){
+                        if (isAllyInjured){
                             if (spAlly[0] > 22){
                                 typeOfMove = 2;
                                 prevPage = 2;
@@ -734,7 +706,7 @@ public class Game
                         }
                         break;
                     case 3: // guardian angel
-                        if (allyDead){
+                        if (isAllyDead){
                             if (spAlly[0] > 8){
                                 typeOfMove = 2;
                                 prevPage = 2;
@@ -1002,29 +974,29 @@ public class Game
     }
     
     void healing(int ally){
-        switch (currentCharacter){
-            case 0: // ame
-                switch (ally){
-                    case 0:
-                        textHistory.add("Ame No Uzume uses redemption on Ame No Uzume");
-                        calculateHealing(0, "Ame No Uzume", 80);
-                        break;
-                    case 1:
-                        textHistory.add("Ame No Uzume uses redemption on Cendrillon");
-                        calculateHealing(1, "Cendrillon", 80);
-                        break;
-                    case 2:
-                        textHistory.add("Ame No Uzume uses redemption on Orpheus");
-                        calculateHealing(2, "Orpheus", 0);
-                        break;
-                    case 3:
-                        textHistory.add("Ame No Uzume uses redemption on Robin Hood");
-                        calculateHealing(3, "Robin Hood", 80);
-                        break;
-                }
-                spAlly[0] -= 8;
-                break;
+        textHistory.add("Ame No Uzume uses Redemption");
+        String who = "o";
+        if (allyDead[ally] == 1){
+            System.out.println("cannot heal because ally is dead");
+        } else {
+            switch (ally){
+                case 0:
+                    who = "Ame No Uzume";
+                    break;
+                case 1:
+                    who = "Cendrillon";
+                    break;
+                case 2:
+                    who = "Orpheus";
+                    break;
+                case 3:
+                    who = "Robin Hood";
+                    break;
+            }
         }
+        calculateHealing(ally, who, 80);
+        spAlly[0] -= 8;
+        
         goNext();
     }
     
@@ -1218,6 +1190,258 @@ public class Game
     }
     
     public void goNext(){ // the script that decides whos turn is next, and basically advances the game
+        switch (turn){
+            case 0:
+                switch (currentCharacter){
+                    case 0:
+                        if (allyDead[1] == 1){
+                            if (allyDead[2] == 1){
+                                if (allyDead[3] == 1){
+                                    textHistory.add("----- Switching to enemy turn-----");
+                                    turn = 1;
+                                    page = 420;
+                                    if (enemyDead[0] == 1){ // if first ally dead
+                                        if (enemyDead[1] == 1){ // if second ally dead
+                                            if (enemyDead[2] == 1){ // if third ally dead
+                                                if (enemyDead[3] == 1){ // if all allies dead
+                                                    System.out.println("you fuckin won bro");
+                                                } else { // if fourth enemy not dead any everyone else is
+                                                    currentCharacter = 3;
+                                                }
+                                            } else { // if third enemy not dead
+                                                currentCharacter = 2;
+                                            }
+                                        } else { // if second enemy not dead
+                                            currentCharacter = 1;
+                                        }
+                                    } else { // if first enemy not dead
+                                        currentCharacter = 0;
+                                    }
+                                    page = 420;
+                                    move(69);
+                                } else {
+                                    currentCharacter = 3;
+                                }
+                            } else {
+                                currentCharacter = 2;
+                            }
+                        } else {
+                            currentCharacter = 1;
+                        }
+                        page = 0;
+                        break;
+                    case 1:
+                        if (allyDead[2] == 1){
+                            if (allyDead[3] == 1){
+                                textHistory.add("----- Switching to enemy turn-----");
+                                turn = 1;
+                                page = 420;
+                                if (enemyDead[0] == 1){ // if first ally dead
+                                    if (enemyDead[1] == 1){ // if second ally dead
+                                        if (enemyDead[2] == 1){ // if third ally dead
+                                            if (enemyDead[3] == 1){ // if all allies dead
+                                                System.out.println("you fuckin won bro");
+                                            } else { // if fourth enemy not dead any everyone else is
+                                                currentCharacter = 3;
+                                            }
+                                        } else { // if third enemy not dead
+                                            currentCharacter = 2;
+                                        }
+                                    } else { // if second enemy not dead
+                                        currentCharacter = 1;
+                                    }
+                                } else { // if first enemy not dead
+                                    currentCharacter = 0;
+                                }
+                                page = 420;
+                                move(69);
+                            } else {
+                                currentCharacter = 3;
+                            }
+                        } else {
+                            currentCharacter = 2;
+                        }
+                        page = 0;
+                        break;
+                    case 2:
+                        if (allyDead[3] == 1){
+                            textHistory.add("----- Switching to enemy turn-----");
+                            turn = 1;
+                            page = 420;
+                            if (enemyDead[0] == 1){ // if first ally dead
+                                if (enemyDead[1] == 1){ // if second ally dead
+                                    if (enemyDead[2] == 1){ // if third ally dead
+                                        if (enemyDead[3] == 1){ // if all allies dead
+                                            System.out.println("you fuckin won bro");
+                                        } else { // if fourth enemy not dead any everyone else is
+                                            currentCharacter = 3;
+                                        }
+                                    } else { // if third enemy not dead
+                                        currentCharacter = 2;
+                                    }
+                                } else { // if second enemy not dead
+                                    currentCharacter = 1;
+                                }
+                            } else { // if first enemy not dead
+                                currentCharacter = 0;
+                            }
+                            page = 420;
+                            move(69);
+                        } else {
+                            currentCharacter = 3;
+                        }
+                        page = 0;
+                        break;
+                    case 3:
+                        textHistory.add("----- Switching to enemy turn-----");
+                        turn = 1;
+                        page = 420;
+                        if (enemyDead[0] == 1){ // if first ally dead
+                            if (enemyDead[1] == 1){ // if second ally dead
+                                if (enemyDead[2] == 1){ // if third ally dead
+                                    if (enemyDead[3] == 1){ // if all allies dead
+                                        System.out.println("you fuckin won bro");
+                                    } else { // if fourth enemy not dead any everyone else is
+                                        currentCharacter = 3;
+                                    }
+                                } else { // if third enemy not dead
+                                    currentCharacter = 2;
+                                }
+                            } else { // if second enemy not dead
+                                currentCharacter = 1;
+                            }
+                        } else { // if first enemy not dead
+                            currentCharacter = 0;
+                        }
+                        page = 420;
+                        move(69);
+                        break;
+                }
+                break;
+            case 1:
+                switch (currentCharacter){
+                    case 0:
+                        if (enemyDead[1] == 1){
+                            if (enemyDead[2] == 1){
+                                if (enemyDead[3] == 1){
+                                    textHistory.add("----- Switching to player turn-----");
+                                    turn = 0;
+                                    if (allyDead[0] == 1){ // if first ally dead
+                                        if (allyDead[1] == 1){ // if second ally dead
+                                            if (allyDead[2] == 1){ // if third ally dead
+                                                if (allyDead[3] == 1){ // if all allies dead
+                                                    System.out.println("you fuckin dead bro"); // lose the game
+                                                    page = 69420;
+                                                } else { // if fourth ally not dead and everyone else is
+                                                    currentCharacter = 3; // start with fourth character
+                                                }
+                                            } else { // if third ally not dead
+                                                currentCharacter = 2; // start with third character
+                                            }
+                                        } else { // if second ally not dead 
+                                            currentCharacter = 1; // start with second character
+                                        }
+                                    } else { // if first ally not dead
+                                        currentCharacter = 0; // start with first character
+                                    }
+                                    page = 0;
+                                } else {
+                                    currentCharacter = 3;
+                                }
+                            } else {
+                                currentCharacter = 2;
+                            }
+                        } else {
+                            currentCharacter = 1;
+                        }
+                        move(69);
+                        break;
+                    case 1:
+                        if (enemyDead[2] == 1){
+                            if (enemyDead[3] == 1){
+                                textHistory.add("----- Switching to player turn-----");
+                                turn = 0;
+                                if (allyDead[0] == 1){ // if first ally dead
+                                    if (allyDead[1] == 1){ // if second ally dead
+                                        if (allyDead[2] == 1){ // if third ally dead
+                                            if (allyDead[3] == 1){ // if all allies dead
+                                                System.out.println("you fuckin dead bro"); // lose the game
+                                                page = 69420;
+                                            } else { // if fourth ally not dead and everyone else is
+                                                currentCharacter = 3; // start with fourth character
+                                            }
+                                        } else { // if third ally not dead
+                                            currentCharacter = 2; // start with third character
+                                        }
+                                    } else { // if second ally not dead 
+                                        currentCharacter = 1; // start with second character
+                                    }
+                                } else { // if first ally not dead
+                                    currentCharacter = 0; // start with first character
+                                }
+                                page = 0;
+                            } else {
+                                currentCharacter = 3;
+                            }
+                        } else {
+                            currentCharacter = 2;
+                        }
+                        move(69);
+                        break;
+                    case 2:
+                        if (enemyDead[3] == 1){
+                            textHistory.add("----- Switching to player turn-----");
+                            turn = 0;
+                            if (allyDead[0] == 1){ // if first ally dead
+                                if (allyDead[1] == 1){ // if second ally dead
+                                    if (allyDead[2] == 1){ // if third ally dead
+                                        if (allyDead[3] == 1){ // if all allies dead
+                                            System.out.println("you fuckin dead bro"); // lose the game
+                                            page = 69420;
+                                        } else { // if fourth ally not dead and everyone else is
+                                            currentCharacter = 3; // start with fourth character
+                                        }
+                                    } else { // if third ally not dead
+                                        currentCharacter = 2; // start with third character
+                                    }
+                                } else { // if second ally not dead 
+                                    currentCharacter = 1; // start with second character
+                                }
+                            } else { // if first ally not dead
+                                currentCharacter = 0; // start with first character
+                            }
+                            page = 0;
+                        } else {
+                            currentCharacter = 3;
+                        }
+                        move(69);
+                        break;
+                    case 3:
+                        textHistory.add("----- Switching to player turn-----");
+                        turn = 0;
+                        if (allyDead[0] == 1){ // if first ally dead
+                            if (allyDead[1] == 1){ // if second ally dead
+                                if (allyDead[2] == 1){ // if third ally dead
+                                    if (allyDead[3] == 1){ // if all allies dead
+                                        System.out.println("you fuckin dead bro"); // lose the game
+                                    } else { // if fourth ally not dead and everyone else is
+                                        currentCharacter = 3; // start with fourth character
+                                    }
+                                } else { // if third ally not dead
+                                    currentCharacter = 2; // start with third character
+                                }
+                            } else { // if second ally not dead 
+                                currentCharacter = 1; // start with second character
+                            }
+                        } else { // if first ally not dead
+                            currentCharacter = 0; // start with first character
+                        }
+                        page = 0;
+                        break;
+                }
+                break;
+        }
+        /*
         if (currentCharacter < 3 && turn == 0){ // if not end of rotation and player turn
             currentCharacter++;
             page = 0;
@@ -1238,37 +1462,55 @@ public class Game
             //System.out.println("turn " + turn);
             move(69);
         }
+        */
     }
     
     public void checkInjured(){
         if (hpEnemy[0] < hpMaxEnemy[0] || hpEnemy[1] < hpMaxEnemy[1] || hpEnemy[2] < hpMaxEnemy[2] || hpEnemy[3] < hpMaxEnemy[3]){
-            enemyInjured = true;
+            isEnemyInjured = true;
         } else {
-            enemyInjured = false;
+            isEnemyInjured = false;
         }
         if (hpAlly[0] < hpMaxAlly[0] || hpAlly[1] < hpMaxAlly[1] || hpAlly[2] < hpMaxAlly[2] || hpAlly[3] < hpMaxAlly[3]){
-            allyInjured = true;
+            isAllyInjured = true;
         } else {
-            allyInjured = false;
+            isAllyInjured = false;
         }
         if (hpEnemy[0] <= 0 || hpEnemy[1] <= 0 || hpEnemy[2] <= 0 || hpEnemy[3] <= 0){
-            enemyDead = true;
+            isEnemyDead = true;
         } else {
-            enemyDead = false;
+            isEnemyDead = false;
         }
         if (hpAlly[0] <= 0 || hpAlly[1] <= 0 || hpAlly[2] <= 0 || hpAlly[3] <= 0){
-            allyDead = true;
+            isAllyDead = true;
         } else {
-            allyDead = false;
+            isAllyDead = false;
         }
         for (int i = 0; i < 4; i++){
             if (hpEnemy[i] < hpMaxEnemy[i]){
-                enemyInjuredWho[i] = 1;
+                enemyInjured[i] = 1; // set injured status to yes
             } else {
-                enemyInjuredWho[i] = 0;
+                enemyInjured[i] = 0; // set injured status to no
+            }
+        }
+        for (int i = 0; i < 4; i++){
+            if (hpEnemy[i] <= 0){
+                hpEnemy[i] = 0; // set hp to zero, negative numbers are gross
+                enemyDead[i] = 1; // set their status to dead
+            } else {
+                enemyDead[i] = 0; // set status to alive
+            }
+        }
+        for (int i = 0; i < 4; i++){
+            if (hpAlly[i] <= 0){
+                hpAlly[i] = 0; // set hp to zero, negative numbers are gross
+                allyDead[i] = 1; // set their status to dead
+            } else {
+                allyDead[i] = 0; // set status to alive
             }
         }
     }
+
     
     public void setDifficulty(int set){
         switch (set){

@@ -1109,19 +1109,21 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         updateUI();
                         break;
                     case 90: // if z key pressed
-                        switch (game.selected){
-                            case 0:
-                                moveButtonOne.doClick();
-                                break;
-                            case 1:
-                                moveButtonTwo.doClick();
-                                break;
-                            case 2:
-                                moveButtonThree.doClick();
-                                break;
-                            case 3:
-                                moveButtonFour.doClick();
-                                break;
+                        if (game.turn == 0){
+                            switch (game.selected){
+                                case 0:
+                                    moveButtonOne.doClick();
+                                    break;
+                                case 1:
+                                    moveButtonTwo.doClick();
+                                    break;
+                                case 2:
+                                    moveButtonThree.doClick();
+                                    break;
+                                case 3:
+                                    moveButtonFour.doClick();
+                                    break;
+                            }
                         }
                         break;
                 }
