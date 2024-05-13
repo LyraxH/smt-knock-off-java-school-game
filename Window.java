@@ -904,7 +904,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 2: // helaing
                         if (game.hpAlly[0] == game.hpMaxAlly[0]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
-                            game.textHistory.add("You cannot heal this character, as they are already on full hp");
                             updateUI();
                         } else {
                             game.healing(0);
@@ -926,7 +925,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 2: // healing
                         if (game.hpAlly[1] == game.hpMaxAlly[1]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
-                            game.textHistory.add("You cannot heal this character, as they are already on full hp");
                             updateUI();
                         } else {
                             game.healing(1);
@@ -948,7 +946,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 2: // healing
                         if (game.hpAlly[2] == game.hpMaxAlly[2]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
-                            game.textHistory.add("You cannot heal this character, as they are already on full hp");
                             updateUI();
                         } else {
                             game.healing(2);
@@ -970,7 +967,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 2: // healing
                         if (game.hpAlly[3] == game.hpMaxAlly[3]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
-                            game.textHistory.add("You cannot heal this character, as they are already on full hp");
                             updateUI();
                         } else {
                             game.healing(3);
