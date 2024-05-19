@@ -96,10 +96,13 @@ public class Images
     ImageIcon weakOverlay = new ImageIcon("elements/popUpWeak.png");
     ImageIcon resistOverlay = new ImageIcon("elements/popUpResist.png");
     ImageIcon nullOverlay = new ImageIcon("elements/popUpNull.png");
+    ImageIcon normalOverlay = new ImageIcon("elements/popUphit.png");
+    ImageIcon dead = new ImageIcon("elements/dead3.png");
+    ImageIcon test = new ImageIcon("elements/test.png");
     JLabel enemyOneAffinity = new JLabel();
     JLabel enemyTwoAffinity = new JLabel();
     JLabel enemyThreeAffinity = new JLabel();
-    JLabel enemyFourAffinity = new JLabel();
+    JLabel enemyFourAffinity = new JLabel();    
     JLabel blankOne = new JLabel();
     JLabel blankTwo = new JLabel();
     JLabel blankThree = new JLabel();
@@ -108,6 +111,82 @@ public class Images
     JLabel allyTwoAffinity = new JLabel();
     JLabel allyThreeAffinity = new JLabel();
     JLabel allyFourAffinity = new JLabel();
+    
+    // stat changes overlays
+    ImageIcon statOverlay = new ImageIcon("overlayBuffs/statsOverlay.png");
+    ImageIcon atkUp = new ImageIcon("overlayBuffs/attackUp.png");
+    ImageIcon atkNorm = new ImageIcon("overlayBuffs/attackNormal.png");
+    ImageIcon atkDown = new ImageIcon("overlayBuffs/attackDown.png");
+    ImageIcon defUp = new ImageIcon("overlayBuffs/defenseUp.png");
+    ImageIcon defNorm = new ImageIcon("overlayBuffs/defenseNormal.png");
+    ImageIcon defDown = new ImageIcon("overlayBuffs/defenseDown.png");
+    ImageIcon aglUp = new ImageIcon("overlayBuffs/agilityUp.png");
+    ImageIcon aglNorm = new ImageIcon("overlayBuffs/agilityNormal2.png");
+    ImageIcon aglDown = new ImageIcon("overlayBuffs/agilityDown.png");
+    ImageIcon guard = new ImageIcon("overlayBuffs/guard.png");
+    ImageIcon healed = new ImageIcon("overlayBuffs/healed.png");
+    ImageIcon buffed = new ImageIcon("overlayBuffs/buffed.png");
+    ImageIcon debuffed = new ImageIcon("overlayBuffs/debuffed.png");
+    JLabel filler1 = new JLabel();
+    JLabel filler2 = new JLabel();
+    JLabel filler3 = new JLabel();
+    JLabel filler4 = new JLabel();
+    JLabel filler5 = new JLabel();
+    JLabel filler6 = new JLabel();
+    JLabel filler7 = new JLabel();
+    JLabel filler8 = new JLabel();
+    JLabel filler9 = new JLabel();
+    JLabel filler10 = new JLabel();
+    JLabel filler11 = new JLabel();
+    JLabel filler12 = new JLabel();
+    JLabel filler13 = new JLabel();
+    JLabel filler14 = new JLabel();
+    JLabel filler15 = new JLabel();
+    JLabel filler16 = new JLabel();
+    JLabel filler17 = new JLabel();
+    JLabel filler18 = new JLabel();
+    JLabel filler19 = new JLabel();
+    JLabel filler20 = new JLabel();
+    JLabel deadOverlay1 = new JLabel();
+    JLabel deadOverlay2 = new JLabel();
+    JLabel deadOverlay3 = new JLabel();
+    JLabel deadOverlay4 = new JLabel();
+    JLabel deadOverlay5 = new JLabel();
+    JLabel deadOverlay6 = new JLabel();
+    JLabel deadOverlay7 = new JLabel();
+    JLabel deadOverlay8 = new JLabel();
+    JLabel statOverlay1 = new JLabel(statOverlay);
+    JLabel statOverlay2 = new JLabel(statOverlay);
+    JLabel statOverlay3 = new JLabel(statOverlay);
+    JLabel statOverlay4 = new JLabel(statOverlay);
+    JLabel statOverlay5 = new JLabel(statOverlay);
+    JLabel statOverlay6 = new JLabel(statOverlay);
+    JLabel statOverlay7 = new JLabel(statOverlay);
+    JLabel statOverlay8 = new JLabel(statOverlay);
+    JLabel attackOverlay1 = new JLabel(atkNorm);
+    JLabel attackOverlay2 = new JLabel(atkNorm);
+    JLabel attackOverlay3 = new JLabel(atkNorm);
+    JLabel attackOverlay4 = new JLabel(atkNorm);
+    JLabel attackOverlay5 = new JLabel(atkNorm);
+    JLabel attackOverlay6 = new JLabel(atkNorm);
+    JLabel attackOverlay7 = new JLabel(atkNorm);
+    JLabel attackOverlay8 = new JLabel(atkNorm);
+    JLabel defenseOverlay1 = new JLabel(defNorm);
+    JLabel defenseOverlay2 = new JLabel(defNorm);
+    JLabel defenseOverlay3 = new JLabel(defNorm);
+    JLabel defenseOverlay4 = new JLabel(defNorm);
+    JLabel defenseOverlay5 = new JLabel(defNorm);
+    JLabel defenseOverlay6 = new JLabel(defNorm);
+    JLabel defenseOverlay7 = new JLabel(defNorm);
+    JLabel defenseOverlay8 = new JLabel(defNorm);
+    JLabel agilityOverlay1 = new JLabel(aglNorm);
+    JLabel agilityOverlay2 = new JLabel(aglNorm);
+    JLabel agilityOverlay3 = new JLabel(aglNorm);
+    JLabel agilityOverlay4 = new JLabel(aglNorm);
+    JLabel agilityOverlay5 = new JLabel(aglNorm);
+    JLabel agilityOverlay6 = new JLabel(aglNorm);
+    JLabel agilityOverlay7 = new JLabel(aglNorm);
+    JLabel agilityOverlay8 = new JLabel(aglNorm);
     
     // move icons
     // 0 fire // alchemy symbol: fire
@@ -167,14 +246,16 @@ public class Images
     ImageIcon unAglBoost = new ImageIcon("moves/8buff/aglBoostUn.png");
     
     // 9 items // alchemy symbol potash
-    ImageIcon  oracleLens = new ImageIcon("moves/9item/oracleLens.png"); // reveals affinity of one enemy
-    ImageIcon  unOracleLens = new ImageIcon("moves/9item/oracleLensUn.png"); // reveals affinity of one enemy
-    ImageIcon  everfrost = new ImageIcon("moves/9item/everfrost.png"); // restores mana to ally
-    ImageIcon  unEverfrost = new ImageIcon("moves/9item/everfrostUn.png"); // restores mana to ally
-    ImageIcon  lightningCrash = new ImageIcon("moves/9item/lightningCrash.png"); // shock one enemy
-    ImageIcon  unLightningCrash = new ImageIcon("moves/9item/lightningCrashUn.png"); // shock one enemy
-    ImageIcon  focus = new ImageIcon("moves/9item/focus.png"); // shock one enemy
-    ImageIcon  unFocus = new ImageIcon("moves/9item/focusUn.png"); // shock one enemy
+    ImageIcon oracleLens = new ImageIcon("moves/9item/oracleLens.png"); // reveals affinity of one enemy
+    ImageIcon unOracleLens = new ImageIcon("moves/9item/oracleLensUn.png"); // reveals affinity of one enemy
+    ImageIcon everfrost = new ImageIcon("moves/9item/everfrost.png"); // restores mana to ally
+    ImageIcon unEverfrost = new ImageIcon("moves/9item/everfrostUn.png"); // restores mana to ally
+    ImageIcon lightningCrash = new ImageIcon("moves/9item/lightningCrash.png"); // shock one enemy
+    ImageIcon unLightningCrash = new ImageIcon("moves/9item/lightningCrashUn.png"); // shock one enemy
+    ImageIcon focus = new ImageIcon("moves/9item/focus.png"); // shock one enemy
+    ImageIcon unFocus = new ImageIcon("moves/9item/focusUn.png"); // shock one enemy
+    ImageIcon cleanse = new ImageIcon("moves/9item/cleanse.png");
+    ImageIcon unCleanse = new ImageIcon("moves/9item/cleanseUn.png");
     
     // enemy select buttons
     ImageIcon enemyOne = new ImageIcon("buttons/enemyOne.png");

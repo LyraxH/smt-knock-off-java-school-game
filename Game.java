@@ -41,7 +41,6 @@ public class Game
     
     // first number = attack status, second = defense status, third = accuracy/evasion status
     double allyStats[][] = new double[4][3];
-    int concentrate[] = new int[]{0,0,0,0}; // 1 means that characters attack next turn will do more than double damage
     int guard[] = new int[]{0,0,0,0}; // 1 means that you take half damage next round
     // first number = attack status, second = defense status, third = accuracy/evasion status. fourth = shock
     double enemyStats[][] = new double[4][4];
@@ -71,7 +70,7 @@ public class Game
         setDifficulty(1);
     }
     
-    void setStatus(int target1, int status1){
+    void setStatus(int target1, int status1){ // like i could easily just copy paste this but having it as a function is so much easier
         target = target1;
         status = status1;
     }
@@ -84,21 +83,13 @@ public class Game
                 switch (enemyAffinities[receiver][moveAffinity]){
                     case 0: // if enemy is normal to move affinity
                         preBattleDamage = baseDamage * enemyStats[receiver][1] * allyStats[currentCharacter][0] * damageMultiplier;
-                        if (concentrate[currentCharacter] == 1){ // if concentrated
-                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
-                            concentrate[currentCharacter] = 0; // reset the concentrate so you cant use it twice in a row
-                        }
                         battleDamage = (int)Math.round(preBattleDamage);
                         hpEnemy[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
-                        setStatus(receiver, 5);
+                        setStatus(receiver, 3);
                         break;
                     case 1: // if enemy is weak to move affinity
                         preBattleDamage = baseDamage * enemyStats[receiver][1] * allyStats[currentCharacter][0] * damageMultiplier * 1.45;
-                        if (concentrate[currentCharacter] == 1){ // if concentrated
-                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
-                            concentrate[currentCharacter] = 0; // reset the concentrate so you cant use it twice in a row
-                        }
                         battleDamage = (int)Math.round(preBattleDamage);
                         hpEnemy[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is weak to " + toAffinity + ", and takes " + battleDamage + " damage.");
@@ -106,10 +97,6 @@ public class Game
                         break;
                     case 2: // if enemy resists move affinity
                         preBattleDamage = baseDamage * enemyStats[receiver][1] * allyStats[currentCharacter][0] * damageMultiplier * 0.69;
-                        if (concentrate[currentCharacter] == 1){ // if concentrated
-                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
-                            concentrate[currentCharacter] = 0; // reset the concentrate so you cant use it twice in a row
-                        }
                         battleDamage = (int)Math.round(preBattleDamage);
                         hpEnemy[receiver] -= battleDamage;
                         textHistory.add(receiverName + " resists " + toAffinity + ", and takes " + battleDamage + " damage.");
@@ -117,10 +104,6 @@ public class Game
                         break;
                     case 3: // if enemy is null to move affinity
                         preBattleDamage = 0;
-                        if (concentrate[currentCharacter] == 1){ // if concentrated
-                            preBattleDamage *= 2.25; // deal over double damage to make wasting turn worth it
-                            concentrate[currentCharacter] = 0; // reset the concentrate so you cant use it twice in a row
-                        }
                         battleDamage = (int)Math.round(preBattleDamage);
                         hpEnemy[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is null to " + toAffinity + ", and takes " + battleDamage + " damage.");
@@ -139,7 +122,7 @@ public class Game
                         battleDamage = (int)Math.round(preBattleDamage);
                         hpAlly[receiver] -= battleDamage;
                         textHistory.add(receiverName + " is hit by " + toAffinity + ", and takes " + battleDamage + " damage.");
-                        setStatus(receiver + 4, 5);
+                        setStatus(receiver + 4, 3);
                         break;
                     case 1: // if ally is weak to move affinity
                         preBattleDamage = baseDamage * allyStats[receiver][1] * enemyStats[currentCharacter][0] * damageTakenMultiplier * 1.45;
@@ -179,13 +162,30 @@ public class Game
         }
     }
     
+    void cleanse(){
+        textHistory.add("Cleanse used, all stats have returned to default");
+        for (int i = 0; i < 4; i++){ // set ally stats to normal
+            for (int l = 0; l < 3; l++){
+                allyStats[i][l] = 1;
+            }
+        }
+        for (int i = 0; i < 4; i++){ //  same thing to enemeis
+            for (int l = 0; l < 3; l++){
+                enemyStats[i][l] = 1;
+            }
+        }
+        goNext();
+    }
+    
     void calculateHealing(int reciever, String recieverName, int amount){
+        targetAll = false;
         switch (turn){
             case 0: // allies turn
                 if ((hpMaxAlly[reciever] - hpAlly[reciever]) < amount){ // if difference between hp and max hp is less than the amount healing for
                     amount = hpMaxAlly[reciever] - hpAlly[reciever];
                 }
                 hpAlly[reciever] += amount;
+                setStatus(reciever + 4, 4);
                 textHistory.add(recieverName + " was healed for " + amount);
                 break;
             case 1: // enemies turn
@@ -193,6 +193,7 @@ public class Game
                     amount = hpMaxEnemy[reciever] - hpEnemy[reciever];
                 }
                 hpEnemy[reciever] += amount;
+                setStatus(reciever, 4);
                 textHistory.add(recieverName + " was healed for " + amount);
                 break;
         }
@@ -381,6 +382,7 @@ public class Game
     }
     
     void enemyAttack(int enemy){
+        targetAll = false;
         int decision = rng.nextInt(4);
         affinityRNG = rng.nextInt(6);
         switch (decision){
@@ -524,6 +526,7 @@ public class Game
                             target = "Robin Hood";
                             break;
                     }
+                    setStatus(targetInt + 4, 6);
                     textHistory.add(who + " targets " + target + " with " + what);
                     break;
                 } else {
@@ -574,6 +577,7 @@ public class Game
                             target = "Principality";
                             break;
                     }
+                    setStatus(targetInt, 5);
                     textHistory.add(who + " targets " + target + " with " + what);
                     break;
                 }
@@ -642,6 +646,7 @@ public class Game
                 target = "Principality";
                 break;
         }
+        targetAll = false;
         textHistory.add(who + " uses " + what + " on " + target);
         calculateDamage(enemy, target, "Physical", damage, 6);
         goNext();
@@ -651,18 +656,26 @@ public class Game
         switch (who){
             case 0:
                 guard[who] = 1;
+                setStatus(4, 7);
+                targetAll = true;
                 textHistory.add("Ame No Uzume Guards");
                 break;
             case 1:
                 guard[who] = 1;
+                setStatus(5, 7);
+                targetAll = true;
                 textHistory.add("Cendrillon Guards");
                 break;
             case 2:
                 guard[who] = 1;
+                setStatus(6, 7);
+                targetAll = true;
                 textHistory.add("Orpheus Guards");
                 break;
             case 3:
                 guard[who] = 1;
+                setStatus(7, 7);
+                targetAll = true;
                 textHistory.add("Robin Hood Guards");
                 break;
         }
@@ -708,7 +721,7 @@ public class Game
                     case 3: // guardian angel
                         if (isAllyDead){
                             if (spAlly[0] > 8){
-                                typeOfMove = 2;
+                                typeOfMove = 7; // type of move 
                                 prevPage = 2;
                                 page = 4; // single target ally select
                             } else {
@@ -958,15 +971,15 @@ public class Game
                 target = "Principality";
                 break;
         }
-        textHistory.add(who + " uses " + what + " on " + target);
         if (targetAll){
-            textHistory.add("Ame No Uzume uses Monsoon on every enemy");
+            textHistory.add(who + " uses " + what + "on on every enemy");
             calculateDamage(0, "Archangel", affinityString, damage, affinityInt);
             calculateDamage(1, "Jack Frost", affinityString, damage, affinityInt);
             calculateDamage(2, "Legion", affinityString, damage, affinityInt);
             calculateDamage(3, "Principality", affinityString, damage, affinityInt);
             spAlly[currentCharacter] -= 21;
         } else {
+            textHistory.add(who + " uses " + what + " on " + target);
             calculateDamage(enemy, target, affinityString, damage, affinityInt);
             spAlly[currentCharacter] -= 9;
         }
@@ -1004,17 +1017,17 @@ public class Game
         switch (currentCharacter){
             case 0: // ame
                 switch (ally){
-                    case 0:
-                        textHistory.add("Ame No Uzume uses guardian angel on Ame No Uzume");
-                        break;
                     case 1:
                         textHistory.add("Ame No Uzume uses guardian angel on Cendrillon");
+                        hpAlly[ally] = 240;
                         break;
                     case 2:
                         textHistory.add("Ame No Uzume uses guardian angel on Orpheus");
+                        hpAlly[ally] = 240;
                         break;
                     case 3:
                         textHistory.add("Ame No Uzume uses guardian angel on Robin Hood");
+                        hpAlly[ally] = 240;
                         break;
                 }
                 spAlly[0] -= 22;
@@ -1553,14 +1566,13 @@ public class Game
         allyAffinities[3][5] = 1;
         allyAffinities[3][4] = 2;
         allyAffinities[3][0] = 3;
-        
-        for (int i = 0; i < 4; i++){ // set ally attack and defense to one
-            for (int l = 0; l < 2; l++){
+        for (int i = 0; i < 4; i++){ // set ally stats to normal
+            for (int l = 0; l < 3; l++){
                 allyStats[i][l] = 1;
             }
         }
         for (int i = 0; i < 4; i++){ //  same thing to enemeis
-            for (int l = 0; l < 2; l++){
+            for (int l = 0; l < 3; l++){
                 enemyStats[i][l] = 1;
             }
         }

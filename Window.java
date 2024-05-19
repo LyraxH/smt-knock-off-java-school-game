@@ -18,7 +18,12 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     Game game = new Game(); // imports data from game region
     // panel for different regions of the game
     JPanel gameWindowBase = new JPanel(); // where the characters are displayed
-    JPanel gameWindowOverlay = new JPanel();  // where weakness indicator is displayed
+    JPanel gameWindowStats = new JPanel();
+    JPanel gameWindowAttack = new JPanel();
+    JPanel gameWindowDefense = new JPanel();
+    JPanel gameWindowAgility = new JPanel();
+    JPanel gameWindowDead = new JPanel();
+    JPanel gameWindowAffinities = new JPanel();  // where weakness indicator is displayed
     JPanel enemyWindow = new JPanel(); // where enemy health is displayed
     JPanel allyWindow = new JPanel(); // where ally health is displayed
     JPanel moveWindow = new JPanel(); // where actions can be taken
@@ -139,22 +144,103 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         enemyWindow.add(enemyFourButton);
         enemyWindow.add(enemyFourHPText);
     
-        gameWindowBase.setBackground(Color.green);
+        gameWindowBase.setBackground(Color.pink);
         allyWindow.setBackground(Color.cyan);
         allyWindow.setPreferredSize(new Dimension(300, 0));
-        enemyWindow.setBackground(Color.red);
+        enemyWindow.setBackground(Color.magenta);
         enemyWindow.setPreferredSize(new Dimension(250, 0));
         chatWindow.setBackground(Color.gray);
         chatWindow.setPreferredSize(new Dimension(0, 50));
-        moveWindow.setBackground(Color.pink);
+        moveWindow.setBackground(Color.gray);
         moveWindow.setPreferredSize(new Dimension(0, 200));
 
         // adding variables to game window
         gameWindow.setBounds(250,50,300,470);
         gameWindowBase.setBounds(0,0,730,470);
-        gameWindowOverlay.setBounds(0,0,730,470);
         gameWindowBase.setLayout(new GridLayout(3, 4));
-        gameWindowOverlay.setLayout(new GridLayout(3, 4));
+        
+        gameWindowAffinities.setBounds(0,0,730,470);
+        gameWindowAffinities.setLayout(new GridLayout(3, 4));
+        gameWindowStats.setBounds(0,0,730,470);
+        gameWindowStats.setLayout(new GridLayout(3, 4));
+        gameWindowAttack.setBounds(0,0,730,470);
+        gameWindowAttack.setLayout(new GridLayout(3, 4));
+        gameWindowDefense.setBounds(0,0,730,470);
+        gameWindowDefense.setLayout(new GridLayout(3, 4));
+        gameWindowAgility.setBounds(0,0,730,470);
+        gameWindowAgility.setLayout(new GridLayout(3, 4));
+        gameWindowDead.setBounds(0,0,730,470);
+        gameWindowDead.setLayout(new GridLayout(3,4));
+        
+        gameWindowDead.add(img.deadOverlay1);
+        gameWindowDead.add(img.deadOverlay2);
+        gameWindowDead.add(img.deadOverlay3);
+        gameWindowDead.add(img.deadOverlay4);
+        gameWindowDead.add(img.filler17);
+        gameWindowDead.add(img.filler18);
+        gameWindowDead.add(img.filler19);
+        gameWindowDead.add(img.filler20);
+        gameWindowDead.add(img.deadOverlay5);
+        gameWindowDead.add(img.deadOverlay6);
+        gameWindowDead.add(img.deadOverlay7);
+        gameWindowDead.add(img.deadOverlay8);
+        gameWindowDead.setOpaque(false);
+        
+        gameWindowStats.add(img.statOverlay1);
+        gameWindowStats.add(img.statOverlay2);
+        gameWindowStats.add(img.statOverlay3);
+        gameWindowStats.add(img.statOverlay4);
+        gameWindowStats.add(img.filler1);
+        gameWindowStats.add(img.filler2);
+        gameWindowStats.add(img.filler3);
+        gameWindowStats.add(img.filler4);
+        gameWindowStats.add(img.statOverlay5);
+        gameWindowStats.add(img.statOverlay6);
+        gameWindowStats.add(img.statOverlay7);
+        gameWindowStats.add(img.statOverlay8);
+        gameWindowStats.setOpaque(false);
+        
+        gameWindowAttack.add(img.attackOverlay1);
+        gameWindowAttack.add(img.attackOverlay2);
+        gameWindowAttack.add(img.attackOverlay3);
+        gameWindowAttack.add(img.attackOverlay4);
+        gameWindowAttack.add(img.filler5);
+        gameWindowAttack.add(img.filler6);
+        gameWindowAttack.add(img.filler7);
+        gameWindowAttack.add(img.filler8);
+        gameWindowAttack.add(img.attackOverlay5);
+        gameWindowAttack.add(img.attackOverlay6);
+        gameWindowAttack.add(img.attackOverlay7);
+        gameWindowAttack.add(img.attackOverlay8);
+        gameWindowAttack.setOpaque(false);
+        
+        gameWindowDefense.add(img.defenseOverlay1);
+        gameWindowDefense.add(img.defenseOverlay2);
+        gameWindowDefense.add(img.defenseOverlay3);
+        gameWindowDefense.add(img.defenseOverlay4);
+        gameWindowDefense.add(img.filler9);
+        gameWindowDefense.add(img.filler10);
+        gameWindowDefense.add(img.filler11);
+        gameWindowDefense.add(img.filler12);
+        gameWindowDefense.add(img.defenseOverlay5);
+        gameWindowDefense.add(img.defenseOverlay6);
+        gameWindowDefense.add(img.defenseOverlay7);
+        gameWindowDefense.add(img.defenseOverlay8);
+        gameWindowDefense.setOpaque(false);
+        
+        gameWindowAgility.add(img.agilityOverlay1);
+        gameWindowAgility.add(img.agilityOverlay2);
+        gameWindowAgility.add(img.agilityOverlay3);
+        gameWindowAgility.add(img.agilityOverlay4);
+        gameWindowAgility.add(img.filler13);
+        gameWindowAgility.add(img.filler14);
+        gameWindowAgility.add(img.filler15);
+        gameWindowAgility.add(img.filler16);
+        gameWindowAgility.add(img.agilityOverlay5);
+        gameWindowAgility.add(img.agilityOverlay6);
+        gameWindowAgility.add(img.agilityOverlay7);
+        gameWindowAgility.add(img.agilityOverlay8);
+        gameWindowAgility.setOpaque(false);
         
         gameWindowBase.add(enemyOneSprite);
         gameWindowBase.add(enemyTwoSprite);
@@ -169,23 +255,28 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowBase.add(allyThreeSprite);
         gameWindowBase.add(allyFourSprite);
         
-        gameWindowOverlay.add(img.enemyOneAffinity);
-        gameWindowOverlay.add(img.enemyTwoAffinity);
-        gameWindowOverlay.add(img.enemyThreeAffinity);
-        gameWindowOverlay.add(img.enemyFourAffinity);
-        gameWindowOverlay.add(img.blankOne);
-        gameWindowOverlay.add(img.blankTwo);
-        gameWindowOverlay.add(img.blankThree);
-        gameWindowOverlay.add(img.blankFour);
-        gameWindowOverlay.add(img.allyOneAffinity);
-        gameWindowOverlay.add(img.allyTwoAffinity);
-        gameWindowOverlay.add(img.allyThreeAffinity);
-        gameWindowOverlay.add(img.allyFourAffinity);
-        gameWindowOverlay.setOpaque(false);
+        gameWindowAffinities.add(img.enemyOneAffinity);
+        gameWindowAffinities.add(img.enemyTwoAffinity);
+        gameWindowAffinities.add(img.enemyThreeAffinity);
+        gameWindowAffinities.add(img.enemyFourAffinity);
+        gameWindowAffinities.add(img.blankOne);
+        gameWindowAffinities.add(img.blankTwo);
+        gameWindowAffinities.add(img.blankThree);
+        gameWindowAffinities.add(img.blankFour);
+        gameWindowAffinities.add(img.allyOneAffinity);
+        gameWindowAffinities.add(img.allyTwoAffinity);
+        gameWindowAffinities.add(img.allyThreeAffinity);
+        gameWindowAffinities.add(img.allyFourAffinity);
+        gameWindowAffinities.setOpaque(false);
         
         gameWindow.add(gameWindowBase, new Integer(0), 0);
-        gameWindow.add(gameWindowOverlay, new Integer(1), 0);
-        //gameWindow.add(gameWindowOverlay);
+        gameWindow.add(gameWindowAffinities, new Integer(1), 0);
+        gameWindow.add(gameWindowStats, new Integer(2), 0);
+        gameWindow.add(gameWindowAttack, new Integer(3), 0);
+        gameWindow.add(gameWindowDefense, new Integer(4), 0);
+        gameWindow.add(gameWindowAgility, new Integer(5), 0);
+        gameWindow.add(gameWindowDead, new Integer(6), 0);
+        //gameWindow.add(gameWindowAffinities);
 
         updateUI();
         initialize();
@@ -214,7 +305,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     }
     
     public void displayStatus(int target, int status, boolean targetAll){ // 0 = weak, 1 = resist, 2 = null
-        targetAll = false;
+        System.out.println(targetAll);
         if (!targetAll){ // if not targetting all, clear before 
             clearAffinity();
         } // displaying stats
@@ -230,6 +321,18 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 2:
                         img.enemyOneAffinity.setIcon(img.nullOverlay);
                         break;
+                    case 3:
+                        img.enemyOneAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.enemyOneAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.enemyOneAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.enemyOneAffinity.setIcon(img.debuffed);
+                        break;
                 }
                 break;
             case 1: // enemy two
@@ -242,6 +345,18 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                     case 2:
                         img.enemyTwoAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.enemyTwoAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.enemyTwoAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.enemyTwoAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.enemyTwoAffinity.setIcon(img.debuffed);
                         break;
                 }
                 break;
@@ -256,6 +371,18 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 2:
                         img.enemyThreeAffinity.setIcon(img.nullOverlay);
                         break;
+                    case 3:
+                        img.enemyThreeAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.enemyThreeAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.enemyThreeAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.enemyThreeAffinity.setIcon(img.debuffed);
+                        break;
                 }
                 break;
             case 3: // enemy four
@@ -268,6 +395,18 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                     case 2:
                         img.enemyFourAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.enemyFourAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.enemyFourAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.enemyFourAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.enemyFourAffinity.setIcon(img.debuffed);
                         break;
                 }
                 break;
@@ -282,6 +421,21 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 2:
                         img.allyOneAffinity.setIcon(img.nullOverlay);
                         break;
+                    case 3:
+                        img.allyOneAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.allyOneAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.allyOneAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.allyOneAffinity.setIcon(img.debuffed);
+                        break;
+                    case 7:
+                        img.allyOneAffinity.setIcon(img.guard);
+                        break;
                 }
                 break;
             case 5: // ally two
@@ -294,6 +448,21 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                     case 2:
                         img.allyTwoAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.allyTwoAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.allyTwoAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.allyTwoAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.allyTwoAffinity.setIcon(img.debuffed);
+                        break;
+                    case 7:
+                        img.allyTwoAffinity.setIcon(img.guard);
                         break;
                 }
                 break;
@@ -308,6 +477,21 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 2:
                         img.allyThreeAffinity.setIcon(img.nullOverlay);
                         break;
+                    case 3:
+                        img.allyThreeAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.allyThreeAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.allyThreeAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.allyThreeAffinity.setIcon(img.debuffed);
+                        break;
+                    case 7:
+                        img.allyThreeAffinity.setIcon(img.guard);
+                        break;
                 }
                 break;
             case 7: // ally four
@@ -320,6 +504,21 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                     case 2:
                         img.allyFourAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.allyFourAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.allyFourAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.allyFourAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.allyFourAffinity.setIcon(img.debuffed);
+                        break;
+                    case 7:
+                        img.allyFourAffinity.setIcon(img.guard);
                         break;
                 }
                 break;
@@ -457,7 +656,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         //System.out.println(game.textHistory.get(size - 1));
         
         //UPDATE SELECTABLE ICONS
-        if (game.turn == 0){ 
+        if (game.turn == 0){
+            chatWindow.setBackground(Color.green);
             moveWindow.add(currentMoveText);
             moveWindow.add(moveButtonOne);
             moveWindow.add(moveButtonTwo);
@@ -650,25 +850,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             moveButtonOne.setIcon(img.oracleLens);
                             moveButtonTwo.setIcon(img.unEverfrost);
                             moveButtonThree.setIcon(img.unLightningCrash);
-                            moveButtonFour.setIcon(img.unFocus);
+                            moveButtonFour.setIcon(img.unCleanse);
                             break;
                         case 1:
                             moveButtonOne.setIcon(img.unOracleLens);
                             moveButtonTwo.setIcon(img.everfrost);
                             moveButtonThree.setIcon(img.unLightningCrash);
-                            moveButtonFour.setIcon(img.unFocus);
+                            moveButtonFour.setIcon(img.unCleanse);
                             break;
                         case 2:
                             moveButtonOne.setIcon(img.unOracleLens);
                             moveButtonTwo.setIcon(img.unEverfrost);
                             moveButtonThree.setIcon(img.lightningCrash);
-                            moveButtonFour.setIcon(img.unFocus);
+                            moveButtonFour.setIcon(img.unCleanse);
                             break;
                         case 3:
                             moveButtonOne.setIcon(img.unOracleLens);
                             moveButtonTwo.setIcon(img.unEverfrost);
                             moveButtonThree.setIcon(img.unLightningCrash);
-                            moveButtonFour.setIcon(img.focus);
+                            moveButtonFour.setIcon(img.cleanse);
                             break;
                     }
                     break;
@@ -702,10 +902,230 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     break;
             }
         } else if (game.turn == 1){
+            chatWindow.setBackground(Color.red);
             moveWindow.removeAll();
             moveWindow.add(currentMoveText);
             moveWindow.repaint();
             moveWindow.revalidate();
+        }
+        
+        // ALLY ONE ------ ALLY ONE
+        if (game.allyStats[0][0] == 1){ // ally one attack is normal
+            img.attackOverlay5.setIcon(img.atkNorm);
+        } else if (game.allyStats[0][0] == 1.6){ // is increased
+            img.attackOverlay5.setIcon(img.atkUp);
+        } else if (game.allyStats[0][0] == 0.6){ // is decreased
+            img.attackOverlay5.setIcon(img.atkDown);
+        }
+        if (game.allyStats[0][1] == 1){ // ally one defense is normal
+            img.defenseOverlay5.setIcon(img.defNorm);
+        } else if (game.allyStats[0][1] == 0.6){ // is increased
+            img.defenseOverlay5.setIcon(img.defUp);
+        } else if (game.allyStats[0][1] == 1.6){ // is decreased
+            img.defenseOverlay5.setIcon(img.defDown);
+        }
+        if (game.allyStats[0][2] == 1){ // ally one agility is normal
+            img.agilityOverlay5.setIcon(img.aglNorm);
+        } else if (game.allyStats[0][2] == 2){ // is increased
+            img.agilityOverlay5.setIcon(img.aglUp);
+        } else if (game.allyStats[0][2] == 0.5){ // is decreased
+            img.agilityOverlay5.setIcon(img.aglDown);
+        }
+        // ALLY TWO ------ ALLY TWO
+        if (game.allyStats[1][0] == 1){ // ally two attack is normal
+            img.attackOverlay6.setIcon(img.atkNorm);
+        } else if (game.allyStats[1][0] == 1.6){ // is increased
+            img.attackOverlay6.setIcon(img.atkUp);
+        } else if (game.allyStats[1][0] == 0.6){ // is decreased
+            img.attackOverlay6.setIcon(img.atkDown);
+        }
+        if (game.allyStats[1][1] == 1){ // ally two defense is normal
+            img.defenseOverlay6.setIcon(img.defNorm);
+        } else if (game.allyStats[1][1] == 0.6){ // is increased
+            img.defenseOverlay6.setIcon(img.defUp);
+        } else if (game.allyStats[1][1] == 1.6){ // is decreased
+            img.defenseOverlay6.setIcon(img.defDown);
+        }
+        if (game.allyStats[1][2] == 1){ // ally two agility is normal
+            img.agilityOverlay6.setIcon(img.aglNorm);
+        } else if (game.allyStats[1][2] == 2){ // is increased
+            img.agilityOverlay6.setIcon(img.aglUp);
+        } else if (game.allyStats[1][2] == 0.5){ // is decreased
+            img.agilityOverlay6.setIcon(img.aglDown);
+        }
+        // ALLY THREE ------ ALLY THREE
+        if (game.allyStats[2][0] == 1){ // ally three attack is normal
+            img.attackOverlay7.setIcon(img.atkNorm);
+        } else if (game.allyStats[2][0] == 1.6){ // is increased
+            img.attackOverlay7.setIcon(img.atkUp);
+        } else if (game.allyStats[2][0] == 0.6){ // is decreased
+            img.attackOverlay7.setIcon(img.atkDown);
+        }
+        if (game.allyStats[2][1] == 1){ // ally three defense is normal
+            img.defenseOverlay7.setIcon(img.defNorm);
+        } else if (game.allyStats[2][1] == 0.6){ // is increased
+            img.defenseOverlay7.setIcon(img.defUp);
+        } else if (game.allyStats[2][1] == 1.6){ // is decreased
+            img.defenseOverlay7.setIcon(img.defDown);
+        }
+        if (game.allyStats[2][2] == 1){ // ally three agility is normal
+            img.agilityOverlay7.setIcon(img.aglNorm);
+        } else if (game.allyStats[2][2] == 2){ // is increased
+            img.agilityOverlay7.setIcon(img.aglUp);
+        } else if (game.allyStats[2][2] == 0.5){ // is decreased
+            img.agilityOverlay7.setIcon(img.aglDown);
+        }
+        // ALLY FOUR ------ ALLY FOUR
+        if (game.allyStats[3][0] == 1){ // ally three attack is normal
+            img.attackOverlay8.setIcon(img.atkNorm);
+        } else if (game.allyStats[3][0] == 1.6){ // is increased
+            img.attackOverlay8.setIcon(img.atkUp);
+        } else if (game.allyStats[3][0] == 0.6){ // is decreased
+            img.attackOverlay8.setIcon(img.atkDown);
+        }
+        if (game.allyStats[3][1] == 1){ // ally three defense is normal
+            img.defenseOverlay8.setIcon(img.defNorm);
+        } else if (game.allyStats[3][1] == 0.6){ // is increased
+            img.defenseOverlay8.setIcon(img.defUp);
+        } else if (game.allyStats[3][1] == 1.6){ // is decreased
+            img.defenseOverlay8.setIcon(img.defDown);
+        }
+        if (game.allyStats[3][2] == 1){ // ally three agility is normal
+            img.agilityOverlay8.setIcon(img.aglNorm);
+        } else if (game.allyStats[3][2] == 2){ // is increased
+            img.agilityOverlay8.setIcon(img.aglUp);
+        } else if (game.allyStats[3][2] == 0.5){ // is decreased
+            img.agilityOverlay8.setIcon(img.aglDown);
+        }
+        
+        // enemy ONE ------ enemy ONE
+        if (game.enemyStats[0][0] == 1){ // enemy one attack is normal
+            img.attackOverlay1.setIcon(img.atkNorm);
+        } else if (game.enemyStats[0][0] == 1.6){ // is increased
+            img.attackOverlay1.setIcon(img.atkUp);
+        } else if (game.enemyStats[0][0] == 0.6){ // is decreased
+            img.attackOverlay1.setIcon(img.atkDown);
+        }
+        if (game.enemyStats[0][1] == 1){ // enemy one defense is normal
+            img.defenseOverlay1.setIcon(img.defNorm);
+        } else if (game.enemyStats[0][1] == 0.6){ // is increased
+            img.defenseOverlay1.setIcon(img.defUp);
+        } else if (game.enemyStats[0][1] == 1.6){ // is decreased
+            img.defenseOverlay1.setIcon(img.defDown);
+        }
+        if (game.enemyStats[0][2] == 1){ // enemy one agility is normal
+            img.agilityOverlay1.setIcon(img.aglNorm);
+        } else if (game.enemyStats[0][2] == 2){ // is increased
+            img.agilityOverlay1.setIcon(img.aglUp);
+        } else if (game.enemyStats[0][2] == 0.5){ // is decreased
+            img.agilityOverlay1.setIcon(img.aglDown);
+        }
+        // enemy TWO ------ enemy TWO
+        if (game.enemyStats[1][0] == 1){ // enemy two attack is normal
+            img.attackOverlay2.setIcon(img.atkNorm);
+        } else if (game.enemyStats[1][0] == 1.6){ // is increased
+            img.attackOverlay2.setIcon(img.atkUp);
+        } else if (game.enemyStats[1][0] == 0.6){ // is decreased
+            img.attackOverlay2.setIcon(img.atkDown);
+        }
+        if (game.enemyStats[1][1] == 1){ // enemy two defense is normal
+            img.defenseOverlay2.setIcon(img.defNorm);
+        } else if (game.enemyStats[1][1] == 0.6){ // is increased
+            img.defenseOverlay2.setIcon(img.defUp);
+        } else if (game.enemyStats[1][1] == 1.6){ // is decreased
+            img.defenseOverlay2.setIcon(img.defDown);
+        }
+        if (game.enemyStats[1][2] == 1){ // enemy two agility is normal
+            img.agilityOverlay2.setIcon(img.aglNorm);
+        } else if (game.enemyStats[1][2] == 2){ // is increased
+            img.agilityOverlay2.setIcon(img.aglUp);
+        } else if (game.enemyStats[1][2] == 0.5){ // is decreased
+            img.agilityOverlay2.setIcon(img.aglDown);
+        }
+        // enemy THREE ------ enemy THREE
+        if (game.enemyStats[2][0] == 1){ // enemy three attack is normal
+            img.attackOverlay3.setIcon(img.atkNorm);
+        } else if (game.enemyStats[2][0] == 1.6){ // is increased
+            img.attackOverlay3.setIcon(img.atkUp);
+        } else if (game.enemyStats[2][0] == 0.6){ // is decreased
+            img.attackOverlay3.setIcon(img.atkDown);
+        }
+        if (game.enemyStats[2][1] == 1){ // enemy three defense is normal
+            img.defenseOverlay3.setIcon(img.defNorm);
+        } else if (game.enemyStats[2][1] == 0.6){ // is increased
+            img.defenseOverlay3.setIcon(img.defUp);
+        } else if (game.enemyStats[2][1] == 1.6){ // is decreased
+            img.defenseOverlay3.setIcon(img.defDown);
+        }
+        if (game.enemyStats[2][2] == 1){ // enemy three agility is normal
+            img.agilityOverlay3.setIcon(img.aglNorm);
+        } else if (game.enemyStats[2][2] == 2){ // is increased
+            img.agilityOverlay3.setIcon(img.aglUp);
+        } else if (game.enemyStats[2][2] == 0.5){ // is decreased
+            img.agilityOverlay3.setIcon(img.aglDown);
+        }
+        // enemy FOUR ------ enemy FOUR
+        if (game.enemyStats[3][0] == 1){ // enemy three attack is normal
+            img.attackOverlay4.setIcon(img.atkNorm);
+        } else if (game.enemyStats[3][0] == 1.6){ // is increased
+            img.attackOverlay4.setIcon(img.atkUp);
+        } else if (game.enemyStats[3][0] == 0.6){ // is decreased
+            img.attackOverlay4.setIcon(img.atkDown);
+        }
+        if (game.enemyStats[3][1] == 1){ // enemy three defense is normal
+            img.defenseOverlay4.setIcon(img.defNorm);
+        } else if (game.enemyStats[3][1] == 0.6){ // is increased
+            img.defenseOverlay4.setIcon(img.defUp);
+        } else if (game.enemyStats[3][1] == 1.6){ // is decreased
+            img.defenseOverlay4.setIcon(img.defDown);
+        }
+        if (game.enemyStats[3][2] == 1){ // enemy three agility is normal
+            img.agilityOverlay4.setIcon(img.aglNorm);
+        } else if (game.enemyStats[3][2] == 2){ // is increased
+            img.agilityOverlay4.setIcon(img.aglUp);
+        } else if (game.enemyStats[3][2] == 0.5){ // is decreased
+            img.agilityOverlay4.setIcon(img.aglDown);
+        }
+        
+        if (game.enemyDead[0] == 1){
+            img.deadOverlay1.setIcon(img.dead);
+        } else {
+            img.deadOverlay1.setIcon(null);
+        }
+        if (game.enemyDead[1] == 1){
+            img.deadOverlay2.setIcon(img.dead);
+        } else {
+            img.deadOverlay2.setIcon(null);
+        }
+        if (game.enemyDead[2] == 1){
+            img.deadOverlay3.setIcon(img.dead);
+        } else {
+            img.deadOverlay3.setIcon(null);
+        }
+        if (game.enemyDead[3] == 1){
+            img.deadOverlay4.setIcon(img.dead);
+        } else {
+            img.deadOverlay4.setIcon(null);
+        }
+        if (game.allyDead[0] == 1){
+            img.deadOverlay5.setIcon(img.dead);
+        } else {
+            img.deadOverlay5.setIcon(null);
+        }
+        if (game.allyDead[1] == 1){
+            img.deadOverlay6.setIcon(img.dead);
+        } else {
+            img.deadOverlay6.setIcon(null);
+        }
+        if (game.allyDead[2] == 1){
+            img.deadOverlay7.setIcon(img.dead);
+        } else {
+            img.deadOverlay7.setIcon(null);
+        }
+        if (game.allyDead[3] == 1){
+            img.deadOverlay8.setIcon(img.dead);
+        } else {
+            img.deadOverlay8.setIcon(null);
         }
     }
     
@@ -814,7 +1234,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 game.page = 1; // set page to select ally
                 updateUI();
                 break;
-                
+            case "itemFour":
+                game.cleanse();
+                updateUI();
+                break;
                 
             // single target enemy clicks
             case "enemyOne":
@@ -918,6 +1341,15 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.everfrost(0);
                         updateUI();
                         break;
+                    case 7:
+                        if (game.allyDead[0] == 1){
+                            game.revive(0);
+                            updateUI();
+                        } else {
+                            System.out.println("You cannot revive this character, as they are not dead");
+                            updateUI();
+                        }
+                        break;
                 }
                 break;
             case "allyTwo":
@@ -939,6 +1371,15 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.everfrost(1);
                         updateUI();
                         break; 
+                    case 7:
+                        if (game.allyDead[1] == 1){
+                            game.revive(1);
+                            updateUI();
+                        } else {
+                            System.out.println("You cannot revive this character, as they are not dead");
+                            updateUI();
+                        }
+                        break;
                 }
                 break;
             case "allyThree":
@@ -960,6 +1401,15 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.everfrost(2);
                         updateUI();
                         break;
+                    case 7:
+                        if (game.allyDead[2] == 1){
+                            game.revive(2);
+                            updateUI();
+                        } else {
+                            System.out.println("You cannot revive this character, as they are not dead");
+                            updateUI();
+                        }
+                        break;
                 }
                 break;
             case "allyFour":
@@ -980,7 +1430,16 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     case 6: // everfrost
                         game.everfrost(3);
                         updateUI();
-                        break;     
+                        break;    
+                    case 7:
+                        if (game.allyDead[3] == 1){
+                            game.revive(3);
+                            updateUI();
+                        } else {
+                            System.out.println("You cannot revive this character, as they are not dead");
+                            updateUI();
+                        }
+                        break; 
                 }
                 break;
                 
