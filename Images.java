@@ -43,7 +43,9 @@ public class Images
     JLabel principality = new JLabel(principalityIMG);
     
     // panels/backgronds
-    ImageIcon allyPanel = new ImageIcon("panels/allyPanel7.png");
+    ImageIcon allyPanel = new ImageIcon("panels/allyPanel8.png");
+    ImageIcon gamePanel = new ImageIcon("panels/gamepanel.png");
+    ImageIcon enemyPanel = new ImageIcon("panels/enemyPanel6.png");
     
     //sprites
     ImageIcon ameNoUzumeSelected = new ImageIcon("sprites/ameNoUzumeSelected.png");
@@ -118,13 +120,13 @@ public class Images
     // stat changes overlays
     ImageIcon statOverlay = new ImageIcon("overlayBuffs/statsOverlay.png");
     ImageIcon atkUp = new ImageIcon("overlayBuffs/attackUp.png");
-    ImageIcon atkNorm = new ImageIcon("overlayBuffs/attackNormal.png");
+    ImageIcon atkNorm = new ImageIcon("overlayBuffs/attackNormal2.png");
     ImageIcon atkDown = new ImageIcon("overlayBuffs/attackDown.png");
     ImageIcon defUp = new ImageIcon("overlayBuffs/defenseUp.png");
-    ImageIcon defNorm = new ImageIcon("overlayBuffs/defenseNormal.png");
+    ImageIcon defNorm = new ImageIcon("overlayBuffs/defenseNormal2.png");
     ImageIcon defDown = new ImageIcon("overlayBuffs/defenseDown.png");
     ImageIcon aglUp = new ImageIcon("overlayBuffs/agilityUp.png");
-    ImageIcon aglNorm = new ImageIcon("overlayBuffs/agilityNormal2.png");
+    ImageIcon aglNorm = new ImageIcon("overlayBuffs/agilityNormal3.png");
     ImageIcon aglDown = new ImageIcon("overlayBuffs/agilityDown.png");
     ImageIcon guard = new ImageIcon("overlayBuffs/guard.png");
     ImageIcon healed = new ImageIcon("overlayBuffs/healed.png");

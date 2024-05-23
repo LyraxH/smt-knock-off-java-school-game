@@ -33,10 +33,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JLabel enemyFourHPText = new JLabel("300 / 300");
 
     // ally window variables
-    JButton allyOneButton = new JButton("AllyOne");
-    JButton allyTwoButton = new JButton("AllyTwo");
-    JButton allyThreeButton = new JButton("AllyThree");
-    JButton allyFourButton =  new JButton("AllyFour");
+    JButton allyOneButton = new JButton();
+    JButton allyTwoButton = new JButton();
+    JButton allyThreeButton = new JButton();
+    JButton allyFourButton =  new JButton();
     JLabel allyOneHPText = new JLabel("HP: 200 / 200");
     JLabel allyTwoHPText = new JLabel("HP: 200 / 200");
     JLabel allyThreeHPText = new JLabel("HP: 200 / 200");
@@ -101,6 +101,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JPanel gameWindowAgility = new JPanel(); // agility
     JPanel gameWindowDead = new JPanel(); // skull emoji
     JPanel gameWindowAffinities = new JPanel();  // where weakness indicator is displayed
+    JPanel gameWindowBackgroundPanel = new JPanel();
+    JLabel gameWindowBackground = new JLabel();
 
     public Window(){
         game.Start();
@@ -139,6 +141,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowAgility.setLayout(new GridLayout(3, 4));
         gameWindowDead.setBounds(0,0,730,470);
         gameWindowDead.setLayout(new GridLayout(3,4));
+        gameWindowBackgroundPanel.setBounds(0,0,730,470);
                
         chatWindow.setPreferredSize(new Dimension(0, 50));
         moveWindow.setPreferredSize(new Dimension(0, 200));
@@ -173,6 +176,12 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         allyWindowBackgroundPanel.add(allyWindowBackground);
         allyWindowBackground.setIcon(img.allyPanel);
         
+        enemyWindowBackgroundPanel.add(enemyWindowBackground);
+        enemyWindowBackground.setIcon(img.enemyPanel);
+        
+        gameWindowBackgroundPanel.add(gameWindowBackground);
+        gameWindowBackground.setIcon(img.gamePanel);
+        
         cleanUp();
 
         //adding panels to enemy window
@@ -184,13 +193,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         allyWindow.add(allyWindowBase, new Integer(1), 0);
     
         // adding panels to game window
-        gameWindow.add(gameWindowBase, new Integer(0), 0);
-        gameWindow.add(gameWindowAffinities, new Integer(1), 0);
-        gameWindow.add(gameWindowStats, new Integer(2), 0);
-        gameWindow.add(gameWindowAttack, new Integer(3), 0);
-        gameWindow.add(gameWindowDefense, new Integer(4), 0);
-        gameWindow.add(gameWindowAgility, new Integer(5), 0);
-        gameWindow.add(gameWindowDead, new Integer(6), 0);
+        gameWindow.add(gameWindowBackgroundPanel, new Integer(0), 0);
+        gameWindow.add(gameWindowBase, new Integer(1), 0);
+        gameWindow.add(gameWindowAffinities, new Integer(2), 0);
+        gameWindow.add(gameWindowStats, new Integer(3), 0);
+        gameWindow.add(gameWindowAttack, new Integer(4), 0);
+        gameWindow.add(gameWindowDefense, new Integer(5), 0);
+        gameWindow.add(gameWindowAgility, new Integer(6), 0);
+        gameWindow.add(gameWindowDead, new Integer(7), 0);
 
         updateUI();
         initialize();
@@ -1785,6 +1795,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     
     void cleanUp(){
         // enemy window adding variables
+        enemyOneHPText.setForeground(Color.white);
+        enemyTwoHPText.setForeground(Color.white);
+        enemyThreeHPText.setForeground(Color.white);
+        enemyFourHPText.setForeground(Color.white);
         enemyWindowBase.add(enemyOneButton);
         enemyWindowBase.add(enemyOneHPText);
         enemyWindowBase.add(enemyTwoButton);
@@ -1901,7 +1915,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowAffinities.add(img.allyFourAffinity);
         
         // setting opaque
-        enemyWindowBase.setBackground(Color.red);
         allyOneButton.setOpaque(false);
         allyOneButton.setContentAreaFilled(false);
         allyOneButton.setBorderPainted(false);
@@ -1929,11 +1942,13 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         enemyWindowBase.setOpaque(false);
         allyWindowBase.setOpaque(false);
         allyWindowBackground.setOpaque(false);
+        gameWindowBase.setOpaque(false);
         gameWindowDead.setOpaque(false);
         gameWindowStats.setOpaque(false);
         gameWindowAttack.setOpaque(false);
         gameWindowDefense.setOpaque(false);
         gameWindowAgility.setOpaque(false);
         gameWindowAffinities.setOpaque(false);
+        gameWindowBackgroundPanel.setOpaque(false);
     }
 }
