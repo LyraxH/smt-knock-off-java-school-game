@@ -43,9 +43,9 @@ public class Images
     JLabel principality = new JLabel(principalityIMG);
     
     // panels/backgronds
-    ImageIcon allyPanel = new ImageIcon("panels/allyPanel8.png");
+    ImageIcon allyPanel = new ImageIcon("panels/allyPanel10.png");
     ImageIcon gamePanel = new ImageIcon("panels/gamepanel.png");
-    ImageIcon enemyPanel = new ImageIcon("panels/enemyPanel6.png");
+    ImageIcon enemyPanel = new ImageIcon("panels/enemyPanel10.png");
     
     //sprites
     ImageIcon ameNoUzumeSelected = new ImageIcon("sprites/ameNoUzumeSelected.png");

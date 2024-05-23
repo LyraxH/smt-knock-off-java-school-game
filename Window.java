@@ -126,72 +126,49 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         moveWindow.setBackground(Color.magenta);
         allyWindow.setBackground(Color.green);
 
-        // adding variables to the move window region
+        // setting grid layouts to the panels required
         moveWindow.setLayout(new GridLayout(1,0));
-        
-        gameWindowAffinities.setBounds(0,0,730,470);
-        gameWindowAffinities.setLayout(new GridLayout(3, 4));
-        gameWindowStats.setBounds(0,0,730,470);
         gameWindowStats.setLayout(new GridLayout(3, 4));
-        gameWindowAttack.setBounds(0,0,730,470);
         gameWindowAttack.setLayout(new GridLayout(3, 4));
-        gameWindowDefense.setBounds(0,0,730,470);
         gameWindowDefense.setLayout(new GridLayout(3, 4));
-        gameWindowAgility.setBounds(0,0,730,470);
         gameWindowAgility.setLayout(new GridLayout(3, 4));
-        gameWindowDead.setBounds(0,0,730,470);
+        gameWindowAffinities.setLayout(new GridLayout(3, 4));
         gameWindowDead.setLayout(new GridLayout(3,4));
-        gameWindowBackgroundPanel.setBounds(0,0,730,470);
-               
+        gameWindowBase.setLayout(new GridLayout(3, 4));
+        allyWindowBase.setLayout(new GridLayout(4,3));
+        enemyWindowBase.setLayout(new GridLayout(4,2));
+        
         chatWindow.setPreferredSize(new Dimension(0, 50));
         moveWindow.setPreferredSize(new Dimension(0, 200));
-
-        // adding variables to ally window
-        allyWindow.setPreferredSize(new Dimension(300, 0));
-        allyWindow.setBounds(980,50,300,470);
-        allyWindowBackgroundPanel.setBounds(0,0,300,470);
-        allyWindowBase.setBounds(0,0,300,470);
-        allyWindowBase.setLayout(new GridLayout(4,3, 0, 25));
-        
-        allyWindowBackgroundPanel.add(allyWindowBackground);
-        allyWindowBackground.setIcon(img.allyPanel);
-        
-        // adding variables to game window
-        gameWindow.setBounds(250,50,300,470);
-        gameWindowBase.setBounds(0,0,730,470);
-        gameWindowBase.setLayout(new GridLayout(3, 4));
-        // adding variables to enemy window
-        enemyWindow.setPreferredSize(new Dimension(250, 470));
-        enemyWindow.setBounds(0,50,250,470);
-        enemyWindowBackgroundPanel.setBounds(0,0,250,470);
-        enemyWindowBase.setBounds(0,0,250,470);
-        enemyWindowBase.setLayout(new GridLayout(4,2,0,25));
-        // adding variables to ally window
+        gameWindow.setPreferredSize(new Dimension(730, 470));
         allyWindow.setPreferredSize(new Dimension(300, 470));
-        allyWindow.setBounds(980,50,300,470);
-        allyWindowBackgroundPanel.setBounds(0,0,300,470);
-        allyWindowBase.setBounds(0,0,300,470);
-        allyWindowBase.setLayout(new GridLayout(4,3, 0, 25));
+        enemyWindow.setPreferredSize(new Dimension(250, 470));
         
-        allyWindowBackgroundPanel.add(allyWindowBackground);
-        allyWindowBackground.setIcon(img.allyPanel);
         
-        enemyWindowBackgroundPanel.add(enemyWindowBackground);
-        enemyWindowBackground.setIcon(img.enemyPanel);
-        
-        gameWindowBackgroundPanel.add(gameWindowBackground);
-        gameWindowBackground.setIcon(img.gamePanel);
+        gameWindowDead.setBounds(0,-5,730,480);
+        gameWindowStats.setBounds(0,-5,730,480);
+        gameWindowAttack.setBounds(0,-5,730,480);
+        gameWindowDefense.setBounds(0,-5,730,480);
+        gameWindowAgility.setBounds(0,-5,730,480);
+        gameWindowAffinities.setBounds(0,-5,730,480);
+        gameWindow.setBounds(0,-5,730,480);
+        gameWindowBase.setBounds(0,-5,730,480);
+        gameWindowBackgroundPanel.setBounds(0,-5,730,480);
+        allyWindow.setBounds(0,-5,300,480);
+        allyWindowBase.setBounds(0,-5,300,480);
+        allyWindowBackgroundPanel.setBounds(0,-5,300,480);
+        enemyWindow.setBounds(0,-5,250,480);
+        enemyWindowBase.setBounds(0,-5,250,480);
+        enemyWindowBackgroundPanel.setBounds(0,-5,250,480);
         
         cleanUp();
 
         //adding panels to enemy window
         enemyWindow.add(enemyWindowBackgroundPanel, new Integer(0), 0);
         enemyWindow.add(enemyWindowBase, new Integer(1), 0);
-        
         // adding panels to ally window
         allyWindow.add(allyWindowBackgroundPanel, new Integer(0), 0);
         allyWindow.add(allyWindowBase, new Integer(1), 0);
-    
         // adding panels to game window
         gameWindow.add(gameWindowBackgroundPanel, new Integer(0), 0);
         gameWindow.add(gameWindowBase, new Integer(1), 0);
@@ -1913,6 +1890,16 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowAffinities.add(img.allyTwoAffinity);
         gameWindowAffinities.add(img.allyThreeAffinity);
         gameWindowAffinities.add(img.allyFourAffinity);
+        
+        // setting backgrounds
+        allyWindowBackgroundPanel.add(allyWindowBackground);
+        allyWindowBackground.setIcon(img.allyPanel);
+        
+        enemyWindowBackgroundPanel.add(enemyWindowBackground);
+        enemyWindowBackground.setIcon(img.enemyPanel);
+        
+        gameWindowBackgroundPanel.add(gameWindowBackground);
+        gameWindowBackground.setIcon(img.gamePanel);
         
         // setting opaque
         allyOneButton.setOpaque(false);

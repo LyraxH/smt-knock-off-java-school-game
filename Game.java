@@ -23,14 +23,14 @@ public class Game
     
     // varialbes for characters
     int hpMaxAlly[] = new int[]{500,500,500,500};
-    int hpAlly[] = new int[]{hpMaxAlly[0],hpMaxAlly[1] - 300,hpMaxAlly[2],hpMaxAlly[3]};
+    int hpAlly[] = new int[]{hpMaxAlly[0],hpMaxAlly[1],hpMaxAlly[2],hpMaxAlly[3]};
     boolean isAllyInjured = false;
     int allyInjured[] = new int[]{0,0,0,0};
     boolean isAllyDead = false;
     int allyDead[] = new int[]{0,0,0,0};
     
     int hpMaxEnemy[] = new int[]{800,800,800,800};
-    int hpEnemy[] = new int[]{hpMaxEnemy[0],hpMaxEnemy[1] - 500,hpMaxEnemy[2] - 500,hpMaxEnemy[3]};
+    int hpEnemy[] = new int[]{hpMaxEnemy[0],hpMaxEnemy[1],hpMaxEnemy[2],hpMaxEnemy[3]};
     boolean isEnemyInjured = false;
     int enemyInjured[] = new int[]{0,0,0,0};
     boolean isEnemyDead = false;
