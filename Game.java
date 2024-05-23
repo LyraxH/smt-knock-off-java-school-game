@@ -607,49 +607,53 @@ public class Game
         String what = "o";
         String target = "o";
         int damage = 0;
-        switch (currentCharacter){
-            case 0:
-                who = "Ame No Uzume";
-                break;
-            case 1:
-                who = "Cendrillon";
-                break;
-            case 2:
-                who = "Orpheus";
-                break;
-            case 3:
-                who = "Robin Hood";
-                break;
+        if (hpEnemy[enemy] <= 0){
+            System.out.println("Cannot target this enemy as they are already dead");
+        } else {
+            switch (currentCharacter){
+                case 0:
+                    who = "Ame No Uzume";
+                    break;
+                case 1:
+                    who = "Cendrillon";
+                    break;
+                case 2:
+                    who = "Orpheus";
+                    break;
+                case 3:
+                    who = "Robin Hood";
+                    break;
+            }
+            switch (move){
+                case 2:
+                    what = "Snip Snip";
+                    damage = 85;
+                    hpAlly[1] -= 40;
+                    break;
+                default:
+                    what = "a basic attack";
+                    damage = 45;
+                    break;
+            }
+            switch (enemy){
+                case 0:
+                    target = "Archangel";
+                    break;
+                case 1:
+                    target = "Jack Frost";
+                    break;
+                case 2:
+                    target = "Legion";
+                    break;
+                case 3:
+                    target = "Principality";
+                    break;
+            }
+            targetAll = false;
+            textHistory.add(who + " uses " + what + " on " + target);
+            calculateDamage(enemy, target, "Physical", damage, 6);
+            goNext();
         }
-        switch (move){
-            case 2:
-                what = "Snip Snip";
-                damage = 85;
-                hpAlly[1] -= 40;
-                break;
-            default:
-                what = "a basic attack";
-                damage = 45;
-                break;
-        }
-        switch (enemy){
-            case 0:
-                target = "Archangel";
-                break;
-            case 1:
-                target = "Jack Frost";
-                break;
-            case 2:
-                target = "Legion";
-                break;
-            case 3:
-                target = "Principality";
-                break;
-        }
-        targetAll = false;
-        textHistory.add(who + " uses " + what + " on " + target);
-        calculateDamage(enemy, target, "Physical", damage, 6);
-        goNext();
     }
     
     public void guard(int who){ // if from the main menu above you select guard. it will do this
@@ -864,126 +868,129 @@ public class Game
         String affinityString = "o";
         int damage = 0;
         targetAll = false;
-        
-        switch (currentCharacter){
-            case 0:
-                who = "Ame no uzume";
-                switch (move){
-                    case 0:
-                        damage = 85;
-                        what = "Zephyr";
-                        affinityInt = 2;
-                        affinityString = "Wind";
-                        targetAll = false;
-                        break;
-                    case 1:
-                        damage = 65;
-                        what = "Monsoon";
-                        affinityInt = 2;
-                        affinityString = "Wind";
-                        targetAll = true;
-                        break;
-                }
-                break;
-            case 1:
-                who = "Cendrillon";
-                switch (move){
-                    case 0: // 
-                        damage = 85;
-                        what = "Aqua Prison";
-                        affinityInt = 1;
-                        affinityString = "Water";
-                        targetAll = false;
-                        break;
-                    case 1:
-                        damage = 65;
-                        what = "Surging Tide";
-                        affinityInt = 1;
-                        affinityString = "Water";
-                        targetAll = true;
-                        break;
-                }
-                break;
-            case 2:
-                who = "Orpheus";
-                switch (move){
-                    case 0: // 
-                        damage = 85;
-                        what = "Lunar Rush";
-                        affinityInt = 5;
-                        affinityString = "Moon";
-                        targetAll = false;
-                        break;
-                    case 1:
-                        damage = 65;
-                        what = "Moonfall";
-                        affinityInt = 5;
-                        affinityString = "Moon";
-                        targetAll = true;
-                        break;
-                    case 2:
-                        damage = 85;
-                        what = "Shattering Strike";
-                        affinityInt = 3;
-                        affinityString = "Earth";
-                        targetAll = false;
-                        break;
-                }
-                break;
-            case 3:
-                who = "Robin Hood";
-                switch (move){
-                    case 0: // 
-                        damage = 85;
-                        what = "Zenith Blade";
-                        affinityInt = 4;
-                        affinityString = "Sun";
-                        targetAll = false;
-                        break;
-                    case 1:
-                        damage = 65;
-                        what = "Solar Flare";
-                        affinityInt = 4;
-                        affinityString = "Sun";
-                        targetAll = true;
-                        break;
-                    case 2:
-                        damage = 85;
-                        what = "Sear";
-                        affinityInt = 0;
-                        affinityString = "Fire";
-                        targetAll = false;
-                        break;
-                }
-                break;
-        }
-        switch (enemy){
-            case 0:
-                target = "Archangel";
-                break;
-            case 1:
-                target = "Jack Frost";
-                break;
-            case 2:
-                target = "Legion";
-                break;
-            case 3:
-                target = "Principality";
-                break;
-        }
-        if (targetAll){
-            textHistory.add(who + " uses " + what + "on on every enemy");
-            calculateDamage(0, "Archangel", affinityString, damage, affinityInt);
-            calculateDamage(1, "Jack Frost", affinityString, damage, affinityInt);
-            calculateDamage(2, "Legion", affinityString, damage, affinityInt);
-            calculateDamage(3, "Principality", affinityString, damage, affinityInt);
-            spAlly[currentCharacter] -= 21;
+        if (hpEnemy[enemy] <= 0){
+            System.out.println("Cannot target this enemy as they are already dead");
         } else {
-            textHistory.add(who + " uses " + what + " on " + target);
-            calculateDamage(enemy, target, affinityString, damage, affinityInt);
-            spAlly[currentCharacter] -= 9;
+            switch (currentCharacter){
+                case 0:
+                    who = "Ame no uzume";
+                    switch (move){
+                        case 0:
+                            damage = 85;
+                            what = "Zephyr";
+                            affinityInt = 2;
+                            affinityString = "Wind";
+                            targetAll = false;
+                            break;
+                        case 1:
+                            damage = 65;
+                            what = "Monsoon";
+                            affinityInt = 2;
+                            affinityString = "Wind";
+                            targetAll = true;
+                            break;
+                    }
+                    break;
+                case 1:
+                    who = "Cendrillon";
+                    switch (move){
+                        case 0: // 
+                            damage = 85;
+                            what = "Aqua Prison";
+                            affinityInt = 1;
+                            affinityString = "Water";
+                            targetAll = false;
+                            break;
+                        case 1:
+                            damage = 65;
+                            what = "Surging Tide";
+                            affinityInt = 1;
+                            affinityString = "Water";
+                            targetAll = true;
+                            break;
+                    }
+                    break;
+                case 2:
+                    who = "Orpheus";
+                    switch (move){
+                        case 0: // 
+                            damage = 85;
+                            what = "Lunar Rush";
+                            affinityInt = 5;
+                            affinityString = "Moon";
+                            targetAll = false;
+                            break;
+                        case 1:
+                            damage = 65;
+                            what = "Moonfall";
+                            affinityInt = 5;
+                            affinityString = "Moon";
+                            targetAll = true;
+                            break;
+                        case 2:
+                            damage = 85;
+                            what = "Shattering Strike";
+                            affinityInt = 3;
+                            affinityString = "Earth";
+                            targetAll = false;
+                            break;
+                    }
+                    break;
+                case 3:
+                    who = "Robin Hood";
+                    switch (move){
+                        case 0: // 
+                            damage = 85;
+                            what = "Zenith Blade";
+                            affinityInt = 4;
+                            affinityString = "Sun";
+                            targetAll = false;
+                            break;
+                        case 1:
+                            damage = 65;
+                            what = "Solar Flare";
+                            affinityInt = 4;
+                            affinityString = "Sun";
+                            targetAll = true;
+                            break;
+                        case 2:
+                            damage = 85;
+                            what = "Sear";
+                            affinityInt = 0;
+                            affinityString = "Fire";
+                            targetAll = false;
+                            break;
+                    }
+                    break;
+            }
+            switch (enemy){
+                case 0:
+                    target = "Archangel";
+                    break;
+                case 1:
+                    target = "Jack Frost";
+                    break;
+                case 2:
+                    target = "Legion";
+                    break;
+                case 3:
+                    target = "Principality";
+                    break;
+            }
+            if (targetAll){
+                textHistory.add(who + " uses " + what + "on on every enemy");
+                calculateDamage(0, "Archangel", affinityString, damage, affinityInt);
+                calculateDamage(1, "Jack Frost", affinityString, damage, affinityInt);
+                calculateDamage(2, "Legion", affinityString, damage, affinityInt);
+                calculateDamage(3, "Principality", affinityString, damage, affinityInt);
+                spAlly[currentCharacter] -= 21;
+            } else {
+                textHistory.add(who + " uses " + what + " on " + target);
+                calculateDamage(enemy, target, affinityString, damage, affinityInt);
+                spAlly[currentCharacter] -= 9;
+            }
+            goNext();
         }
-        goNext();
     }
     
     void healing(int ally){

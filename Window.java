@@ -16,19 +16,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     Scanner input = new Scanner(System.in);
     Images img = new Images(); // imports images from other class
     Game game = new Game(); // imports data from game region
-    // panel for different regions of the game
-    JPanel gameWindowBase = new JPanel(); // where the characters are displayed
-    JPanel gameWindowStats = new JPanel();
-    JPanel gameWindowAttack = new JPanel();
-    JPanel gameWindowDefense = new JPanel();
-    JPanel gameWindowAgility = new JPanel();
-    JPanel gameWindowDead = new JPanel();
-    JPanel gameWindowAffinities = new JPanel();  // where weakness indicator is displayed
-    JPanel enemyWindow = new JPanel(); // where enemy health is displayed
-    JPanel allyWindow = new JPanel(); // where ally health is displayed
-    JPanel moveWindow = new JPanel(); // where actions can be taken
-    JPanel chatWindow = new JPanel(); // where text of the actions taken is displayed
-    JLayeredPane gameWindow = new JLayeredPane();
 
     // chat window variables
     JLabel textUpdateOne = new JLabel("FILLER TEXT NUMBER ONE NO ONE WILL EVER SEE THIS XDD");
@@ -36,14 +23,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JLabel textUpdateThree = new JLabel("ASDASDASD");
 
     // enemy window variables
-    JButton enemyOneButton = new JButton("EnemyOne");
-    JButton enemyTwoButton = new JButton("EnemyTwo");
-    JButton enemyThreeButton = new JButton("EnemyThree");
-    JButton enemyFourButton = new JButton("EnemyFour");
-    JLabel enemyOneHPText = new JLabel("HP: 300 / 300");
-    JLabel enemyTwoHPText = new JLabel("HP: 300 / 300");
-    JLabel enemyThreeHPText = new JLabel("HP: 300 / 300");
-    JLabel enemyFourHPText = new JLabel("HP: 300 / 300");
+    JButton enemyOneButton = new JButton();
+    JButton enemyTwoButton = new JButton();
+    JButton enemyThreeButton = new JButton();
+    JButton enemyFourButton = new JButton();
+    JLabel enemyOneHPText = new JLabel("300 / 300");
+    JLabel enemyTwoHPText = new JLabel("300 / 300");
+    JLabel enemyThreeHPText = new JLabel("300 / 300");
+    JLabel enemyFourHPText = new JLabel("300 / 300");
 
     // ally window variables
     JButton allyOneButton = new JButton("AllyOne");
@@ -91,6 +78,29 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JMenuItem mediumDif = new JMenuItem("Medium");
     JMenuItem hardDif = new JMenuItem("Hard");
     JMenuItem displayBattleLog = new JMenuItem("Display Battle Log");
+    
+    // panel for different regions of the game
+    JPanel moveWindow = new JPanel(); // where actions can be taken
+    JPanel chatWindow = new JPanel(); // where text of the actions taken is displayed
+    
+    JLayeredPane enemyWindow = new JLayeredPane();
+    JPanel enemyWindowBase = new JPanel();
+    JPanel enemyWindowBackgroundPanel = new JPanel();
+    JLabel enemyWindowBackground = new JLabel();
+    
+    JLayeredPane allyWindow = new JLayeredPane();
+    JPanel allyWindowBase = new JPanel(); // where ally health is displayed
+    JPanel allyWindowBackgroundPanel = new JPanel();
+    JLabel allyWindowBackground = new JLabel();
+    
+    JLayeredPane gameWindow = new JLayeredPane();
+    JPanel gameWindowBase = new JPanel(); // where the characters are displayed
+    JPanel gameWindowStats = new JPanel(); // stat overlay
+    JPanel gameWindowAttack = new JPanel(); // attack
+    JPanel gameWindowDefense = new JPanel(); // defense
+    JPanel gameWindowAgility = new JPanel(); // agility
+    JPanel gameWindowDead = new JPanel(); // skull emoji
+    JPanel gameWindowAffinities = new JPanel();  // where weakness indicator is displayed
 
     public Window(){
         game.Start();
@@ -111,53 +121,11 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         chatWindow.add(textUpdateOne);
         chatWindow.add(textUpdateTwo);
         chatWindow.add(textUpdateThree);
+        moveWindow.setBackground(Color.magenta);
+        allyWindow.setBackground(Color.green);
 
         // adding variables to the move window region
         moveWindow.setLayout(new GridLayout(1,0));
-
-        // adding variables to the ally window region
-        allyWindow.setLayout(new GridLayout(4,3, 0, 25));
-        allyWindow.add(allyOneButton);
-        allyWindow.add(allyOneHPText);
-        allyWindow.add(allyOneSPText);
-
-        allyWindow.add(allyTwoButton);
-        allyWindow.add(allyTwoHPText);
-        allyWindow.add(allyTwoSPText);
-
-        allyWindow.add(allyThreeButton);
-        allyWindow.add(allyThreeHPText);
-        allyWindow.add(allyThreeSPText);
-
-        allyWindow.add(allyFourButton);
-        allyWindow.add(allyFourHPText);
-        allyWindow.add(allyFourSPText);
-
-        // adding variables to the enemy window region
-        enemyWindow.setLayout(new GridLayout(4,2, 50, 25));
-        enemyWindow.add(enemyOneButton);
-        enemyWindow.add(enemyOneHPText);
-        enemyWindow.add(enemyTwoButton);
-        enemyWindow.add(enemyTwoHPText);
-        enemyWindow.add(enemyThreeButton);
-        enemyWindow.add(enemyThreeHPText);
-        enemyWindow.add(enemyFourButton);
-        enemyWindow.add(enemyFourHPText);
-    
-        gameWindowBase.setBackground(Color.pink);
-        allyWindow.setBackground(Color.cyan);
-        allyWindow.setPreferredSize(new Dimension(300, 0));
-        enemyWindow.setBackground(Color.magenta);
-        enemyWindow.setPreferredSize(new Dimension(250, 0));
-        chatWindow.setBackground(Color.gray);
-        chatWindow.setPreferredSize(new Dimension(0, 50));
-        moveWindow.setBackground(Color.gray);
-        moveWindow.setPreferredSize(new Dimension(0, 200));
-
-        // adding variables to game window
-        gameWindow.setBounds(250,50,300,470);
-        gameWindowBase.setBounds(0,0,730,470);
-        gameWindowBase.setLayout(new GridLayout(3, 4));
         
         gameWindowAffinities.setBounds(0,0,730,470);
         gameWindowAffinities.setLayout(new GridLayout(3, 4));
@@ -171,104 +139,51 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowAgility.setLayout(new GridLayout(3, 4));
         gameWindowDead.setBounds(0,0,730,470);
         gameWindowDead.setLayout(new GridLayout(3,4));
+               
+        chatWindow.setPreferredSize(new Dimension(0, 50));
+        moveWindow.setPreferredSize(new Dimension(0, 200));
+
+        // adding variables to ally window
+        allyWindow.setPreferredSize(new Dimension(300, 0));
+        allyWindow.setBounds(980,50,300,470);
+        allyWindowBackgroundPanel.setBounds(0,0,300,470);
+        allyWindowBase.setBounds(0,0,300,470);
+        allyWindowBase.setLayout(new GridLayout(4,3, 0, 25));
         
-        gameWindowDead.add(img.deadOverlay1);
-        gameWindowDead.add(img.deadOverlay2);
-        gameWindowDead.add(img.deadOverlay3);
-        gameWindowDead.add(img.deadOverlay4);
-        gameWindowDead.add(img.filler17);
-        gameWindowDead.add(img.filler18);
-        gameWindowDead.add(img.filler19);
-        gameWindowDead.add(img.filler20);
-        gameWindowDead.add(img.deadOverlay5);
-        gameWindowDead.add(img.deadOverlay6);
-        gameWindowDead.add(img.deadOverlay7);
-        gameWindowDead.add(img.deadOverlay8);
-        gameWindowDead.setOpaque(false);
+        allyWindowBackgroundPanel.add(allyWindowBackground);
+        allyWindowBackground.setIcon(img.allyPanel);
         
-        gameWindowStats.add(img.statOverlay1);
-        gameWindowStats.add(img.statOverlay2);
-        gameWindowStats.add(img.statOverlay3);
-        gameWindowStats.add(img.statOverlay4);
-        gameWindowStats.add(img.filler1);
-        gameWindowStats.add(img.filler2);
-        gameWindowStats.add(img.filler3);
-        gameWindowStats.add(img.filler4);
-        gameWindowStats.add(img.statOverlay5);
-        gameWindowStats.add(img.statOverlay6);
-        gameWindowStats.add(img.statOverlay7);
-        gameWindowStats.add(img.statOverlay8);
-        gameWindowStats.setOpaque(false);
+        // adding variables to game window
+        gameWindow.setBounds(250,50,300,470);
+        gameWindowBase.setBounds(0,0,730,470);
+        gameWindowBase.setLayout(new GridLayout(3, 4));
+        // adding variables to enemy window
+        enemyWindow.setPreferredSize(new Dimension(250, 470));
+        enemyWindow.setBounds(0,50,250,470);
+        enemyWindowBackgroundPanel.setBounds(0,0,250,470);
+        enemyWindowBase.setBounds(0,0,250,470);
+        enemyWindowBase.setLayout(new GridLayout(4,2,0,25));
+        // adding variables to ally window
+        allyWindow.setPreferredSize(new Dimension(300, 470));
+        allyWindow.setBounds(980,50,300,470);
+        allyWindowBackgroundPanel.setBounds(0,0,300,470);
+        allyWindowBase.setBounds(0,0,300,470);
+        allyWindowBase.setLayout(new GridLayout(4,3, 0, 25));
         
-        gameWindowAttack.add(img.attackOverlay1);
-        gameWindowAttack.add(img.attackOverlay2);
-        gameWindowAttack.add(img.attackOverlay3);
-        gameWindowAttack.add(img.attackOverlay4);
-        gameWindowAttack.add(img.filler5);
-        gameWindowAttack.add(img.filler6);
-        gameWindowAttack.add(img.filler7);
-        gameWindowAttack.add(img.filler8);
-        gameWindowAttack.add(img.attackOverlay5);
-        gameWindowAttack.add(img.attackOverlay6);
-        gameWindowAttack.add(img.attackOverlay7);
-        gameWindowAttack.add(img.attackOverlay8);
-        gameWindowAttack.setOpaque(false);
+        allyWindowBackgroundPanel.add(allyWindowBackground);
+        allyWindowBackground.setIcon(img.allyPanel);
         
-        gameWindowDefense.add(img.defenseOverlay1);
-        gameWindowDefense.add(img.defenseOverlay2);
-        gameWindowDefense.add(img.defenseOverlay3);
-        gameWindowDefense.add(img.defenseOverlay4);
-        gameWindowDefense.add(img.filler9);
-        gameWindowDefense.add(img.filler10);
-        gameWindowDefense.add(img.filler11);
-        gameWindowDefense.add(img.filler12);
-        gameWindowDefense.add(img.defenseOverlay5);
-        gameWindowDefense.add(img.defenseOverlay6);
-        gameWindowDefense.add(img.defenseOverlay7);
-        gameWindowDefense.add(img.defenseOverlay8);
-        gameWindowDefense.setOpaque(false);
+        cleanUp();
+
+        //adding panels to enemy window
+        enemyWindow.add(enemyWindowBackgroundPanel, new Integer(0), 0);
+        enemyWindow.add(enemyWindowBase, new Integer(1), 0);
         
-        gameWindowAgility.add(img.agilityOverlay1);
-        gameWindowAgility.add(img.agilityOverlay2);
-        gameWindowAgility.add(img.agilityOverlay3);
-        gameWindowAgility.add(img.agilityOverlay4);
-        gameWindowAgility.add(img.filler13);
-        gameWindowAgility.add(img.filler14);
-        gameWindowAgility.add(img.filler15);
-        gameWindowAgility.add(img.filler16);
-        gameWindowAgility.add(img.agilityOverlay5);
-        gameWindowAgility.add(img.agilityOverlay6);
-        gameWindowAgility.add(img.agilityOverlay7);
-        gameWindowAgility.add(img.agilityOverlay8);
-        gameWindowAgility.setOpaque(false);
-        
-        gameWindowBase.add(enemyOneSprite);
-        gameWindowBase.add(enemyTwoSprite);
-        gameWindowBase.add(enemyThreeSprite);
-        gameWindowBase.add(enemyFourSprite);
-        gameWindowBase.add(img.turnIndicatorOne);
-        gameWindowBase.add(img.turnIndicatorTwo);
-        gameWindowBase.add(img.turnIndicatorThree);
-        gameWindowBase.add(img.turnIndicatorFour);
-        gameWindowBase.add(allyOneSprite);
-        gameWindowBase.add(allyTwoSprite);
-        gameWindowBase.add(allyThreeSprite);
-        gameWindowBase.add(allyFourSprite);
-        
-        gameWindowAffinities.add(img.enemyOneAffinity);
-        gameWindowAffinities.add(img.enemyTwoAffinity);
-        gameWindowAffinities.add(img.enemyThreeAffinity);
-        gameWindowAffinities.add(img.enemyFourAffinity);
-        gameWindowAffinities.add(img.blankOne);
-        gameWindowAffinities.add(img.blankTwo);
-        gameWindowAffinities.add(img.blankThree);
-        gameWindowAffinities.add(img.blankFour);
-        gameWindowAffinities.add(img.allyOneAffinity);
-        gameWindowAffinities.add(img.allyTwoAffinity);
-        gameWindowAffinities.add(img.allyThreeAffinity);
-        gameWindowAffinities.add(img.allyFourAffinity);
-        gameWindowAffinities.setOpaque(false);
-        
+        // adding panels to ally window
+        allyWindow.add(allyWindowBackgroundPanel, new Integer(0), 0);
+        allyWindow.add(allyWindowBase, new Integer(1), 0);
+    
+        // adding panels to game window
         gameWindow.add(gameWindowBase, new Integer(0), 0);
         gameWindow.add(gameWindowAffinities, new Integer(1), 0);
         gameWindow.add(gameWindowStats, new Integer(2), 0);
@@ -276,7 +191,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindow.add(gameWindowDefense, new Integer(4), 0);
         gameWindow.add(gameWindowAgility, new Integer(5), 0);
         gameWindow.add(gameWindowDead, new Integer(6), 0);
-        //gameWindow.add(gameWindowAffinities);
 
         updateUI();
         initialize();
@@ -303,227 +217,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         allyThreeSprite.setIcon(img.orpheusIMG);
         allyFourSprite.setIcon(img.robinHoodIMG);
     }
-    
-    public void displayStatus(int target, int status, boolean targetAll){ // 0 = weak, 1 = resist, 2 = null
-        System.out.println(targetAll);
-        if (!targetAll){ // if not targetting all, clear before 
-            clearAffinity();
-        } // displaying stats
-        switch (target){
-            case 0: // enemy one
-                switch (status){
-                    case 0:
-                        img.enemyOneAffinity.setIcon(img.weakOverlay);
-                        break;
-                    case 1:
-                        img.enemyOneAffinity.setIcon(img.resistOverlay);
-                        break;
-                    case 2:
-                        img.enemyOneAffinity.setIcon(img.nullOverlay);
-                        break;
-                    case 3:
-                        img.enemyOneAffinity.setIcon(img.normalOverlay);
-                        break;
-                    case 4:
-                        img.enemyOneAffinity.setIcon(img.healed);
-                        break;
-                    case 5:
-                        img.enemyOneAffinity.setIcon(img.buffed);
-                        break;
-                    case 6:
-                        img.enemyOneAffinity.setIcon(img.debuffed);
-                        break;
-                }
-                break;
-            case 1: // enemy two
-                switch (status){
-                    case 0:
-                        img.enemyTwoAffinity.setIcon(img.weakOverlay);
-                        break;
-                    case 1:
-                        img.enemyTwoAffinity.setIcon(img.resistOverlay);
-                        break;
-                    case 2:
-                        img.enemyTwoAffinity.setIcon(img.nullOverlay);
-                        break;
-                    case 3:
-                        img.enemyTwoAffinity.setIcon(img.normalOverlay);
-                        break;
-                    case 4:
-                        img.enemyTwoAffinity.setIcon(img.healed);
-                        break;
-                    case 5:
-                        img.enemyTwoAffinity.setIcon(img.buffed);
-                        break;
-                    case 6:
-                        img.enemyTwoAffinity.setIcon(img.debuffed);
-                        break;
-                }
-                break;
-            case 2: // enemy three
-                switch (status){
-                    case 0:
-                        img.enemyThreeAffinity.setIcon(img.weakOverlay);
-                        break;
-                    case 1:
-                        img.enemyThreeAffinity.setIcon(img.resistOverlay);
-                        break;
-                    case 2:
-                        img.enemyThreeAffinity.setIcon(img.nullOverlay);
-                        break;
-                    case 3:
-                        img.enemyThreeAffinity.setIcon(img.normalOverlay);
-                        break;
-                    case 4:
-                        img.enemyThreeAffinity.setIcon(img.healed);
-                        break;
-                    case 5:
-                        img.enemyThreeAffinity.setIcon(img.buffed);
-                        break;
-                    case 6:
-                        img.enemyThreeAffinity.setIcon(img.debuffed);
-                        break;
-                }
-                break;
-            case 3: // enemy four
-                switch (status){
-                    case 0:
-                        img.enemyFourAffinity.setIcon(img.weakOverlay);
-                        break;
-                    case 1:
-                        img.enemyFourAffinity.setIcon(img.resistOverlay);
-                        break;
-                    case 2:
-                        img.enemyFourAffinity.setIcon(img.nullOverlay);
-                        break;
-                    case 3:
-                        img.enemyFourAffinity.setIcon(img.normalOverlay);
-                        break;
-                    case 4:
-                        img.enemyFourAffinity.setIcon(img.healed);
-                        break;
-                    case 5:
-                        img.enemyFourAffinity.setIcon(img.buffed);
-                        break;
-                    case 6:
-                        img.enemyFourAffinity.setIcon(img.debuffed);
-                        break;
-                }
-                break;
-            case 4: // allyOne
-                switch (status){
-                    case 0:
-                        img.allyOneAffinity.setIcon(img.weakOverlay);
-                        break;
-                    case 1:
-                        img.allyOneAffinity.setIcon(img.resistOverlay);
-                        break;
-                    case 2:
-                        img.allyOneAffinity.setIcon(img.nullOverlay);
-                        break;
-                    case 3:
-                        img.allyOneAffinity.setIcon(img.normalOverlay);
-                        break;
-                    case 4:
-                        img.allyOneAffinity.setIcon(img.healed);
-                        break;
-                    case 5:
-                        img.allyOneAffinity.setIcon(img.buffed);
-                        break;
-                    case 6:
-                        img.allyOneAffinity.setIcon(img.debuffed);
-                        break;
-                    case 7:
-                        img.allyOneAffinity.setIcon(img.guard);
-                        break;
-                }
-                break;
-            case 5: // ally two
-                switch (status){
-                    case 0:
-                        img.allyTwoAffinity.setIcon(img.weakOverlay);
-                        break;
-                    case 1:
-                        img.allyTwoAffinity.setIcon(img.resistOverlay);
-                        break;
-                    case 2:
-                        img.allyTwoAffinity.setIcon(img.nullOverlay);
-                        break;
-                    case 3:
-                        img.allyTwoAffinity.setIcon(img.normalOverlay);
-                        break;
-                    case 4:
-                        img.allyTwoAffinity.setIcon(img.healed);
-                        break;
-                    case 5:
-                        img.allyTwoAffinity.setIcon(img.buffed);
-                        break;
-                    case 6:
-                        img.allyTwoAffinity.setIcon(img.debuffed);
-                        break;
-                    case 7:
-                        img.allyTwoAffinity.setIcon(img.guard);
-                        break;
-                }
-                break;
-            case 6: // ally three
-                switch (status){
-                    case 0:
-                        img.allyThreeAffinity.setIcon(img.weakOverlay);
-                        break;
-                    case 1:
-                        img.allyThreeAffinity.setIcon(img.resistOverlay);
-                        break;
-                    case 2:
-                        img.allyThreeAffinity.setIcon(img.nullOverlay);
-                        break;
-                    case 3:
-                        img.allyThreeAffinity.setIcon(img.normalOverlay);
-                        break;
-                    case 4:
-                        img.allyThreeAffinity.setIcon(img.healed);
-                        break;
-                    case 5:
-                        img.allyThreeAffinity.setIcon(img.buffed);
-                        break;
-                    case 6:
-                        img.allyThreeAffinity.setIcon(img.debuffed);
-                        break;
-                    case 7:
-                        img.allyThreeAffinity.setIcon(img.guard);
-                        break;
-                }
-                break;
-            case 7: // ally four
-                switch (status){
-                    case 0:
-                        img.allyFourAffinity.setIcon(img.weakOverlay);
-                        break;
-                    case 1:
-                        img.allyFourAffinity.setIcon(img.resistOverlay);
-                        break;
-                    case 2:
-                        img.allyFourAffinity.setIcon(img.nullOverlay);
-                        break;
-                    case 3:
-                        img.allyFourAffinity.setIcon(img.normalOverlay);
-                        break;
-                    case 4:
-                        img.allyFourAffinity.setIcon(img.healed);
-                        break;
-                    case 5:
-                        img.allyFourAffinity.setIcon(img.buffed);
-                        break;
-                    case 6:
-                        img.allyFourAffinity.setIcon(img.debuffed);
-                        break;
-                    case 7:
-                        img.allyFourAffinity.setIcon(img.guard);
-                        break;
-                }
-                break;
-        }
-    }    
     
     public void updateUI(){
         displayStatus(game.target, game.status, game.targetAll);
@@ -635,18 +328,18 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         }
         
         // UPDATE HP AND SP
-        allyOneHPText.setText("HP: " + game.hpAlly[0] + " / " + game.hpMaxAlly[0]);
-        allyOneSPText.setText("SP: " + game.spAlly[0] + " / " + game.spMaxAlly[0]);
-        allyTwoHPText.setText("HP: " + game.hpAlly[1] + " / " + game.hpMaxAlly[1]);
-        allyTwoSPText.setText("SP: " + game.spAlly[1] + " / " + game.spMaxAlly[1]);
-        allyThreeHPText.setText("HP: " + game.hpAlly[2] + " / " + game.hpMaxAlly[2]);
-        allyThreeSPText.setText("SP: " + game.spAlly[2] + " / " + game.spMaxAlly[2]);
-        allyFourHPText.setText("HP: " + game.hpAlly[3] + " / " + game.hpMaxAlly[3]);
-        allyFourSPText.setText("SP: " + game.spAlly[3] + " / " + game.spMaxAlly[3]);
-        enemyOneHPText.setText("HP: " + game.hpEnemy[0] + " / " + game.hpMaxEnemy[0]);
-        enemyTwoHPText.setText("HP: " + game.hpEnemy[1] + " / " + game.hpMaxEnemy[1]);
-        enemyThreeHPText.setText("HP: " + game.hpEnemy[2] + " / " + game.hpMaxEnemy[2]);
-        enemyFourHPText.setText("HP: " + game.hpEnemy[3] + " / " + game.hpMaxEnemy[3]);
+        allyOneHPText.setText("       " + game.hpAlly[0] + " / " + game.hpMaxAlly[0]);
+        allyOneSPText.setText("       " + game.spAlly[0] + " / " + game.spMaxAlly[0]);
+        allyTwoHPText.setText("       " + game.hpAlly[1] + " / " + game.hpMaxAlly[1]);
+        allyTwoSPText.setText("       " + game.spAlly[1] + " / " + game.spMaxAlly[1]);
+        allyThreeHPText.setText("       " + game.hpAlly[2] + " / " + game.hpMaxAlly[2]);
+        allyThreeSPText.setText("       " + game.spAlly[2] + " / " + game.spMaxAlly[2]);
+        allyFourHPText.setText("       " + game.hpAlly[3] + " / " + game.hpMaxAlly[3]);
+        allyFourSPText.setText("       " + game.spAlly[3] + " / " + game.spMaxAlly[3]);
+        enemyOneHPText.setText("       " + game.hpEnemy[0] + " / " + game.hpMaxEnemy[0]);
+        enemyTwoHPText.setText("       " + game.hpEnemy[1] + " / " + game.hpMaxEnemy[1]);
+        enemyThreeHPText.setText("       " + game.hpEnemy[2] + " / " + game.hpMaxEnemy[2]);
+        enemyFourHPText.setText("       " + game.hpEnemy[3] + " / " + game.hpMaxEnemy[3]);
         
         //UPDATE TEXT HISTORY
         int size = game.textHistory.size();
@@ -1836,7 +1529,228 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     public void mouseReleased(MouseEvent e){}
 
     public void mouseClicked(MouseEvent e){}
-
+    
+    public void displayStatus(int target, int status, boolean targetAll){ // 0 = weak, 1 = resist, 2 = null
+        //System.out.println(targetAll);
+        if (!targetAll){ // if not targetting all, clear before 
+            clearAffinity();
+        } // displaying stats
+        switch (target){
+            case 0: // enemy one
+                switch (status){
+                    case 0:
+                        img.enemyOneAffinity.setIcon(img.weakOverlay);
+                        break;
+                    case 1:
+                        img.enemyOneAffinity.setIcon(img.resistOverlay);
+                        break;
+                    case 2:
+                        img.enemyOneAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.enemyOneAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.enemyOneAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.enemyOneAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.enemyOneAffinity.setIcon(img.debuffed);
+                        break;
+                }
+                break;
+            case 1: // enemy two
+                switch (status){
+                    case 0:
+                        img.enemyTwoAffinity.setIcon(img.weakOverlay);
+                        break;
+                    case 1:
+                        img.enemyTwoAffinity.setIcon(img.resistOverlay);
+                        break;
+                    case 2:
+                        img.enemyTwoAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.enemyTwoAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.enemyTwoAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.enemyTwoAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.enemyTwoAffinity.setIcon(img.debuffed);
+                        break;
+                }
+                break;
+            case 2: // enemy three
+                switch (status){
+                    case 0:
+                        img.enemyThreeAffinity.setIcon(img.weakOverlay);
+                        break;
+                    case 1:
+                        img.enemyThreeAffinity.setIcon(img.resistOverlay);
+                        break;
+                    case 2:
+                        img.enemyThreeAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.enemyThreeAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.enemyThreeAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.enemyThreeAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.enemyThreeAffinity.setIcon(img.debuffed);
+                        break;
+                }
+                break;
+            case 3: // enemy four
+                switch (status){
+                    case 0:
+                        img.enemyFourAffinity.setIcon(img.weakOverlay);
+                        break;
+                    case 1:
+                        img.enemyFourAffinity.setIcon(img.resistOverlay);
+                        break;
+                    case 2:
+                        img.enemyFourAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.enemyFourAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.enemyFourAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.enemyFourAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.enemyFourAffinity.setIcon(img.debuffed);
+                        break;
+                }
+                break;
+            case 4: // allyOne
+                switch (status){
+                    case 0:
+                        img.allyOneAffinity.setIcon(img.weakOverlay);
+                        break;
+                    case 1:
+                        img.allyOneAffinity.setIcon(img.resistOverlay);
+                        break;
+                    case 2:
+                        img.allyOneAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.allyOneAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.allyOneAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.allyOneAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.allyOneAffinity.setIcon(img.debuffed);
+                        break;
+                    case 7:
+                        img.allyOneAffinity.setIcon(img.guard);
+                        break;
+                }
+                break;
+            case 5: // ally two
+                switch (status){
+                    case 0:
+                        img.allyTwoAffinity.setIcon(img.weakOverlay);
+                        break;
+                    case 1:
+                        img.allyTwoAffinity.setIcon(img.resistOverlay);
+                        break;
+                    case 2:
+                        img.allyTwoAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.allyTwoAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.allyTwoAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.allyTwoAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.allyTwoAffinity.setIcon(img.debuffed);
+                        break;
+                    case 7:
+                        img.allyTwoAffinity.setIcon(img.guard);
+                        break;
+                }
+                break;
+            case 6: // ally three
+                switch (status){
+                    case 0:
+                        img.allyThreeAffinity.setIcon(img.weakOverlay);
+                        break;
+                    case 1:
+                        img.allyThreeAffinity.setIcon(img.resistOverlay);
+                        break;
+                    case 2:
+                        img.allyThreeAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.allyThreeAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.allyThreeAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.allyThreeAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.allyThreeAffinity.setIcon(img.debuffed);
+                        break;
+                    case 7:
+                        img.allyThreeAffinity.setIcon(img.guard);
+                        break;
+                }
+                break;
+            case 7: // ally four
+                switch (status){
+                    case 0:
+                        img.allyFourAffinity.setIcon(img.weakOverlay);
+                        break;
+                    case 1:
+                        img.allyFourAffinity.setIcon(img.resistOverlay);
+                        break;
+                    case 2:
+                        img.allyFourAffinity.setIcon(img.nullOverlay);
+                        break;
+                    case 3:
+                        img.allyFourAffinity.setIcon(img.normalOverlay);
+                        break;
+                    case 4:
+                        img.allyFourAffinity.setIcon(img.healed);
+                        break;
+                    case 5:
+                        img.allyFourAffinity.setIcon(img.buffed);
+                        break;
+                    case 6:
+                        img.allyFourAffinity.setIcon(img.debuffed);
+                        break;
+                    case 7:
+                        img.allyFourAffinity.setIcon(img.guard);
+                        break;
+                }
+                break;
+        }
+    }    
+    
     void setMenu(){
         this.setJMenuBar(menuBar);
         menuBar.add(system);
@@ -1867,5 +1781,159 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         enemyTwoButton.setIcon(img.jackFrostIMG);
         enemyThreeButton.setIcon(img.legionIMG);
         enemyFourButton.setIcon(img.principalityIMG);
+    }
+    
+    void cleanUp(){
+        // enemy window adding variables
+        enemyWindowBase.add(enemyOneButton);
+        enemyWindowBase.add(enemyOneHPText);
+        enemyWindowBase.add(enemyTwoButton);
+        enemyWindowBase.add(enemyTwoHPText);
+        enemyWindowBase.add(enemyThreeButton);
+        enemyWindowBase.add(enemyThreeHPText);
+        enemyWindowBase.add(enemyFourButton);
+        enemyWindowBase.add(enemyFourHPText);
+        
+        // ally window adding variables
+        allyWindowBase.add(allyOneButton);
+        allyWindowBase.add(allyOneHPText);
+        allyWindowBase.add(allyOneSPText);
+        allyWindowBase.add(allyTwoButton);
+        allyWindowBase.add(allyTwoHPText);
+        allyWindowBase.add(allyTwoSPText);
+        allyWindowBase.add(allyThreeButton);
+        allyWindowBase.add(allyThreeHPText);
+        allyWindowBase.add(allyThreeSPText);
+        allyWindowBase.add(allyFourButton);
+        allyWindowBase.add(allyFourHPText);
+        allyWindowBase.add(allyFourSPText);
+        
+        // game window adding variables
+        gameWindowDead.add(img.deadOverlay1);
+        gameWindowDead.add(img.deadOverlay2);
+        gameWindowDead.add(img.deadOverlay3);
+        gameWindowDead.add(img.deadOverlay4);
+        gameWindowDead.add(img.filler17);
+        gameWindowDead.add(img.filler18);
+        gameWindowDead.add(img.filler19);
+        gameWindowDead.add(img.filler20);
+        gameWindowDead.add(img.deadOverlay5);
+        gameWindowDead.add(img.deadOverlay6);
+        gameWindowDead.add(img.deadOverlay7);
+        gameWindowDead.add(img.deadOverlay8);
+        
+        gameWindowStats.add(img.statOverlay1);
+        gameWindowStats.add(img.statOverlay2);
+        gameWindowStats.add(img.statOverlay3);
+        gameWindowStats.add(img.statOverlay4);
+        gameWindowStats.add(img.filler1);
+        gameWindowStats.add(img.filler2);
+        gameWindowStats.add(img.filler3);
+        gameWindowStats.add(img.filler4);
+        gameWindowStats.add(img.statOverlay5);
+        gameWindowStats.add(img.statOverlay6);
+        gameWindowStats.add(img.statOverlay7);
+        gameWindowStats.add(img.statOverlay8);
+        
+        gameWindowAttack.add(img.attackOverlay1);
+        gameWindowAttack.add(img.attackOverlay2);
+        gameWindowAttack.add(img.attackOverlay3);
+        gameWindowAttack.add(img.attackOverlay4);
+        gameWindowAttack.add(img.filler5);
+        gameWindowAttack.add(img.filler6);
+        gameWindowAttack.add(img.filler7);
+        gameWindowAttack.add(img.filler8);
+        gameWindowAttack.add(img.attackOverlay5);
+        gameWindowAttack.add(img.attackOverlay6);
+        gameWindowAttack.add(img.attackOverlay7);
+        gameWindowAttack.add(img.attackOverlay8);
+        
+        gameWindowDefense.add(img.defenseOverlay1);
+        gameWindowDefense.add(img.defenseOverlay2);
+        gameWindowDefense.add(img.defenseOverlay3);
+        gameWindowDefense.add(img.defenseOverlay4);
+        gameWindowDefense.add(img.filler9);
+        gameWindowDefense.add(img.filler10);
+        gameWindowDefense.add(img.filler11);
+        gameWindowDefense.add(img.filler12);
+        gameWindowDefense.add(img.defenseOverlay5);
+        gameWindowDefense.add(img.defenseOverlay6);
+        gameWindowDefense.add(img.defenseOverlay7);
+        gameWindowDefense.add(img.defenseOverlay8);
+        
+        gameWindowAgility.add(img.agilityOverlay1);
+        gameWindowAgility.add(img.agilityOverlay2);
+        gameWindowAgility.add(img.agilityOverlay3);
+        gameWindowAgility.add(img.agilityOverlay4);
+        gameWindowAgility.add(img.filler13);
+        gameWindowAgility.add(img.filler14);
+        gameWindowAgility.add(img.filler15);
+        gameWindowAgility.add(img.filler16);
+        gameWindowAgility.add(img.agilityOverlay5);
+        gameWindowAgility.add(img.agilityOverlay6);
+        gameWindowAgility.add(img.agilityOverlay7);
+        gameWindowAgility.add(img.agilityOverlay8);
+        
+        gameWindowBase.add(enemyOneSprite);
+        gameWindowBase.add(enemyTwoSprite);
+        gameWindowBase.add(enemyThreeSprite);
+        gameWindowBase.add(enemyFourSprite);
+        gameWindowBase.add(img.turnIndicatorOne);
+        gameWindowBase.add(img.turnIndicatorTwo);
+        gameWindowBase.add(img.turnIndicatorThree);
+        gameWindowBase.add(img.turnIndicatorFour);
+        gameWindowBase.add(allyOneSprite);
+        gameWindowBase.add(allyTwoSprite);
+        gameWindowBase.add(allyThreeSprite);
+        gameWindowBase.add(allyFourSprite);
+        
+        gameWindowAffinities.add(img.enemyOneAffinity);
+        gameWindowAffinities.add(img.enemyTwoAffinity);
+        gameWindowAffinities.add(img.enemyThreeAffinity);
+        gameWindowAffinities.add(img.enemyFourAffinity);
+        gameWindowAffinities.add(img.blankOne);
+        gameWindowAffinities.add(img.blankTwo);
+        gameWindowAffinities.add(img.blankThree);
+        gameWindowAffinities.add(img.blankFour);
+        gameWindowAffinities.add(img.allyOneAffinity);
+        gameWindowAffinities.add(img.allyTwoAffinity);
+        gameWindowAffinities.add(img.allyThreeAffinity);
+        gameWindowAffinities.add(img.allyFourAffinity);
+        
+        // setting opaque
+        enemyWindowBase.setBackground(Color.red);
+        allyOneButton.setOpaque(false);
+        allyOneButton.setContentAreaFilled(false);
+        allyOneButton.setBorderPainted(false);
+        allyTwoButton.setOpaque(false);
+        allyTwoButton.setContentAreaFilled(false);
+        allyTwoButton.setBorderPainted(false);
+        allyThreeButton.setOpaque(false);
+        allyThreeButton.setContentAreaFilled(false);
+        allyThreeButton.setBorderPainted(false);
+        allyFourButton.setOpaque(false);
+        allyFourButton.setContentAreaFilled(false);
+        allyFourButton.setBorderPainted(false);
+        allyOneButton.setOpaque(false);
+        enemyOneButton.setContentAreaFilled(false);
+        enemyOneButton.setBorderPainted(false);
+        enemyTwoButton.setOpaque(false);
+        enemyTwoButton.setContentAreaFilled(false);
+        enemyTwoButton.setBorderPainted(false);
+        enemyThreeButton.setOpaque(false);
+        enemyThreeButton.setContentAreaFilled(false);
+        enemyThreeButton.setBorderPainted(false);
+        enemyFourButton.setOpaque(false);
+        enemyFourButton.setContentAreaFilled(false);
+        enemyFourButton.setBorderPainted(false);
+        enemyWindowBase.setOpaque(false);
+        allyWindowBase.setOpaque(false);
+        allyWindowBackground.setOpaque(false);
+        gameWindowDead.setOpaque(false);
+        gameWindowStats.setOpaque(false);
+        gameWindowAttack.setOpaque(false);
+        gameWindowDefense.setOpaque(false);
+        gameWindowAgility.setOpaque(false);
+        gameWindowAffinities.setOpaque(false);
     }
 }

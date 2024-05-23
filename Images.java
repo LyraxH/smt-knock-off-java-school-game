@@ -42,6 +42,9 @@ public class Images
     JLabel legion = new JLabel(legionIMG);
     JLabel principality = new JLabel(principalityIMG);
     
+    // panels/backgronds
+    ImageIcon allyPanel = new ImageIcon("panels/allyPanel7.png");
+    
     //sprites
     ImageIcon ameNoUzumeSelected = new ImageIcon("sprites/ameNoUzumeSelected.png");
     ImageIcon archangelSelected = new ImageIcon("sprites/archangelSelected.png");
