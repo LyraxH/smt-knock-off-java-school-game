@@ -64,10 +64,10 @@ public class Images
     ImageIcon enemyTurnTwo = new ImageIcon("sprites/enemyTurntwo.png");
     ImageIcon enemyTurnThree = new ImageIcon("sprites/enemyTurnThree.png");
     ImageIcon enemyTurnFour = new ImageIcon("sprites/enemyTurnFour.png");
-    ImageIcon youLoseOne = new ImageIcon("sprites/youLoseOne.png");
-    ImageIcon youLoseTwo = new ImageIcon("sprites/youLoseTwo.png");
-    ImageIcon youLoseThree = new ImageIcon("sprites/youLoseThree.png");
-    ImageIcon youLoseFour = new ImageIcon("sprites/youLoseFour.png");
+    ImageIcon youLoseOne = new ImageIcon("sprites/youLoseOne2.png");
+    ImageIcon youLoseTwo = new ImageIcon("sprites/youLoseTwo2.png");
+    ImageIcon youLoseThree = new ImageIcon("sprites/youLoseThree2.png");
+    ImageIcon youLoseFour = new ImageIcon("sprites/youLoseFour2.png");
     ImageIcon youWinOne = new ImageIcon("sprites/youWinOne.png");
     ImageIcon youWinTwo = new ImageIcon("sprites/youWinTwo.png");
     ImageIcon youWinThree = new ImageIcon("sprites/youWinThree.png");

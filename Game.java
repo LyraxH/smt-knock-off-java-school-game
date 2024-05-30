@@ -1210,7 +1210,6 @@ public class Game
                         if (allyDead[1] == 1){
                             if (allyDead[2] == 1){
                                 if (allyDead[3] == 1){
-                                    textHistory.add("----- Switching to enemy turn-----");
                                     turn = 1;
                                     page = 420;
                                     if (enemyDead[0] == 1){ // if first ally dead
@@ -1246,7 +1245,6 @@ public class Game
                     case 1:
                         if (allyDead[2] == 1){
                             if (allyDead[3] == 1){
-                                textHistory.add("----- Switching to enemy turn-----");
                                 turn = 1;
                                 page = 420;
                                 if (enemyDead[0] == 1){ // if first ally dead
@@ -1278,7 +1276,6 @@ public class Game
                         break;
                     case 2:
                         if (allyDead[3] == 1){
-                            textHistory.add("----- Switching to enemy turn-----");
                             turn = 1;
                             page = 420;
                             if (enemyDead[0] == 1){ // if first ally dead
@@ -1306,7 +1303,6 @@ public class Game
                         page = 0;
                         break;
                     case 3:
-                        textHistory.add("----- Switching to enemy turn-----");
                         turn = 1;
                         page = 420;
                         if (enemyDead[0] == 1){ // if first ally dead
@@ -1337,7 +1333,6 @@ public class Game
                         if (enemyDead[1] == 1){
                             if (enemyDead[2] == 1){
                                 if (enemyDead[3] == 1){
-                                    textHistory.add("----- Switching to player turn-----");
                                     turn = 0;
                                     if (allyDead[0] == 1){ // if first ally dead
                                         if (allyDead[1] == 1){ // if second ally dead
@@ -1371,7 +1366,6 @@ public class Game
                     case 1:
                         if (enemyDead[2] == 1){
                             if (enemyDead[3] == 1){
-                                textHistory.add("----- Switching to player turn-----");
                                 turn = 0;
                                 if (allyDead[0] == 1){ // if first ally dead
                                     if (allyDead[1] == 1){ // if second ally dead
@@ -1401,7 +1395,6 @@ public class Game
                         break;
                     case 2:
                         if (enemyDead[3] == 1){
-                            textHistory.add("----- Switching to player turn-----");
                             turn = 0;
                             if (allyDead[0] == 1){ // if first ally dead
                                 if (allyDead[1] == 1){ // if second ally dead
@@ -1427,7 +1420,6 @@ public class Game
                         move(69);
                         break;
                     case 3:
-                        textHistory.add("----- Switching to player turn-----");
                         turn = 0;
                         if (allyDead[0] == 1){ // if first ally dead
                             if (allyDead[1] == 1){ // if second ally dead
