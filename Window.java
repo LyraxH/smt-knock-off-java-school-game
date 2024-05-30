@@ -260,10 +260,23 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         addAndRemove();
                         enemyFourSprite.setIcon(img.principalitySelected);
                         break;
-                }img.turnIndicatorOne.setIcon(img.enemyTurnOne);
+                }
+                img.turnIndicatorOne.setIcon(img.enemyTurnOne);
                 img.turnIndicatorTwo.setIcon(img.enemyTurnTwo);
                 img.turnIndicatorThree.setIcon(img.enemyTurnThree);
                 img.turnIndicatorFour.setIcon(img.enemyTurnFour);
+                break;
+            case 2:
+                img.turnIndicatorOne.setIcon(img.youLoseOne);
+                img.turnIndicatorTwo.setIcon(img.youLoseTwo);
+                img.turnIndicatorThree.setIcon(img.youLoseThree);
+                img.turnIndicatorFour.setIcon(img.youLoseFour);
+                break;
+            case 3:
+                img.turnIndicatorOne.setIcon(img.youWinOne);
+                img.turnIndicatorTwo.setIcon(img.youWinTwo);
+                img.turnIndicatorThree.setIcon(img.youWinThree);
+                img.turnIndicatorFour.setIcon(img.youWinFour);
                 break;
         }
         

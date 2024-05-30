@@ -64,6 +64,14 @@ public class Images
     ImageIcon enemyTurnTwo = new ImageIcon("sprites/enemyTurntwo.png");
     ImageIcon enemyTurnThree = new ImageIcon("sprites/enemyTurnThree.png");
     ImageIcon enemyTurnFour = new ImageIcon("sprites/enemyTurnFour.png");
+    ImageIcon youLoseOne = new ImageIcon("sprites/youLoseOne.png");
+    ImageIcon youLoseTwo = new ImageIcon("sprites/youLoseTwo.png");
+    ImageIcon youLoseThree = new ImageIcon("sprites/youLoseThree.png");
+    ImageIcon youLoseFour = new ImageIcon("sprites/youLoseFour.png");
+    ImageIcon youWinOne = new ImageIcon("sprites/youWinOne.png");
+    ImageIcon youWinTwo = new ImageIcon("sprites/youWinTwo.png");
+    ImageIcon youWinThree = new ImageIcon("sprites/youWinThree.png");
+    ImageIcon youWinFour = new ImageIcon("sprites/youWinFour.png");
     JLabel turnIndicatorOne = new JLabel(playerTurnOne);
     JLabel turnIndicatorTwo = new JLabel(playerTurnTwo);
     JLabel turnIndicatorThree = new JLabel(playerTurnThree);
