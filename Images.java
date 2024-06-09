@@ -126,16 +126,13 @@ public class Images
     JLabel allyFourAffinity = new JLabel();
     
     // stat changes overlays
-    ImageIcon statOverlay = new ImageIcon("overlayBuffs/statsOverlay.png");
+    ImageIcon statOverlay = new ImageIcon("overlayBuffs/statsOverlay2.png");
     ImageIcon atkUp = new ImageIcon("overlayBuffs/attackUp.png");
     ImageIcon atkNorm = new ImageIcon("overlayBuffs/attackNormal2.png");
     ImageIcon atkDown = new ImageIcon("overlayBuffs/attackDown.png");
     ImageIcon defUp = new ImageIcon("overlayBuffs/defenseUp.png");
     ImageIcon defNorm = new ImageIcon("overlayBuffs/defenseNormal2.png");
     ImageIcon defDown = new ImageIcon("overlayBuffs/defenseDown.png");
-    ImageIcon aglUp = new ImageIcon("overlayBuffs/agilityUp.png");
-    ImageIcon aglNorm = new ImageIcon("overlayBuffs/agilityNormal3.png");
-    ImageIcon aglDown = new ImageIcon("overlayBuffs/agilityDown.png");
     ImageIcon guard = new ImageIcon("overlayBuffs/guard.png");
     ImageIcon healed = new ImageIcon("overlayBuffs/healed.png");
     ImageIcon buffed = new ImageIcon("overlayBuffs/buffed.png");
@@ -152,10 +149,6 @@ public class Images
     JLabel filler10 = new JLabel();
     JLabel filler11 = new JLabel();
     JLabel filler12 = new JLabel();
-    JLabel filler13 = new JLabel();
-    JLabel filler14 = new JLabel();
-    JLabel filler15 = new JLabel();
-    JLabel filler16 = new JLabel();
     JLabel filler17 = new JLabel();
     JLabel filler18 = new JLabel();
     JLabel filler19 = new JLabel();
@@ -192,14 +185,6 @@ public class Images
     JLabel defenseOverlay6 = new JLabel(defNorm);
     JLabel defenseOverlay7 = new JLabel(defNorm);
     JLabel defenseOverlay8 = new JLabel(defNorm);
-    JLabel agilityOverlay1 = new JLabel(aglNorm);
-    JLabel agilityOverlay2 = new JLabel(aglNorm);
-    JLabel agilityOverlay3 = new JLabel(aglNorm);
-    JLabel agilityOverlay4 = new JLabel(aglNorm);
-    JLabel agilityOverlay5 = new JLabel(aglNorm);
-    JLabel agilityOverlay6 = new JLabel(aglNorm);
-    JLabel agilityOverlay7 = new JLabel(aglNorm);
-    JLabel agilityOverlay8 = new JLabel(aglNorm);
     
     // move icons
     // 0 fire // alchemy symbol: fire

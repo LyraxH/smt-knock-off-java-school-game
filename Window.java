@@ -66,14 +66,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     // j menu variables
     JMenuBar menuBar = new JMenuBar();
     JMenu system = new JMenu("System");
-    JMenu music = new JMenu("Music");
     JMenu difficulty = new JMenu("Difficulty");
     JMenu battleLog = new JMenu("Battle Log");
     JMenuItem goBackItem = new JMenuItem("Go Back");
     JMenuItem quitGame = new JMenuItem("Quit Game");
-    JMenuItem nextSong = new JMenuItem("Next Track");
-    JMenuItem previousSong = new JMenuItem("Previous Track");
-    JMenuItem pauseMusic = new JMenuItem("Pause Music");
     JMenuItem easyDif = new JMenuItem("Easy");
     JMenuItem mediumDif = new JMenuItem("Medium");
     JMenuItem hardDif = new JMenuItem("Hard");
@@ -98,7 +94,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JPanel gameWindowStats = new JPanel(); // stat overlay
     JPanel gameWindowAttack = new JPanel(); // attack
     JPanel gameWindowDefense = new JPanel(); // defense
-    JPanel gameWindowAgility = new JPanel(); // agility
     JPanel gameWindowDead = new JPanel(); // skull emoji
     JPanel gameWindowAffinities = new JPanel();  // where weakness indicator is displayed
     JPanel gameWindowBackgroundPanel = new JPanel();
@@ -131,7 +126,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowStats.setLayout(new GridLayout(3, 4));
         gameWindowAttack.setLayout(new GridLayout(3, 4));
         gameWindowDefense.setLayout(new GridLayout(3, 4));
-        gameWindowAgility.setLayout(new GridLayout(3, 4));
         gameWindowAffinities.setLayout(new GridLayout(3, 4));
         gameWindowDead.setLayout(new GridLayout(3,4));
         gameWindowBase.setLayout(new GridLayout(3, 4));
@@ -149,7 +143,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowStats.setBounds(0,-5,730,480);
         gameWindowAttack.setBounds(0,-5,730,480);
         gameWindowDefense.setBounds(0,-5,730,480);
-        gameWindowAgility.setBounds(0,-5,730,480);
         gameWindowAffinities.setBounds(0,-5,730,480);
         gameWindow.setBounds(0,-5,730,480);
         gameWindowBase.setBounds(0,-5,730,480);
@@ -176,12 +169,18 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindow.add(gameWindowStats, new Integer(3), 0);
         gameWindow.add(gameWindowAttack, new Integer(4), 0);
         gameWindow.add(gameWindowDefense, new Integer(5), 0);
-        gameWindow.add(gameWindowAgility, new Integer(6), 0);
-        gameWindow.add(gameWindowDead, new Integer(7), 0);
+        gameWindow.add(gameWindowDead, new Integer(6), 0);
 
         updateUI();
         initialize();
     }
+    
+    ActionListener taskPerformer = new ActionListener() {
+    public void actionPerformed(ActionEvent evt) {
+        game.goNext();
+        updateUI();
+        }
+    };    
     
     public void clearAffinity(){
         img.enemyOneAffinity.setIcon(null);
@@ -206,8 +205,30 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     }
     
     public void updateUI(){
-        displayStatus(game.target, game.status, game.targetAll);
+        displayStatus(game.target, game.status);
         game.checkInjured();
+        
+        
+        Timer timer = new Timer(3000, taskPerformer);
+        timer.setRepeats(false);
+        
+        if (game.turn == 1){
+            switch (game.currentCharacter){
+                case 0:
+                    timer.start();
+                    break;
+                case 1:
+                    timer.start();
+                    break;
+                case 2:
+                    timer.start();
+                    break;
+                case 3:
+                    timer.start();
+                    break;
+            }
+        }
+        
         // UPDATE CURRENT MOVE TEXT
         switch (game.turn){
             case 0:
@@ -617,13 +638,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         } else if (game.allyStats[0][1] == 1.6){ // is decreased
             img.defenseOverlay5.setIcon(img.defDown);
         }
-        if (game.allyStats[0][2] == 1){ // ally one agility is normal
-            img.agilityOverlay5.setIcon(img.aglNorm);
-        } else if (game.allyStats[0][2] == 2){ // is increased
-            img.agilityOverlay5.setIcon(img.aglUp);
-        } else if (game.allyStats[0][2] == 0.5){ // is decreased
-            img.agilityOverlay5.setIcon(img.aglDown);
-        }
         // ALLY TWO ------ ALLY TWO
         if (game.allyStats[1][0] == 1){ // ally two attack is normal
             img.attackOverlay6.setIcon(img.atkNorm);
@@ -638,13 +652,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             img.defenseOverlay6.setIcon(img.defUp);
         } else if (game.allyStats[1][1] == 1.6){ // is decreased
             img.defenseOverlay6.setIcon(img.defDown);
-        }
-        if (game.allyStats[1][2] == 1){ // ally two agility is normal
-            img.agilityOverlay6.setIcon(img.aglNorm);
-        } else if (game.allyStats[1][2] == 2){ // is increased
-            img.agilityOverlay6.setIcon(img.aglUp);
-        } else if (game.allyStats[1][2] == 0.5){ // is decreased
-            img.agilityOverlay6.setIcon(img.aglDown);
         }
         // ALLY THREE ------ ALLY THREE
         if (game.allyStats[2][0] == 1){ // ally three attack is normal
@@ -661,13 +668,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         } else if (game.allyStats[2][1] == 1.6){ // is decreased
             img.defenseOverlay7.setIcon(img.defDown);
         }
-        if (game.allyStats[2][2] == 1){ // ally three agility is normal
-            img.agilityOverlay7.setIcon(img.aglNorm);
-        } else if (game.allyStats[2][2] == 2){ // is increased
-            img.agilityOverlay7.setIcon(img.aglUp);
-        } else if (game.allyStats[2][2] == 0.5){ // is decreased
-            img.agilityOverlay7.setIcon(img.aglDown);
-        }
         // ALLY FOUR ------ ALLY FOUR
         if (game.allyStats[3][0] == 1){ // ally three attack is normal
             img.attackOverlay8.setIcon(img.atkNorm);
@@ -683,14 +683,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         } else if (game.allyStats[3][1] == 1.6){ // is decreased
             img.defenseOverlay8.setIcon(img.defDown);
         }
-        if (game.allyStats[3][2] == 1){ // ally three agility is normal
-            img.agilityOverlay8.setIcon(img.aglNorm);
-        } else if (game.allyStats[3][2] == 2){ // is increased
-            img.agilityOverlay8.setIcon(img.aglUp);
-        } else if (game.allyStats[3][2] == 0.5){ // is decreased
-            img.agilityOverlay8.setIcon(img.aglDown);
-        }
-        
         // enemy ONE ------ enemy ONE
         if (game.enemyStats[0][0] == 1){ // enemy one attack is normal
             img.attackOverlay1.setIcon(img.atkNorm);
@@ -705,13 +697,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             img.defenseOverlay1.setIcon(img.defUp);
         } else if (game.enemyStats[0][1] == 1.6){ // is decreased
             img.defenseOverlay1.setIcon(img.defDown);
-        }
-        if (game.enemyStats[0][2] == 1){ // enemy one agility is normal
-            img.agilityOverlay1.setIcon(img.aglNorm);
-        } else if (game.enemyStats[0][2] == 2){ // is increased
-            img.agilityOverlay1.setIcon(img.aglUp);
-        } else if (game.enemyStats[0][2] == 0.5){ // is decreased
-            img.agilityOverlay1.setIcon(img.aglDown);
         }
         // enemy TWO ------ enemy TWO
         if (game.enemyStats[1][0] == 1){ // enemy two attack is normal
@@ -728,13 +713,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         } else if (game.enemyStats[1][1] == 1.6){ // is decreased
             img.defenseOverlay2.setIcon(img.defDown);
         }
-        if (game.enemyStats[1][2] == 1){ // enemy two agility is normal
-            img.agilityOverlay2.setIcon(img.aglNorm);
-        } else if (game.enemyStats[1][2] == 2){ // is increased
-            img.agilityOverlay2.setIcon(img.aglUp);
-        } else if (game.enemyStats[1][2] == 0.5){ // is decreased
-            img.agilityOverlay2.setIcon(img.aglDown);
-        }
         // enemy THREE ------ enemy THREE
         if (game.enemyStats[2][0] == 1){ // enemy three attack is normal
             img.attackOverlay3.setIcon(img.atkNorm);
@@ -750,13 +728,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         } else if (game.enemyStats[2][1] == 1.6){ // is decreased
             img.defenseOverlay3.setIcon(img.defDown);
         }
-        if (game.enemyStats[2][2] == 1){ // enemy three agility is normal
-            img.agilityOverlay3.setIcon(img.aglNorm);
-        } else if (game.enemyStats[2][2] == 2){ // is increased
-            img.agilityOverlay3.setIcon(img.aglUp);
-        } else if (game.enemyStats[2][2] == 0.5){ // is decreased
-            img.agilityOverlay3.setIcon(img.aglDown);
-        }
         // enemy FOUR ------ enemy FOUR
         if (game.enemyStats[3][0] == 1){ // enemy three attack is normal
             img.attackOverlay4.setIcon(img.atkNorm);
@@ -771,13 +742,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             img.defenseOverlay4.setIcon(img.defUp);
         } else if (game.enemyStats[3][1] == 1.6){ // is decreased
             img.defenseOverlay4.setIcon(img.defDown);
-        }
-        if (game.enemyStats[3][2] == 1){ // enemy three agility is normal
-            img.agilityOverlay4.setIcon(img.aglNorm);
-        } else if (game.enemyStats[3][2] == 2){ // is increased
-            img.agilityOverlay4.setIcon(img.aglUp);
-        } else if (game.enemyStats[3][2] == 0.5){ // is decreased
-            img.agilityOverlay4.setIcon(img.aglDown);
         }
         
         if (game.enemyDead[0] == 1){
@@ -855,9 +819,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
 
         goBackItem.addActionListener(this);
         quitGame.addActionListener(this);
-        nextSong.addActionListener(this);
-        previousSong.addActionListener(this);
-        pauseMusic.addActionListener(this);
         displayBattleLog.addActionListener(this);
         easyDif.addActionListener(this);
         mediumDif.addActionListener(this);
@@ -1021,6 +982,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         if (game.hpAlly[0] == game.hpMaxAlly[0]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
                             updateUI();
+                        } else if (game.allyDead[0] == 1) {
+                            System.out.println("You cannot heal this character, as they are dead");
                         } else {
                             game.healing(0);
                             updateUI();
@@ -1051,7 +1014,9 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         if (game.hpAlly[1] == game.hpMaxAlly[1]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
                             updateUI();
-                        } else {
+                        } else if (game.allyDead[1] == 1) {
+                            System.out.println("You cannot heal this character, as they are dead");
+                        } else  {
                             game.healing(1);
                             updateUI();
                         }
@@ -1081,7 +1046,9 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         if (game.hpAlly[2] == game.hpMaxAlly[2]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
                             updateUI();
-                        } else {
+                        } else if (game.allyDead[2] == 1) {
+                            System.out.println("You cannot heal this character, as they are dead");
+                        } else  {
                             game.healing(2);
                             updateUI();
                         }
@@ -1111,7 +1078,9 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         if (game.hpAlly[3] == game.hpMaxAlly[3]){
                             System.out.println("You cannot heal this character, as they are already on full hp");
                             updateUI();
-                        } else {
+                        } else if (game.allyDead[3] == 1) {
+                            System.out.println("You cannot heal this character, as they are dead");
+                        } else  {
                             game.healing(3);
                             updateUI();
                         }
@@ -1530,9 +1499,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
 
     public void mouseClicked(MouseEvent e){}
     
-    public void displayStatus(int target, int status, boolean targetAll){ // 0 = weak, 1 = resist, 2 = null
-        //System.out.println(targetAll);
-        if (!targetAll){ // if not targetting all, clear before 
+    public void displayStatus(int target, int status){ // 0 = weak, 1 = resist, 2 = null
+        if (!game.targetAll){ // if not targetting all, clear before 
             clearAffinity();
         } // displaying stats
         switch (target){
@@ -1754,16 +1722,11 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     void setMenu(){
         this.setJMenuBar(menuBar);
         menuBar.add(system);
-        menuBar.add(music);
         menuBar.add(difficulty);
         menuBar.add(battleLog);
 
         system.add(goBackItem);
         system.add(quitGame);
-
-        music.add(nextSong);
-        music.add(previousSong);
-        music.add(pauseMusic);
 
         difficulty.add(easyDif);
         difficulty.add(mediumDif);
@@ -1865,19 +1828,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowDefense.add(img.defenseOverlay7);
         gameWindowDefense.add(img.defenseOverlay8);
         
-        gameWindowAgility.add(img.agilityOverlay1);
-        gameWindowAgility.add(img.agilityOverlay2);
-        gameWindowAgility.add(img.agilityOverlay3);
-        gameWindowAgility.add(img.agilityOverlay4);
-        gameWindowAgility.add(img.filler13);
-        gameWindowAgility.add(img.filler14);
-        gameWindowAgility.add(img.filler15);
-        gameWindowAgility.add(img.filler16);
-        gameWindowAgility.add(img.agilityOverlay5);
-        gameWindowAgility.add(img.agilityOverlay6);
-        gameWindowAgility.add(img.agilityOverlay7);
-        gameWindowAgility.add(img.agilityOverlay8);
-        
         gameWindowBase.add(enemyOneSprite);
         gameWindowBase.add(enemyTwoSprite);
         gameWindowBase.add(enemyThreeSprite);
@@ -1947,7 +1897,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindowStats.setOpaque(false);
         gameWindowAttack.setOpaque(false);
         gameWindowDefense.setOpaque(false);
-        gameWindowAgility.setOpaque(false);
         gameWindowAffinities.setOpaque(false);
         gameWindowBackgroundPanel.setOpaque(false);
     }

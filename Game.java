@@ -36,14 +36,14 @@ public class Game
     boolean isEnemyDead = false;
     int enemyDead[] = new int[]{0,0,0,0};
     
-    int spMaxAlly[] = new int[]{150,150,150,150};
+    int spMaxAlly[] = new int[]{89,89,89,89};
     int spAlly[] = new int[]{spMaxAlly[0],spMaxAlly[1],spMaxAlly[2],spMaxAlly[3]};
     
     // first number = attack status, second = defense status, third = accuracy/evasion status
-    double allyStats[][] = new double[4][3];
+    double allyStats[][] = new double[4][2];
     int guard[] = new int[]{0,0,0,0}; // 1 means that you take half damage next round
     // first number = attack status, second = defense status, third = accuracy/evasion status. fourth = shock
-    double enemyStats[][] = new double[4][4];
+    double enemyStats[][] = new double[4][3];
     // 0 = normal, 1 = weak, 2 = null, 3 = resist, 4 = unknown
     int allyAffinities[][] = new int[4][7];
     int enemyAffinities[][] = new int[4][7];
@@ -61,7 +61,7 @@ public class Game
     int target = 420;
     boolean targetAll = false;
 
-    public void Start(){
+    public void Start(){ // start.. yea,, its the initializing method
         initializeAffinitiesStats();
         
         textHistory.add("Welcome to my shitty SMT knockoff for school");
@@ -76,6 +76,7 @@ public class Game
     }
     
     void calculateDamage(int receiver, String receiverName, String toAffinity, int baseDamage, int moveAffinity){
+        // this might just be the single most slickest function i've ever written. It calculates final damage output based on all factors
         preBattleDamage = 0;
         battleDamage = 0;
         switch (turn){
@@ -165,12 +166,12 @@ public class Game
     void cleanse(){
         textHistory.add("Cleanse used, all stats have returned to default");
         for (int i = 0; i < 4; i++){ // set ally stats to normal
-            for (int l = 0; l < 3; l++){
+            for (int l = 0; l < 2; l++){
                 allyStats[i][l] = 1;
             }
         }
         for (int i = 0; i < 4; i++){ //  same thing to enemeis
-            for (int l = 0; l < 3; l++){
+            for (int l = 0; l < 2; l++){
                 enemyStats[i][l] = 1;
             }
         }
@@ -227,7 +228,7 @@ public class Game
                     case 0:
                         boolean skip = false;
                         if (hpEnemy[currentCharacter] > 0){ // if not dead do the thing
-                            if (enemyStats[0][3] == 1){ // if afflicted with shock
+                            if (enemyStats[0][2] == 1){ // if afflicted with shock
                                 int shock = rng.nextInt(10);
                                 if (shock < 7){ // 80% chance you remain shocked
                                     textHistory.add("Archangel is still shocked");
@@ -239,7 +240,7 @@ public class Game
                                     }
                                 } else { // 20% chance you remove shock
                                     textHistory.add("Archangel has recovered from shock");
-                                    enemyStats[0][3] = 0;
+                                    enemyStats[0][2] = 0;
                                     skip = false;
                                 }
                             }
@@ -265,7 +266,7 @@ public class Game
                     case 1:
                         skip = false;
                         if (hpEnemy[currentCharacter] > 0){ // if not dead do the thing
-                            if (enemyStats[1][3] == 1){ // if afflicted with shock
+                            if (enemyStats[1][2] == 1){ // if afflicted with shock
                                 int shock = rng.nextInt(10);
                                 if (shock < 7){ // 80% chance you remain shocked
                                     textHistory.add("Jack Frost is still shocked");
@@ -277,7 +278,7 @@ public class Game
                                     }
                                 } else { // 20% chance you remove shock
                                     textHistory.add("Jack Frost has recovered from shock");
-                                    enemyStats[1][3] = 0;
+                                    enemyStats[1][2] = 0;
                                     skip = false;
                                 }
                             }
@@ -303,7 +304,7 @@ public class Game
                     case 2:
                         skip = false;
                         if (hpEnemy[currentCharacter] > 0){ // if not dead do the thing
-                            if (enemyStats[2][3] == 1){ // if afflicted with shock
+                            if (enemyStats[2][2] == 1){ // if afflicted with shock
                                 int shock = rng.nextInt(10);
                                 if (shock < 7){ // 80% chance you remain shocked
                                     textHistory.add("Legion is still shocked");
@@ -315,7 +316,7 @@ public class Game
                                     }
                                 } else { // 20% chance you remove shock
                                     textHistory.add("Legion has recovered from shock");
-                                    enemyStats[2][3] = 0;
+                                    enemyStats[2][2] = 0;
                                     skip = false;
                                 }
                             }
@@ -341,7 +342,7 @@ public class Game
                     case 3:
                         skip = false;
                         if (hpEnemy[currentCharacter] > 0){ // if not dead do the thing
-                            if (enemyStats[3][3] == 1){ // if afflicted with shock
+                            if (enemyStats[3][2] == 1){ // if afflicted with shock
                                 int shock = rng.nextInt(10);
                                 if (shock < 7){ // 80% chance you remain shocked
                                     textHistory.add("Principality is still shocked");
@@ -353,7 +354,7 @@ public class Game
                                     }
                                 } else { // 20% chance you remove shock
                                     textHistory.add("Principality has recovered from shock");
-                                    enemyStats[3][3] = 0;
+                                    enemyStats[3][2] = 0;
                                     skip = false;
                                 }
                             }
@@ -379,6 +380,7 @@ public class Game
                 }
                 break;
         }
+        
     }
     
     void enemyAttack(int enemy){
@@ -410,6 +412,16 @@ public class Game
                         break;
                 }
                 decision = rng.nextInt(4);
+                boolean can = false;
+                while (!can){
+                    if (hpAlly[decision] == 0){ // if ally is dead
+                        can = false; // cannot attack
+                        decision = rng.nextInt(4); // try again
+                        System.out.println("tried to attack dead");
+                    } else { // else
+                        can = true; // can attack
+                    }
+                }
                 switch (decision){
                     case 0:
                         target = "Ame No Uzume";
@@ -442,7 +454,6 @@ public class Game
                 calculateDamage(decision, target, affinity, 75, affinityRNG);
                 break;
             case 2: // physical attack
-                decision = rng.nextInt(4);
                 who = "o";
                 target = "o";
                 switch (currentCharacter){
@@ -458,6 +469,16 @@ public class Game
                     case 3:
                         who = "Principality";
                         break;
+                }
+                can = false;
+                while (!can){
+                    if (hpAlly[decision] == 0){ // if ally is dead
+                        can = false; // cannot attack
+                        decision = rng.nextInt(4); // try again
+                        System.out.println("tried to attack dead");
+                    } else { // else
+                        can = true; // can attack
+                    }
                 }
                 switch (decision){
                     case 0:
@@ -483,8 +504,9 @@ public class Game
                     target = "o";
                     String what = "o";
                     int targetInt = rng.nextInt(4);
-                    int whatInt = rng.nextInt(3);
-                    switch (enemy){
+                    int whatInt = rng.nextInt(2);
+                    can = false;
+                    switch (enemy){ 
                         case 0:
                             who = "Archangel";
                             break;
@@ -506,10 +528,6 @@ public class Game
                         case 1:
                             what = "a defense debuff";
                             allyStats[targetInt][whatInt] = 1.6;
-                            break;
-                        case 2:
-                            what = "an agility debuff";
-                            allyStats[targetInt][whatInt] = 0.5;
                             break;
                     }
                     switch (targetInt){
@@ -534,7 +552,7 @@ public class Game
                     target = "o";
                     String what = "o";
                     int targetInt = rng.nextInt(4);
-                    int whatInt = rng.nextInt(3);
+                    int whatInt = rng.nextInt(2);
                     switch (enemy){
                         case 0:
                             who = "Archangel";
@@ -557,10 +575,6 @@ public class Game
                         case 1:
                             what = "a defense buff";
                             enemyStats[targetInt][whatInt] = 0.6;
-                            break;
-                        case 2:
-                            what = "an agility buff";
-                            enemyStats[targetInt][whatInt] = 2;
                             break;
                     }
                     switch (targetInt){
@@ -977,6 +991,7 @@ public class Game
             if (hpEnemy[3] >= 1){
                 calculateDamage(3, "Principality", affinityString, damage, affinityInt);
             }
+            targetAll = true;
             spAlly[currentCharacter] -= 21;
         } else {
             textHistory.add(who + " uses " + what + " on " + target);
@@ -989,23 +1004,19 @@ public class Game
     void healing(int ally){
         textHistory.add("Ame No Uzume uses Redemption");
         String who = "o";
-        if (allyDead[ally] == 1){
-            System.out.println("cannot heal because ally is dead");
-        } else {
-            switch (ally){
-                case 0:
-                    who = "Ame No Uzume";
-                    break;
-                case 1:
-                    who = "Cendrillon";
-                    break;
-                case 2:
-                    who = "Orpheus";
-                    break;
-                case 3:
-                    who = "Robin Hood";
-                    break;
-            }
+        switch (ally){
+            case 0:
+                who = "Ame No Uzume";
+                break;
+            case 1:
+                who = "Cendrillon";
+                break;
+            case 2:
+                who = "Orpheus";
+                break;
+            case 3:
+                who = "Robin Hood";
+                break;
         }
         calculateHealing(ally, who, 80);
         spAlly[0] -= 8;
@@ -1062,10 +1073,6 @@ public class Game
             case 4:
                 what = "Defense";
                 allyStats[target][1] = 0.6;
-                break;
-            case 5:
-                what = "Agility";
-                allyStats[target][2] = 2;
                 break;
         }
         switch (target){
@@ -1183,19 +1190,19 @@ public class Game
     void lightningCrash(int enemy){
         switch (enemy){
             case 0:
-                enemyStats[0][3] = 1;
+                enemyStats[0][2] = 1;
                 textHistory.add("Applied shock to enemy One");
                 break;
             case 1:
-                enemyStats[1][3] = 1;
+                enemyStats[1][2] = 1;
                 textHistory.add("Applied shock to enemy Two");
                 break;
             case 2:
-                enemyStats[2][3] = 1;
+                enemyStats[2][2] = 1;
                 textHistory.add("Applied shock to enemy Three");
                 break;
             case 3:
-                enemyStats[3][3] = 1;
+                enemyStats[3][2] = 1;
                 textHistory.add("Applied shock to enemy Four");
                 break;
         }
@@ -1204,7 +1211,7 @@ public class Game
     
     public void goNext(){ // the script that decides whos turn is next, and basically advances the game
         switch (turn){
-            case 0:
+            case 0: // if allies turn
                 switch (currentCharacter){
                     case 0:
                         if (allyDead[1] == 1){
@@ -1327,7 +1334,7 @@ public class Game
                         break;
                 }
                 break;
-            case 1:
+            case 1: // if enemies turn
                 switch (currentCharacter){
                     case 0:
                         if (enemyDead[1] == 1){
@@ -1443,28 +1450,6 @@ public class Game
                 }
                 break;
         }
-        /*
-        if (currentCharacter < 3 && turn == 0){ // if not end of rotation and player turn
-            currentCharacter++;
-            page = 0;
-        } else if (currentCharacter < 3 && turn == 1){ // else if not end of rotation and enemy turn 
-            currentCharacter++;
-            move(69);
-        } else if (currentCharacter == 3 && turn == 1){ // else if end of rotation and enemy turn
-            page = 0;
-            currentCharacter = 0;
-            turn = 0;
-            textHistory.add("----- Switching to player turn-----");
-            //System.out.println("turn " + turn);
-        } else if (currentCharacter == 3 && turn  == 0){ // else if end of rotation and player turn
-            page = 420;
-            currentCharacter = 0;
-            turn = 1;
-            textHistory.add("----- Switching to enemy turn-----");
-            //System.out.println("turn " + turn);
-            move(69);
-        }
-        */
     }
     
     public void checkInjured(){
@@ -1562,12 +1547,12 @@ public class Game
         allyAffinities[3][4] = 2;
         allyAffinities[3][0] = 3;
         for (int i = 0; i < 4; i++){ // set ally stats to normal
-            for (int l = 0; l < 3; l++){
+            for (int l = 0; l < 2; l++){
                 allyStats[i][l] = 1;
             }
         }
         for (int i = 0; i < 4; i++){ //  same thing to enemeis
-            for (int l = 0; l < 3; l++){
+            for (int l = 0; l < 2; l++){
                 enemyStats[i][l] = 1;
             }
         }
