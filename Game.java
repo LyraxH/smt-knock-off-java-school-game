@@ -22,7 +22,7 @@ public class Game
     ArrayList<String> textHistory = new ArrayList<String>();
     
     // varialbes for characters
-    int hpMaxAlly[] = new int[]{500,500,500,500};
+    int hpMaxAlly[] = new int[]{440,630,540,720};
     int hpAlly[] = new int[]{hpMaxAlly[0],hpMaxAlly[1],hpMaxAlly[2],hpMaxAlly[3]};
     boolean isAllyInjured = false;
     int allyInjured[] = new int[]{0,0,0,0};
@@ -36,7 +36,7 @@ public class Game
     boolean isEnemyDead = false;
     int enemyDead[] = new int[]{0,0,0,0};
     
-    int spMaxAlly[] = new int[]{89,89,89,89};
+    int spMaxAlly[] = new int[]{153,104,132,89};
     int spAlly[] = new int[]{spMaxAlly[0],spMaxAlly[1],spMaxAlly[2],spMaxAlly[3]};
     
     // first number = attack status, second = defense status, third = accuracy/evasion status
@@ -780,11 +780,11 @@ public class Game
                             System.out.println("Not Enough HP");
                         }
                         break;
-                    case 3: // agl boost
+                    case 3: // atk down (ex agl boost)
                         if (spAlly[1] > 12){
-                            typeOfMove = 5;
+                            typeOfMove = 5; // set type move attack debuff
                             prevPage = 2;
-                            page = 4; // single target
+                            page = 1; // set page enemy single target
                         } else {
                             System.out.println("Not Enough SP");
                         }
@@ -1044,6 +1044,28 @@ public class Game
                 spAlly[0] -= 22;
                 break;
         }
+        goNext();
+    }
+    
+    void debuff(int target){
+        String who = "o";
+        switch (target){
+            case 0:
+                who = "Archangel";
+                break;
+            case 1:
+                who = "Jack Frost";
+                break;
+            case 2:
+                who = "Legion";
+                break;
+            case 3:
+                who = "Principality";
+                break;
+        }
+        enemyStats[target][0] = 0.6;
+        setStatus(target, 6);
+        textHistory.add("Cendrillon targets " + who + " with an attack debuff");
         goNext();
     }
     

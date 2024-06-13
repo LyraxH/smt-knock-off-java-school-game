@@ -43,9 +43,9 @@ public class Images
     JLabel principality = new JLabel(principalityIMG);
     
     // panels/backgronds
-    ImageIcon allyPanel = new ImageIcon("panels/allyPanel10.png");
+    ImageIcon allyPanel = new ImageIcon("panels/allyPanel12.png");
     ImageIcon gamePanel = new ImageIcon("panels/gamepanel.png");
-    ImageIcon enemyPanel = new ImageIcon("panels/enemyPanel10.png");
+    ImageIcon enemyPanel = new ImageIcon("panels/enemyPanel12.png");
     
     //sprites
     ImageIcon ameNoUzumeSelected = new ImageIcon("sprites/ameNoUzumeSelected.png");
@@ -242,6 +242,8 @@ public class Images
     ImageIcon unDefBoost = new ImageIcon("moves/8buff/defBoostUn.png");
     ImageIcon aglBoost = new ImageIcon("moves/8buff/aglBoost.png");
     ImageIcon unAglBoost = new ImageIcon("moves/8buff/aglBoostUn.png");
+    ImageIcon atkDownTwo = new ImageIcon("moves/8buff/atkDown.png");
+    ImageIcon unAtkDown = new ImageIcon("moves/8buff/atkDownUn.png");
     
     // 9 items // alchemy symbol potash
     ImageIcon oracleLens = new ImageIcon("moves/9item/oracleLens.png"); // reveals affinity of one enemy

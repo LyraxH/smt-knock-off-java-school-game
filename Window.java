@@ -477,25 +477,25 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                         moveButtonOne.setIcon(img.aquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
                                         moveButtonThree.setIcon(img.unSnipSnip);
-                                        moveButtonFour.setIcon(img.unAglBoost);
+                                        moveButtonFour.setIcon(img.unAtkDown);
                                         break;
                                     case 1: // if move two selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.surgingTide); // multi target water
                                         moveButtonThree.setIcon(img.unSnipSnip);
-                                        moveButtonFour.setIcon(img.unAglBoost);
+                                        moveButtonFour.setIcon(img.unAtkDown);
                                         break;
                                     case 2: // if move three selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
                                         moveButtonThree.setIcon(img.snipSnip);
-                                        moveButtonFour.setIcon(img.unAglBoost);
+                                        moveButtonFour.setIcon(img.unAtkDown);
                                         break;
                                     case 3: // if move four selected
                                         moveButtonOne.setIcon(img.unAquaPrison); // single target water
                                         moveButtonTwo.setIcon(img.unSurgingTide); // multi target water
                                         moveButtonThree.setIcon(img.unSnipSnip);
-                                        moveButtonFour.setIcon(img.aglBoost);
+                                        moveButtonFour.setIcon(img.atkDownTwo);
                                         break;
                                 }
                                 break;
@@ -904,6 +904,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.magic(0);
                         updateUI();
                         break;
+                    case 5: // atk down
+                        game.debuff(0);
+                        updateUI();
+                        break;
                     case 6: // sweeper lens
                         game.sweeper(0);
                         updateUI();
@@ -922,6 +926,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                     case 1: // magic
                         game.magic(1);
+                        updateUI();
+                        break;
+                    case 5: // atk down
+                        game.debuff(1);
                         updateUI();
                         break;
                     case 6: // sweeper lens
@@ -944,6 +952,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         game.magic(2);
                         updateUI();
                         break;
+                    case 5: // atk down
+                        game.debuff(2);
+                        updateUI();
+                        break;
                     case 6: // sweeper lens
                         game.sweeper(2);
                         updateUI();
@@ -962,6 +974,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                     case 1: // magic
                         game.magic(3);
+                        updateUI();
+                        break;
+                    case 5: // atk down
+                        game.debuff(3);
                         updateUI();
                         break;
                     case 6: // sweeper lens
@@ -1251,10 +1267,12 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             goBack();
         }
         
+        /*
         if (keyCode == 84){
             game.goNext();
             updateUI();
         }
+        */
     }    
     
     void goBack(){
@@ -1752,6 +1770,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         enemyTwoHPText.setForeground(Color.white);
         enemyThreeHPText.setForeground(Color.white);
         enemyFourHPText.setForeground(Color.white);
+        allyOneHPText.setForeground(Color.white);
+        allyTwoHPText.setForeground(Color.white);
+        allyThreeHPText.setForeground(Color.white);
+        allyFourHPText.setForeground(Color.white);
+        allyOneSPText.setForeground(Color.white);
+        allyTwoSPText.setForeground(Color.white);
+        allyThreeSPText.setForeground(Color.white);
+        allyFourSPText.setForeground(Color.white);
         enemyWindowBase.add(enemyOneButton);
         enemyWindowBase.add(enemyOneHPText);
         enemyWindowBase.add(enemyTwoButton);
