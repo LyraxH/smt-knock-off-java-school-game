@@ -70,7 +70,7 @@ public class Game
         textHistory.add("xdd");
         **/
         textHistory.add("Welcome to Stim Megumi Sensei made by taison s");
-        textHistory.add("If you need direction. Open the tutorial via the 'Instructions menu above");
+        textHistory.add("If you need direction. Open the tutorial via the 'Instructions' menu above");
         textHistory.add("Otherwise have fun and good luck!");
         setDifficulty(1);
     }
@@ -236,7 +236,7 @@ public class Game
                             if (enemyStats[0][2] == 1){ // if afflicted with shock
                                 int shock = rng.nextInt(10);
                                 if (shock < 7){ // 80% chance you remain shocked
-                                    textHistory.add("Archangel is still shocked");
+                                    textHistory.add("Virtue is still shocked");
                                     shock = rng.nextInt(10);
                                     if (shock < 5){ // 40% chance you can move anyways
                                         skip = false;
@@ -244,18 +244,18 @@ public class Game
                                         skip = true;
                                     }
                                 } else { // 20% chance you remove shock
-                                    textHistory.add("Archangel has recovered from shock");
+                                    textHistory.add("Virtue has recovered from shock");
                                     enemyStats[0][2] = 0;
                                     skip = false;
                                 }
                             }
                             if (skip){
-                                textHistory.add("Archangel is shocked and cannot move");
+                                textHistory.add("Virtue is shocked and cannot move");
                             } else {
                                 if (isEnemyInjured){ // if "ally" (enemy) injured
                                     int decision = rng.nextInt(5);
                                     if (decision == 1){
-                                        enemyHeal("Archangel");
+                                        enemyHeal("Virtue");
                                     } else { // 66% you just attack anyways
                                         enemyAttack(0);
                                     }
@@ -274,7 +274,7 @@ public class Game
                             if (enemyStats[1][2] == 1){ // if afflicted with shock
                                 int shock = rng.nextInt(10);
                                 if (shock < 7){ // 80% chance you remain shocked
-                                    textHistory.add("Jack Frost is still shocked");
+                                    textHistory.add("Eerie is still shocked");
                                     shock = rng.nextInt(10);
                                     if (shock < 5){ // 40% chance you can move anyways
                                         skip = false;
@@ -282,18 +282,18 @@ public class Game
                                         skip = true;
                                     }
                                 } else { // 20% chance you remove shock
-                                    textHistory.add("Jack Frost has recovered from shock");
+                                    textHistory.add("Eerie has recovered from shock");
                                     enemyStats[1][2] = 0;
                                     skip = false;
                                 }
                             }
                             if (skip){
-                                textHistory.add("Jack Frost is shocked and cannot move");
+                                textHistory.add("Eerie is shocked and cannot move");
                             } else {
                                 if (isEnemyInjured){ // if "ally" (enemy) injured
                                     int decision = rng.nextInt(5);
                                     if (decision == 1){
-                                        enemyHeal("Jack Frost");
+                                        enemyHeal("Eerie");
                                     } else { // 66% you just attack anyways
                                         enemyAttack(1);
                                     }
@@ -312,7 +312,7 @@ public class Game
                             if (enemyStats[2][2] == 1){ // if afflicted with shock
                                 int shock = rng.nextInt(10);
                                 if (shock < 7){ // 80% chance you remain shocked
-                                    textHistory.add("Legion is still shocked");
+                                    textHistory.add("Soul is still shocked");
                                     shock = rng.nextInt(10);
                                     if (shock < 5){ // 40% chance you can move anyways
                                         skip = false;
@@ -320,18 +320,18 @@ public class Game
                                         skip = true;
                                     }
                                 } else { // 20% chance you remove shock
-                                    textHistory.add("Legion has recovered from shock");
+                                    textHistory.add("Soul has recovered from shock");
                                     enemyStats[2][2] = 0;
                                     skip = false;
                                 }
                             }
                             if (skip){
-                                textHistory.add("Legion is shocked and cannot move");
+                                textHistory.add("Soul is shocked and cannot move");
                             } else {
                                 if (isEnemyInjured){ // if "ally" (enemy) injured
                                     int decision = rng.nextInt(5);
                                     if (decision == 1){ // 33% rng.nextInt(5)
-                                        enemyHeal("Legion");
+                                        enemyHeal("Soul");
                                     } else { // 66% you just attack anyways
                                         enemyAttack(2);
                                     }
@@ -350,7 +350,7 @@ public class Game
                             if (enemyStats[3][2] == 1){ // if afflicted with shock
                                 int shock = rng.nextInt(10);
                                 if (shock < 7){ // 80% chance you remain shocked
-                                    textHistory.add("Principality is still shocked");
+                                    textHistory.add("Reign is still shocked");
                                     shock = rng.nextInt(10);
                                     if (shock < 5){ // 40% chance you can move anyways
                                         skip = false;
@@ -358,18 +358,18 @@ public class Game
                                         skip = true;
                                     }
                                 } else { // 20% chance you remove shock
-                                    textHistory.add("Principality has recovered from shock");
+                                    textHistory.add("Reign has recovered from shock");
                                     enemyStats[3][2] = 0;
                                     skip = false;
                                 }
                             }
                             if (skip){
-                                textHistory.add("Principality is shocked and cannot move");
+                                textHistory.add("Reign is shocked and cannot move");
                             } else {
                                 if (isEnemyInjured){ // if "ally" (enemy) injured
                                     int decision = rng.nextInt(5);
                                     if (decision == 1){
-                                        enemyHeal("Principality");
+                                        enemyHeal("Reign");
                                     } else { // 33% you just attack anyways
                                         enemyAttack(3);
                                     }
@@ -429,30 +429,30 @@ public class Game
                 }
                 switch (decision){
                     case 0:
-                        target = "Ame No Uzume";
+                        target = "Aegis";
                         break;
                     case 1:
-                        target = "Cendrillon";
+                        target = "Dawn";
                         break;
                     case 2:
-                        target = "Orpheus";
+                        target = "Sentinel";
                         break;
                     case 3:
-                        target = "Robin Hood";
+                        target = "Blaze";
                         break;
                 }
                 switch (currentCharacter){
                     case 0:
-                        who = "Archangel";
+                        who = "Virtue";
                         break;
                     case 1:
-                        who = "Jack Frost";
+                        who = "Eerie";
                         break;
                     case 2:
-                        who = "Legion";
+                        who = "Soul";
                         break;
                     case 3:
-                        who = "Principality";
+                        who = "Reign";
                         break;
                 }
                 textHistory.add(who + " targets " + target + " with a magic attack of affinity " + affinity);
@@ -463,16 +463,16 @@ public class Game
                 target = "o";
                 switch (currentCharacter){
                     case 0:
-                        who = "Archangel";
+                        who = "Virtue";
                         break;
                     case 1:
-                        who = "Jack Frost";
+                        who = "Eerie";
                         break;
                     case 2:
-                        who = "Legion";
+                        who = "Soul";
                         break;
                     case 3:
-                        who = "Principality";
+                        who = "Reign";
                         break;
                 }
                 can = false;
@@ -487,16 +487,16 @@ public class Game
                 }
                 switch (decision){
                     case 0:
-                        target = "Ame No Uzume";
+                        target = "Aegis";
                         break;
                     case 1:
-                        target = "Cendrillon";
+                        target = "Dawn";
                         break;
                     case 2:
-                        target = "Orpheus";
+                        target = "Sentinel";
                         break;
                     case 3:
-                        target = "Robin Hood";
+                        target = "Blaze";
                         break;
                 }
                 textHistory.add(who + " targets " + target + " with a basic attack");
@@ -513,16 +513,16 @@ public class Game
                     can = false;
                     switch (enemy){ 
                         case 0:
-                            who = "Archangel";
+                            who = "Virtue";
                             break;
                         case 1:
-                            who = "Jack Frost";
+                            who = "Eerie";
                             break;
                         case 2:
-                            who = "Legion";
+                            who = "Soul";
                             break;
                         case 3:
-                            who = "Principality";
+                            who = "Reign";
                             break;
                     }
                     switch (whatInt){
@@ -537,16 +537,16 @@ public class Game
                     }
                     switch (targetInt){
                         case 0:
-                            target = "Ame No Uzume";
+                            target = "Aegis";
                             break;
                         case 1:
-                            target = "Cendrillon";
+                            target = "Dawn";
                             break;
                         case 2:
-                            target = "Orpheus";
+                            target = "Sentinel";
                             break;
                         case 3:
-                            target = "Robin Hood";
+                            target = "Blaze";
                             break;
                     }
                     setStatus(targetInt + 4, 6);
@@ -560,16 +560,16 @@ public class Game
                     int whatInt = rng.nextInt(2);
                     switch (enemy){
                         case 0:
-                            who = "Archangel";
+                            who = "Virtue";
                             break;
                         case 1:
-                            who = "Jack Frost";
+                            who = "Eerie";
                             break;
                         case 2:
-                            who = "Legion";
+                            who = "Soul";
                             break;
                         case 3:
-                            who = "Principality";
+                            who = "Reign";
                             break;
                     }
                     switch (whatInt){
@@ -584,16 +584,16 @@ public class Game
                     }
                     switch (targetInt){
                         case 0:
-                            target = "Archangel";
+                            target = "Virtue";
                             break;
                         case 1:
-                            target = "Jack Frost";
+                            target = "Eerie";
                             break;
                         case 2:
-                            target = "Legion";
+                            target = "Soul";
                             break;
                         case 3:
-                            target = "Principality";
+                            target = "Reign";
                             break;
                     }
                     setStatus(targetInt, 5);
@@ -608,16 +608,16 @@ public class Game
         // know you can pull that off you deserve to be able to abuse this mechanic.
         if (enemyInjured[0] == 1 && enemyDead[0] == 0){
             textHistory.add(enemy + " has healed enemy one");
-            calculateHealing(0, "Archangel", 100);
+            calculateHealing(0, "Virtue", 100);
         } else if (enemyInjured[1] == 1 && enemyDead[1] == 0){
             textHistory.add(enemy + " has healed enemy two");
-            calculateHealing(1, "Jack Frost", 100);
+            calculateHealing(1, "Eerie", 100);
         } else if (enemyInjured[2] == 1 && enemyDead[2] == 0){
             textHistory.add(enemy + " has healed enemy three");
-            calculateHealing(2, "Legion", 100);
+            calculateHealing(2, "Soul", 100);
         } else if (enemyInjured[3] == 1 && enemyDead[3] == 0){
             textHistory.add(enemy + " has healed enemy four");
-            calculateHealing(3, "Principality", 100);
+            calculateHealing(3, "Reign", 100);
         }
     }
     
@@ -631,16 +631,16 @@ public class Game
         } else {
             switch (currentCharacter){
                 case 0:
-                    who = "Ame No Uzume";
+                    who = "Aegis";
                     break;
                 case 1:
-                    who = "Cendrillon";
+                    who = "Dawn";
                     break;
                 case 2:
-                    who = "Orpheus";
+                    who = "Sentinel";
                     break;
                 case 3:
-                    who = "Robin Hood";
+                    who = "Blaze";
                     break;
             }
             switch (move){
@@ -656,16 +656,16 @@ public class Game
             }
             switch (enemy){
                 case 0:
-                    target = "Archangel";
+                    target = "Virtue";
                     break;
                 case 1:
-                    target = "Jack Frost";
+                    target = "Eerie";
                     break;
                 case 2:
-                    target = "Legion";
+                    target = "Soul";
                     break;
                 case 3:
-                    target = "Principality";
+                    target = "Reign";
                     break;
             }
             targetAll = false;
@@ -681,25 +681,25 @@ public class Game
                 guard[who] = 1;
                 setStatus(4, 7);
                 targetAll = true;
-                textHistory.add("Ame No Uzume Guards");
+                textHistory.add("Aegis Guards");
                 break;
             case 1:
                 guard[who] = 1;
                 setStatus(5, 7);
                 targetAll = true;
-                textHistory.add("Cendrillon Guards");
+                textHistory.add("Dawn Guards");
                 break;
             case 2:
                 guard[who] = 1;
                 setStatus(6, 7);
                 targetAll = true;
-                textHistory.add("Orpheus Guards");
+                textHistory.add("Sentinel Guards");
                 break;
             case 3:
                 guard[who] = 1;
                 setStatus(7, 7);
                 targetAll = true;
-                textHistory.add("Robin Hood Guards");
+                textHistory.add("Blaze Guards");
                 break;
         }
         goNext();
@@ -756,7 +756,7 @@ public class Game
                         break;
                 }
                 break;
-            case 1: // cendrillon moves
+            case 1: // Dawn moves
                 switch (move){
                     case 0: // aqua prison
                         if (spAlly[1] > 9){
@@ -796,7 +796,7 @@ public class Game
                         break;
                 }
                 break;
-            case 2: // orpheus moves
+            case 2: // Sentinel moves
                 switch (move){
                     case 0: // lunar rush
                         if (spAlly[2] > 9){
@@ -836,7 +836,7 @@ public class Game
                         break;
                 }
                 break;
-            case 3: // robin hood moves 
+            case 3: // Blaze moves 
                 switch (move){
                     case 0: // zenith blade
                         if (spAlly[3] > 9){
@@ -892,25 +892,25 @@ public class Game
             damage = 65;
             switch (currentCharacter){
                 case 0:
-                    who = "Ame No Uzume";
+                    who = "Aegis";
                     what = "Monsoon";
                     affinityInt = 2;
                     affinityString = "Wind";
                     break;
                 case 1:
-                    who = "Cendrillon";
+                    who = "Dawn";
                     what = "Surging Tide";
                     affinityInt = 1;
                     affinityString = "Water";
                     break;
                 case 2:
-                    who = "Orpheus";
+                    who = "Sentinel";
                     what = "Moonfall";
                     affinityInt = 5;
                     affinityString = "Moon";
                     break;
                 case 3:
-                    who = "Robin Hood";
+                    who = "Blaze";
                     what = "Solar Flare";
                     affinityInt = 4;
                     affinityString = "Sun";
@@ -924,19 +924,19 @@ public class Game
                 targetAll = false;
                 switch (currentCharacter){
                     case 0:
-                        who = "Ame No Uzume";
+                        who = "Aegis";
                         what = "Zephyr";
                         affinityInt = 2;
                         affinityString = "Wind";
                         break;
                     case 1:
-                        who = "Cendrillon";
+                        who = "Dawn";
                         what = "Aqua Prison";
                         affinityInt = 1;
                         affinityString = "Water";
                         break;
                     case 2:
-                        who = "Orpheus";
+                        who = "Sentinel";
                         switch (move){
                             case 0:
                                 what = "Lunar Rush";
@@ -951,7 +951,7 @@ public class Game
                         }
                         break;
                     case 3:
-                        who = "Robin Hood";
+                        who = "Blaze";
                         switch (move){
                             case 0:
                                 what = "Zenith Blade";
@@ -970,31 +970,31 @@ public class Game
         }
         switch (enemy){
             case 0:
-                target = "Archangel";
+                target = "Virtue";
                 break;
             case 1:
-                target = "Jack Frost";
+                target = "Eerie";
                 break;
             case 2:
-                target = "Legion";
+                target = "Soul";
                 break;
             case 3:
-                target = "Principality";
+                target = "Reign";
                 break;
         }
         if (targetAll){
             textHistory.add(who + " uses " + what + "on on every enemy");
             if (hpEnemy[0] >= 1){
-                calculateDamage(0, "Archangel", affinityString, damage, affinityInt);
+                calculateDamage(0, "Virtue", affinityString, damage, affinityInt);
             }
             if (hpEnemy[1] >= 1){
-                calculateDamage(1, "Jack Frost", affinityString, damage, affinityInt);
+                calculateDamage(1, "Eerie", affinityString, damage, affinityInt);
             }
             if (hpEnemy[2] >= 1){
-                calculateDamage(2, "Legion", affinityString, damage, affinityInt);
+                calculateDamage(2, "Soul", affinityString, damage, affinityInt);
             }
             if (hpEnemy[3] >= 1){
-                calculateDamage(3, "Principality", affinityString, damage, affinityInt);
+                calculateDamage(3, "Reign", affinityString, damage, affinityInt);
             }
             targetAll = true;
             spAlly[currentCharacter] -= 21;
@@ -1007,20 +1007,20 @@ public class Game
     }
     
     void healing(int ally){
-        textHistory.add("Ame No Uzume uses Redemption");
+        textHistory.add("Aegis uses Redemption");
         String who = "o";
         switch (ally){
             case 0:
-                who = "Ame No Uzume";
+                who = "Aegis";
                 break;
             case 1:
-                who = "Cendrillon";
+                who = "Dawn";
                 break;
             case 2:
-                who = "Orpheus";
+                who = "Sentinel";
                 break;
             case 3:
-                who = "Robin Hood";
+                who = "Blaze";
                 break;
         }
         calculateHealing(ally, who, 80);
@@ -1034,15 +1034,15 @@ public class Game
             case 0: // ame
                 switch (ally){
                     case 1:
-                        textHistory.add("Ame No Uzume uses guardian angel on Cendrillon");
+                        textHistory.add("Aegis uses guardian angel on Dawn");
                         hpAlly[ally] = 240;
                         break;
                     case 2:
-                        textHistory.add("Ame No Uzume uses guardian angel on Orpheus");
+                        textHistory.add("Aegis uses guardian angel on Sentinel");
                         hpAlly[ally] = 240;
                         break;
                     case 3:
-                        textHistory.add("Ame No Uzume uses guardian angel on Robin Hood");
+                        textHistory.add("Aegis uses guardian angel on Blaze");
                         hpAlly[ally] = 240;
                         break;
                 }
@@ -1056,21 +1056,21 @@ public class Game
         String who = "o";
         switch (target){
             case 0:
-                who = "Archangel";
+                who = "Virtue";
                 break;
             case 1:
-                who = "Jack Frost";
+                who = "Eerie";
                 break;
             case 2:
-                who = "Legion";
+                who = "Soul";
                 break;
             case 3:
-                who = "Principality";
+                who = "Reign";
                 break;
         }
         enemyStats[target][0] = 0.6;
         setStatus(target, 6);
-        textHistory.add("Cendrillon targets " + who + " with an attack debuff");
+        textHistory.add("Dawn targets " + who + " with an attack debuff");
         goNext();
     }
     
@@ -1080,16 +1080,16 @@ public class Game
         String who = "o";
         switch (currentCharacter){
             case 0:
-                from = "Ame No Uzume";
+                from = "Aegis";
                 break;
             case 1:
-                from = "Cendrillon";
+                from = "Dawn";
                 break;
             case 2:
-                from = "Orpheus";
+                from = "Sentinel";
                 break;
             case 3:
-                from = "Robin Hood";
+                from = "Blaze";
                 break;
         }
         switch (typeOfMove){
@@ -1104,16 +1104,16 @@ public class Game
         }
         switch (target){
             case 0:
-                who = "Ame No Uzume";
+                who = "Aegis";
                 break;
             case 1:
-                who = "Cendrillon";
+                who = "Dawn";
                 break;
             case 2:
-                who = "Orpheus";
+                who = "Sentinel";
                 break;
             case 3:
-                who = "Robin Hood";
+                who = "Blaze";
                 break;
         }
         textHistory.add(from + " Boosts the " + what + " of " + who);

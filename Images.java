@@ -22,41 +22,41 @@ public class Images
     ImageIcon itemIcon = new ImageIcon("buttons/selectedItem.png");
     
     // allies
-    ImageIcon ameNoUzumeIMG = new ImageIcon("allies/100ameNoUzume.png");
-    ImageIcon cendrillonIMG = new ImageIcon("allies/100cendrillon.png");
-    ImageIcon orpheusIMG = new ImageIcon("allies/100orpheus.png");
-    ImageIcon robinHoodIMG = new ImageIcon("allies/100robinHood.png");
+    ImageIcon aegisIMG = new ImageIcon("sprites/aegis.png");
+    ImageIcon dawnIMG = new ImageIcon("sprites/dawn.png");
+    ImageIcon sentinelIMG = new ImageIcon("sprites/sentinel.png");
+    ImageIcon blazeIMG = new ImageIcon("sprites/blaze.png");
     //turning allies into jlabels
-    JLabel ameNoUzume = new JLabel(ameNoUzumeIMG);
-    JLabel cendrillon = new JLabel(cendrillonIMG);
-    JLabel orpheus = new JLabel(orpheusIMG);
-    JLabel robinHood = new JLabel(robinHoodIMG);
+    JLabel aegis = new JLabel(aegisIMG);
+    JLabel dawn = new JLabel(dawnIMG);
+    JLabel sentinel = new JLabel(sentinelIMG);
+    JLabel blaze = new JLabel(blazeIMG);
     
     // enemies
-    ImageIcon archangelIMG = new ImageIcon("enemies/100archangel.png");
-    ImageIcon jackFrostIMG = new ImageIcon("enemies/100jackFrost.png");
-    ImageIcon legionIMG = new ImageIcon("enemies/100legion.png");
-    ImageIcon principalityIMG = new ImageIcon("enemies/100principality.png");
+    ImageIcon virtueIMG = new ImageIcon("sprites/virtue.png");
+    ImageIcon eerieIMG = new ImageIcon("sprites/.png");
+    ImageIcon soulIMG = new ImageIcon("sprites/soul.png");
+    ImageIcon reignIMG = new ImageIcon("sprites/reign.png");
     // turning enemies into jlabels
-    JLabel archangel = new JLabel(archangelIMG);
-    JLabel jackFrost = new JLabel(jackFrostIMG);
-    JLabel legion = new JLabel(legionIMG);
-    JLabel principality = new JLabel(principalityIMG);
+    JLabel virtue = new JLabel(virtueIMG);
+    JLabel eerie = new JLabel(eerieIMG);
+    JLabel soul = new JLabel(soulIMG);
+    JLabel reign = new JLabel(reignIMG);
     
     // panels/backgronds
-    ImageIcon allyPanel = new ImageIcon("panels/allyPanel12.png");
+    ImageIcon allyPanel = new ImageIcon("panels/allyPanel14.png");
     ImageIcon gamePanel = new ImageIcon("panels/gamepanel.png");
-    ImageIcon enemyPanel = new ImageIcon("panels/enemyPanel12.png");
+    ImageIcon enemyPanel = new ImageIcon("panels/enemyPanel14.png");
     
     //sprites
-    ImageIcon ameNoUzumeSelected = new ImageIcon("sprites/ameNoUzumeSelected.png");
-    ImageIcon archangelSelected = new ImageIcon("sprites/archangelSelected.png");
-    ImageIcon cendrillonSelected = new ImageIcon("sprites/cendrillonSelected.png");
-    ImageIcon jackFrostSelected = new ImageIcon("sprites/jackFrostSelected.png");
-    ImageIcon legionSelected = new ImageIcon("sprites/legionSelected.png");
-    ImageIcon orpheusSelected = new ImageIcon("sprites/orpheusSelected.png");
-    ImageIcon robinHoodSelected = new ImageIcon("sprites/robinHoodSelected.png");
-    ImageIcon principalitySelected = new ImageIcon("sprites/principalitySelected.png");
+    ImageIcon aegisSelected = new ImageIcon("sprites/aegisSelected.png");
+    ImageIcon dawnSelected = new ImageIcon("sprites/dawnSelected.png");
+    ImageIcon sentinelSelected = new ImageIcon("sprites/sentinelSelected.png");
+    ImageIcon blazeSelected = new ImageIcon("sprites/blazeSelected.png");
+    ImageIcon virtueSelected = new ImageIcon("sprites/virtueSelected.png");
+    ImageIcon eerieSelected = new ImageIcon("sprites/eerieSelected.png");
+    ImageIcon soulSelected = new ImageIcon("sprites/soulSelected.png");
+    ImageIcon reignSelected = new ImageIcon("sprites/reignSelected.png");
     ImageIcon playerTurnOne = new ImageIcon("sprites/playerTurnOne.png");
     ImageIcon playerTurnTwo = new ImageIcon("sprites/playerTurnTwo.png");
     ImageIcon playerTurnThree = new ImageIcon("sprites/playerTurnThree.png");

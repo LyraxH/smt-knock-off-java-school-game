@@ -198,14 +198,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     }
     
     public void addAndRemove(){
-        enemyOneSprite.setIcon(img.archangelIMG);
-        enemyTwoSprite.setIcon(img.jackFrostIMG);
-        enemyThreeSprite.setIcon(img.legionIMG);
-        enemyFourSprite.setIcon(img.principalityIMG);
-        allyOneSprite.setIcon(img.ameNoUzumeIMG);
-        allyTwoSprite.setIcon(img.cendrillonIMG);
-        allyThreeSprite.setIcon(img.orpheusIMG);
-        allyFourSprite.setIcon(img.robinHoodIMG);
+        enemyOneSprite.setIcon(img.virtueIMG);
+        enemyTwoSprite.setIcon(img.eerieIMG);
+        enemyThreeSprite.setIcon(img.soulIMG);
+        enemyFourSprite.setIcon(img.reignIMG);
+        allyOneSprite.setIcon(img.aegisIMG);
+        allyTwoSprite.setIcon(img.dawnIMG);
+        allyThreeSprite.setIcon(img.sentinelIMG);
+        allyFourSprite.setIcon(img.blazeIMG);
     }
     
     public void updateUI(){
@@ -224,24 +224,24 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case 0:
                 switch (game.currentCharacter){
                     case 0:
-                        currentMoveText.setText("Ame No Uzume");
+                        currentMoveText.setText("Aegis");
                         addAndRemove();
-                        allyOneSprite.setIcon(img.ameNoUzumeSelected);
+                        allyOneSprite.setIcon(img.aegisSelected);
                         break;
                     case 1:
-                        currentMoveText.setText("Cendrillon");
+                        currentMoveText.setText("Dawn");
                         addAndRemove();
-                        allyTwoSprite.setIcon(img.cendrillonSelected);
+                        allyTwoSprite.setIcon(img.dawnSelected);
                         break;
                     case 2:
-                        currentMoveText.setText("Orpheus");
+                        currentMoveText.setText("Sentinel");
                         addAndRemove();
-                        allyThreeSprite.setIcon(img.orpheusSelected);
+                        allyThreeSprite.setIcon(img.sentinelSelected);
                         break;
                     case 3:
-                        currentMoveText.setText("Robin Hood");
+                        currentMoveText.setText("Blaze");
                         addAndRemove();
-                        allyFourSprite.setIcon(img.robinHoodSelected);
+                        allyFourSprite.setIcon(img.blazeSelected);
                         break;
                 }
                 img.turnIndicatorOne.setIcon(img.playerTurnOne);
@@ -252,24 +252,24 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case 1:
                 switch (game.currentCharacter){
                     case 0:
-                        currentMoveText.setText("Archangel");
+                        currentMoveText.setText("virtue");
                         addAndRemove();
-                        enemyOneSprite.setIcon(img.archangelSelected);
+                        enemyOneSprite.setIcon(img.virtueSelected);
                         break;
                     case 1:
                         currentMoveText.setText("Jack Frost");
                         addAndRemove();
-                        enemyTwoSprite.setIcon(img.jackFrostSelected);
+                        enemyTwoSprite.setIcon(img.eerieSelected);
                         break;
                     case 2:
-                        currentMoveText.setText("Legion");
+                        currentMoveText.setText("soul");
                         addAndRemove();
-                        enemyThreeSprite.setIcon(img.legionSelected);
+                        enemyThreeSprite.setIcon(img.soulSelected);
                         break;
                     case 3:
-                        currentMoveText.setText("Principality");
+                        currentMoveText.setText("reign");
                         addAndRemove();
-                        enemyFourSprite.setIcon(img.principalitySelected);
+                        enemyFourSprite.setIcon(img.reignSelected);
                         break;
                 }
                 img.turnIndicatorOne.setIcon(img.enemyTurnOne);
@@ -293,14 +293,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         displayWarnings(game.warning);
         
         //UPDATE ACTION COMMANDS FOR INTERACTABLE ICONS
-        allyOneButton.setActionCommand("ameNoUzume");
-        allyTwoButton.setActionCommand("cendrillon");
-        allyThreeButton.setActionCommand("orpheus");
-        allyFourButton.setActionCommand("robinHood");
-        enemyOneButton.setActionCommand("archangel");
-        enemyTwoButton.setActionCommand("jackFrost");
-        enemyThreeButton.setActionCommand("legion");
-        enemyFourButton.setActionCommand("principality");
+        allyOneButton.setActionCommand("aegis");
+        allyTwoButton.setActionCommand("dawn");
+        allyThreeButton.setActionCommand("sentinel");
+        allyFourButton.setActionCommand("blaze");
+        enemyOneButton.setActionCommand("virtue");
+        enemyTwoButton.setActionCommand("eerie");
+        enemyThreeButton.setActionCommand("soul");
+        enemyFourButton.setActionCommand("reign");
         switch (game.page){
             case 0: // if main page
                 moveButtonOne.setActionCommand("attack");
@@ -434,7 +434,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 case 2: // if in magic attack
                     if (game.turn == 0 ){ //if the turn is an ally that you can see abilities for
                         switch (game.currentCharacter){
-                            case 0: // ame no uzume
+                            case 0: // Aegis
                                 switch (game.selected){
                                     case 0: // if move one selected
                                         moveButtonOne.setIcon(img.zephyr); // single target wind
@@ -462,7 +462,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                         break;
                                 }
                                 break;
-                            case 1: // cendrillon
+                            case 1: // Dawn
                                 switch (game.selected){
                                     case 0: // if move one selected
                                         moveButtonOne.setIcon(img.aquaPrison); // single target water
@@ -490,7 +490,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                         break;
                                 }
                                 break;
-                            case 2: // orpheus
+                            case 2: // Sentinel
                                 switch (game.selected){
                                     case 0: // if move one selected
                                         moveButtonOne.setIcon(img.lunarRush); // single target moon
@@ -518,7 +518,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                         break;
                                 }
                                 break;
-                            case 3: // robin hood
+                            case 3: // Blaze
                                 switch (game.selected){
                                     case 0: // if move one selected
                                         moveButtonOne.setIcon(img.zenithBlade); // single target sun
@@ -1175,33 +1175,33 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 
             // createStatsMenu("charName", fire, water, air, earth, sun, moon, phys);
             //                    0 = normal, 1 = weak, 2 = resist, 3 = null, 4 = unknown
-            case "ameNoUzume":
+            case "aegis":
                 createStatsMenu("Ame-No-Uzume", 0, game.allyAffinities[0][0], game.allyAffinities[0][1], game.allyAffinities[0][2], game.allyAffinities[0][3], game.allyAffinities[0][4], game.allyAffinities[0][5], game.allyAffinities[0][6]);
                 updateUI();
                 break;            
-            case "cendrillon":
-                createStatsMenu("Cendrillon", 1, game.allyAffinities[1][0], game.allyAffinities[1][1], game.allyAffinities[1][2], game.allyAffinities[1][3], game.allyAffinities[1][4], game.allyAffinities[1][5], game.allyAffinities[1][6]);
+            case "Dawn":
+                createStatsMenu("Dawn", 1, game.allyAffinities[1][0], game.allyAffinities[1][1], game.allyAffinities[1][2], game.allyAffinities[1][3], game.allyAffinities[1][4], game.allyAffinities[1][5], game.allyAffinities[1][6]);
                 updateUI();
                 break;
-            case "orpheus":
-                createStatsMenu("Orpheus", 2, game.allyAffinities[2][0], game.allyAffinities[2][1], game.allyAffinities[2][2], game.allyAffinities[2][3], game.allyAffinities[2][4], game.allyAffinities[2][5], game.allyAffinities[2][6]);
+            case "Sentinel":
+                createStatsMenu("Sentinel", 2, game.allyAffinities[2][0], game.allyAffinities[2][1], game.allyAffinities[2][2], game.allyAffinities[2][3], game.allyAffinities[2][4], game.allyAffinities[2][5], game.allyAffinities[2][6]);
                 updateUI();
                 break;
-            case "robinHood":
-                createStatsMenu("Robin Hood", 3, game.allyAffinities[3][0], game.allyAffinities[3][1], game.allyAffinities[3][2], game.allyAffinities[3][3], game.allyAffinities[3][4], game.allyAffinities[3][5], game.allyAffinities[3][6]);
+            case "blaze":
+                createStatsMenu("Blaze", 3, game.allyAffinities[3][0], game.allyAffinities[3][1], game.allyAffinities[3][2], game.allyAffinities[3][3], game.allyAffinities[3][4], game.allyAffinities[3][5], game.allyAffinities[3][6]);
                 updateUI();
                 break;
                 
-            case "archangel":
+            case "virtue":
                 if (game.affinitiesKnown[0] == 1) {
-                    createStatsMenu("Archangel", 4, game.enemyAffinities[0][0], game.enemyAffinities[0][1], game.enemyAffinities[0][2], game.enemyAffinities[0][3], game.enemyAffinities[0][4], game.enemyAffinities[0][5], game.enemyAffinities[0][6]);
+                    createStatsMenu("virtue", 4, game.enemyAffinities[0][0], game.enemyAffinities[0][1], game.enemyAffinities[0][2], game.enemyAffinities[0][3], game.enemyAffinities[0][4], game.enemyAffinities[0][5], game.enemyAffinities[0][6]);
                     updateUI();
                 } else {
-                    createStatsMenu("Archangel", 4, 4, 4, 4, 4, 4, 4, 4);
+                    createStatsMenu("virtue", 4, 4, 4, 4, 4, 4, 4, 4);
                     updateUI();
                 }
                 break;
-            case "jackFrost":
+            case "eerie":
                 if (game.affinitiesKnown[1] == 1) {
                     createStatsMenu("Jack Frost", 5, game.enemyAffinities[1][0], game.enemyAffinities[1][1], game.enemyAffinities[1][2], game.enemyAffinities[1][3], game.enemyAffinities[1][4], game.enemyAffinities[1][5], game.enemyAffinities[1][6]);
                     updateUI();
@@ -1210,21 +1210,21 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                     updateUI();
                 }
                 break;
-            case "legion":
+            case "soul":
                 if (game.affinitiesKnown[2] == 1) {
-                    createStatsMenu("Legion", 6, game.enemyAffinities[2][0], game.enemyAffinities[2][1], game.enemyAffinities[2][2], game.enemyAffinities[2][3], game.enemyAffinities[2][4], game.enemyAffinities[2][5], game.enemyAffinities[2][6]);
+                    createStatsMenu("soul", 6, game.enemyAffinities[2][0], game.enemyAffinities[2][1], game.enemyAffinities[2][2], game.enemyAffinities[2][3], game.enemyAffinities[2][4], game.enemyAffinities[2][5], game.enemyAffinities[2][6]);
                     updateUI();
                 } else {
-                    createStatsMenu("Legion", 6, 4, 4, 4, 4, 4, 4, 4);
+                    createStatsMenu("soul", 6, 4, 4, 4, 4, 4, 4, 4);
                     updateUI();
                 }
                 break;
-            case "principality":
+            case "reign":
                 if (game.affinitiesKnown[3] == 1) {
-                    createStatsMenu("Principality", 7, game.enemyAffinities[3][0], game.enemyAffinities[3][1], game.enemyAffinities[3][2], game.enemyAffinities[3][3], game.enemyAffinities[3][4], game.enemyAffinities[3][5], game.enemyAffinities[3][6]);
+                    createStatsMenu("reign", 7, game.enemyAffinities[3][0], game.enemyAffinities[3][1], game.enemyAffinities[3][2], game.enemyAffinities[3][3], game.enemyAffinities[3][4], game.enemyAffinities[3][5], game.enemyAffinities[3][6]);
                     updateUI();
                 } else {
-                    createStatsMenu("Principality", 7, 4, 4, 4, 4, 4, 4, 4);
+                    createStatsMenu("reign", 7, 4, 4, 4, 4, 4, 4, 4);
                     updateUI();
                 }
                 break;
@@ -1307,28 +1307,28 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         JLabel nameLabel = new JLabel(name);
         switch (character){
             case 0:
-                box.add(img.ameNoUzume);
+                box.add(img.aegis);
                 break;
             case 1:
-                box.add(img.cendrillon);
+                box.add(img.dawn);
                 break;
             case 2:
-                box.add(img.orpheus);
+                box.add(img.sentinel);
                 break;
             case 3:
-                box.add(img.robinHood);
+                box.add(img.blaze);
                 break;
             case 4:
-                box.add(img.archangel);
+                box.add(img.virtue);
                 break;
             case 5:
-                box.add(img.jackFrost);
+                box.add(img.eerie);
                 break;
             case 6:
-                box.add(img.legion);
+                box.add(img.soul);
                 break;
             case 7:
-                box.add(img.principality);
+                box.add(img.reign);
                 break;
         }
         box.add(img.elementOne); // 1
@@ -1623,7 +1623,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     public void mouseClicked(MouseEvent e){}
     
     public void displayWarnings(int warning){
-        System.out.println("problem, warning: " + warning);
         img.turnIndicatorOne.setIcon(img.warningLeft);
         img.turnIndicatorFour.setIcon(img.warningRight);
         switch (warning){
@@ -1922,14 +1921,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     }
 
     void setImages(){
-        allyOneButton.setIcon(img.ameNoUzumeIMG);
-        allyTwoButton.setIcon(img.cendrillonIMG);
-        allyThreeButton.setIcon(img.orpheusIMG);
-        allyFourButton.setIcon(img.robinHoodIMG);
-        enemyOneButton.setIcon(img.archangelIMG);
-        enemyTwoButton.setIcon(img.jackFrostIMG);
-        enemyThreeButton.setIcon(img.legionIMG);
-        enemyFourButton.setIcon(img.principalityIMG);
+        allyOneButton.setIcon(img.aegisIMG);
+        allyTwoButton.setIcon(img.dawnIMG);
+        allyThreeButton.setIcon(img.sentinelIMG);
+        allyFourButton.setIcon(img.blazeIMG);
+        enemyOneButton.setIcon(img.virtueIMG);
+        enemyTwoButton.setIcon(img.eerieIMG);
+        enemyThreeButton.setIcon(img.soulIMG);
+        enemyFourButton.setIcon(img.reignIMG);
     }
     
     void cleanUp(){
