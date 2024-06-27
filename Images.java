@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 public class Images
 {
+    ImageIcon LOGO = new ImageIcon("stimMegumiSensei.png");
     // hud moves
     ImageIcon unAttackIcon = new ImageIcon("buttons/unselectedAttack.png");
     ImageIcon unGuardIcon = new ImageIcon("buttons/unselectedGuard.png");
@@ -72,6 +73,27 @@ public class Images
     ImageIcon youWinTwo = new ImageIcon("sprites/youWinTwo.png");
     ImageIcon youWinThree = new ImageIcon("sprites/youWinThree.png");
     ImageIcon youWinFour = new ImageIcon("sprites/youWinFour.png");
+    ///
+    ImageIcon warningLeft = new ImageIcon("sprites/warnings/left.png");
+    ImageIcon warningRight = new ImageIcon("sprites/warnings/right.png");
+    ImageIcon affinitiesRevealed1 = new ImageIcon("sprites/warnings/affinitiesRevealed1.png");
+    ImageIcon affinitiesRevealed2 = new ImageIcon("sprites/warnings/affinitiesRevealed2.png");
+    ImageIcon fullHP1 = new ImageIcon("sprites/warnings/fullHP1.png");
+    ImageIcon fullHP2 = new ImageIcon("sprites/warnings/fullHP2.png");
+    ImageIcon isAlive1 = new ImageIcon("sprites/warnings/isAlive1.png");
+    ImageIcon isAlive2 = new ImageIcon("sprites/warnings/isAlive2.png");
+    ImageIcon isDead1 = new ImageIcon("sprites/warnings/isDead1.png");
+    ImageIcon isDead2 = new ImageIcon("sprites/warnings/isDead2.png");
+    ImageIcon maxSP1 = new ImageIcon("sprites/warnings/maxSP1.png");
+    ImageIcon maxSP2 = new ImageIcon("sprites/warnings/maxSP2.png");
+    ImageIcon noHP1 = new ImageIcon("sprites/warnings/noHP1.png");
+    ImageIcon noHP2 = new ImageIcon("sprites/warnings/noHP2.png");
+    ImageIcon noInjured1 = new ImageIcon("sprites/warnings/noInjured1.png");
+    ImageIcon noInjured2 = new ImageIcon("sprites/warnings/noInjured2.png");
+    ImageIcon noOneDead1 = new ImageIcon("sprites/warnings/noOneDead1.png");
+    ImageIcon noOneDead2 = new ImageIcon("sprites/warnings/noOneDead2.png");
+    ImageIcon noSP1 = new ImageIcon("sprites/warnings/noSP1.png");
+    ImageIcon noSP2 = new ImageIcon("sprites/warnings/noSP2.png");
     JLabel turnIndicatorOne = new JLabel(playerTurnOne);
     JLabel turnIndicatorTwo = new JLabel(playerTurnTwo);
     JLabel turnIndicatorThree = new JLabel(playerTurnThree);
@@ -185,6 +207,30 @@ public class Images
     JLabel defenseOverlay6 = new JLabel(defNorm);
     JLabel defenseOverlay7 = new JLabel(defNorm);
     JLabel defenseOverlay8 = new JLabel(defNorm);
+    
+    // tutotiral assets
+    ImageIcon rightArrow = new ImageIcon("tutorial/rightArrowSmall.png");
+    ImageIcon leftArrow = new ImageIcon("tutorial/leftArrowSmall.png");
+    ImageIcon tutorial1 = new ImageIcon("tutorial/1overview.png");
+    ImageIcon tutorial2 = new ImageIcon("tutorial/2moves.png");
+    ImageIcon tutorial3 = new ImageIcon("tutorial/3basicAttack.png");
+    ImageIcon tutorial4 = new ImageIcon("tutorial/4guard.png");
+    ImageIcon tutorial5 = new ImageIcon("tutorial/5magic.png");
+    ImageIcon tutorial6 = new ImageIcon("tutorial/6elementalAffinities.png");
+    ImageIcon tutorial7 = new ImageIcon("tutorial/7singleTargetMagic.png");
+    ImageIcon tutorial8 = new ImageIcon("tutorial/8targetAllMagic.png");
+    ImageIcon tutorial9 = new ImageIcon("tutorial/9healing.png");
+    ImageIcon tutorial10 = new ImageIcon("tutorial/10revives.png");
+    ImageIcon tutorial11 = new ImageIcon("tutorial/11stats.png");
+    ImageIcon tutorial12 = new ImageIcon("tutorial/12items.png");
+    ImageIcon tutorial13 = new ImageIcon("tutorial/13oracleLens.png");
+    ImageIcon tutorial14 = new ImageIcon("tutorial/14checkingAffinities.png");
+    ImageIcon tutorial15 = new ImageIcon("tutorial/15everfrost.png");
+    ImageIcon tutorial16 = new ImageIcon("tutorial/16lightningCrash.png");
+    ImageIcon tutorial17 = new ImageIcon("tutorial/17shock.png");
+    ImageIcon tutorial18 = new ImageIcon("tutorial/18cleanse.png");
+    ImageIcon tutorial19 = new ImageIcon("tutorial/19difficulty.png");
+    ImageIcon tutorial20 = new ImageIcon("tutorial/20battleLog.png");
     
     // move icons
     // 0 fire // alchemy symbol: fire

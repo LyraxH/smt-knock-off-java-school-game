@@ -15,6 +15,7 @@ public class Game
     int selected = 0; // what option is currently being hovered, 0-3 left to right
     int turn = 0; // 0 = ally, 1 = enemy.
     int currentCharacter = 0; // what out of four characters turn it is
+    int warning = 420;
     // goes turn 0, character 1-2-3-4, then turn 1, character 1-2-3-4. then repeat
     int move;
     
@@ -63,10 +64,14 @@ public class Game
 
     public void Start(){ // start.. yea,, its the initializing method
         initializeAffinitiesStats();
-        
+        /**
         textHistory.add("Welcome to my shitty SMT knockoff for school");
         textHistory.add("made by taison");
         textHistory.add("xdd");
+        **/
+        textHistory.add("Welcome to Stim Megumi Sensei made by taison s");
+        textHistory.add("If you need direction. Open the tutorial via the 'Instructions menu above");
+        textHistory.add("Otherwise have fun and good luck!");
         setDifficulty(1);
     }
     
@@ -622,7 +627,7 @@ public class Game
         String target = "o";
         int damage = 0;
         if (hpEnemy[enemy] <= 0){
-            System.out.println("Cannot target this enemy as they are already dead");
+            warning = 3;
         } else {
             switch (currentCharacter){
                 case 0:
@@ -711,7 +716,7 @@ public class Game
                             prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 1: // monsoon
@@ -720,7 +725,7 @@ public class Game
                             prevPage = 2;
                             page = 5; // multi target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 2: // redemption
@@ -730,10 +735,10 @@ public class Game
                                 prevPage = 2;
                                 page = 4; // single target ally select
                             } else {
-                                System.out.println("Not Enough SP");
+                                warning = 8;
                             }
                         } else {
-                            System.out.println("No one is injured");
+                            warning = 6;
                         }
                         break;
                     case 3: // guardian angel
@@ -743,10 +748,10 @@ public class Game
                                 prevPage = 2;
                                 page = 4; // single target ally select
                             } else {
-                                System.out.println("Not Enough SP");
+                                warning = 8;
                             }
                         } else {
-                            System.out.println("No one is dead");
+                            warning = 7;
                         }
                         break;
                 }
@@ -759,7 +764,7 @@ public class Game
                             prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 1: // surging tide
@@ -768,7 +773,7 @@ public class Game
                             prevPage = 2;
                             page = 5; // multi target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 2:
@@ -777,7 +782,7 @@ public class Game
                             prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
-                            System.out.println("Not Enough HP");
+                            warning = 5;
                         }
                         break;
                     case 3: // atk down (ex agl boost)
@@ -786,7 +791,7 @@ public class Game
                             prevPage = 2;
                             page = 1; // set page enemy single target
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                 }
@@ -799,7 +804,7 @@ public class Game
                             prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 1: // moonfall
@@ -808,7 +813,7 @@ public class Game
                             prevPage = 2;
                             page = 5; // multi target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 2:
@@ -817,7 +822,7 @@ public class Game
                             prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 3: // def boost
@@ -826,7 +831,7 @@ public class Game
                             prevPage = 2;
                             page = 4; // single target
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                 }
@@ -839,7 +844,7 @@ public class Game
                             prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 1: // solar flare
@@ -848,7 +853,7 @@ public class Game
                             prevPage = 2;
                             page = 5; // multi target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 2:
@@ -857,7 +862,7 @@ public class Game
                             prevPage = 2;
                             page = 1; // single target enemy select
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                     case 3: // atk boost
@@ -866,7 +871,7 @@ public class Game
                             prevPage = 2;
                             page = 4; // single target
                         } else {
-                            System.out.println("Not Enough SP");
+                            warning = 8;
                         }
                         break;
                 }
@@ -913,7 +918,7 @@ public class Game
             }
         } else {
             if (hpEnemy[enemy] <= 0){
-                System.out.println("Cannot target this enemy as they are already dead");
+                warning = 3;
             } else {
                 damage = 85;
                 targetAll = false;
@@ -1123,7 +1128,7 @@ public class Game
                     affinitiesKnown[0] = 1;
                     goNext();
                 } else {
-                    System.out.println("Affinities for enemy one already revealed");
+                    warning = 0;
                 }
                 break;
             case 1:
@@ -1132,7 +1137,7 @@ public class Game
                     affinitiesKnown[1] = 1;
                     goNext();
                 } else {
-                    System.out.println("Affinities for Enemy Two already revealed");
+                    warning = 0;
                 }
                 break;
             case 2:
@@ -1141,7 +1146,7 @@ public class Game
                     affinitiesKnown[2] = 1;
                     goNext();
                 } else {
-                    System.out.println("Affinities for Enemy Three already revealed");
+                    warning = 0;
                 }
                 break;
             case 3:
@@ -1150,7 +1155,7 @@ public class Game
                     affinitiesKnown[3] = 1;
                     goNext();
                 } else {
-                    System.out.println("Affinities for Enemy Four already revealed");
+                    warning = 0;
                 }
                 break;
         }
@@ -1160,7 +1165,7 @@ public class Game
         switch (ally){
             case 0:
                 if (spAlly[0] == spMaxAlly[0]){
-                    System.out.println("This ally already has max SP");
+                    warning = 4;
                 } else {
                     spAlly[0] += 30;
                     if (spAlly[0] > spMaxAlly[0]){
@@ -1172,7 +1177,7 @@ public class Game
                 break;
             case 1:
                 if (spAlly[1] == spMaxAlly[1]){
-                    System.out.println("This Ally already has max SP");
+                    warning = 4;
                 } else {
                     spAlly[1] += 30;
                     if (spAlly[1] > spMaxAlly[1]){
@@ -1184,7 +1189,7 @@ public class Game
                 break;
             case 2:
                 if (spAlly[2] == spMaxAlly[2]){
-                    System.out.println("This Ally already has max SP");
+                    warning = 4;
                 } else {
                     spAlly[2] += 30;
                     if (spAlly[2] > spMaxAlly[2]){
@@ -1196,7 +1201,7 @@ public class Game
                 break;
             case 3:
                 if (spAlly[3] == spMaxAlly[3]){
-                    System.out.println("This ally already has max SP");
+                    warning = 4;
                 } else {
                     spAlly[3] += 30;
                     if (spAlly[3] > spMaxAlly[3]){
@@ -1232,6 +1237,7 @@ public class Game
     }
     
     public void goNext(){ // the script that decides whos turn is next, and basically advances the game
+        warning = 420;
         switch (turn){
             case 0: // if allies turn
                 switch (currentCharacter){
@@ -1363,6 +1369,9 @@ public class Game
                             if (enemyDead[2] == 1){
                                 if (enemyDead[3] == 1){
                                     turn = 0;
+                                    for (int i = 0; i < 4; i++){ // resets guard status at the start of ally turn
+                                        guard[i] = 0;
+                                    }
                                     if (allyDead[0] == 1){ // if first ally dead
                                         if (allyDead[1] == 1){ // if second ally dead
                                             if (allyDead[2] == 1){ // if third ally dead
@@ -1396,6 +1405,9 @@ public class Game
                         if (enemyDead[2] == 1){
                             if (enemyDead[3] == 1){
                                 turn = 0;
+                                for (int i = 0; i < 4; i++){ // resets guard status at the start of ally turn
+                                    guard[i] = 0;
+                                }
                                 if (allyDead[0] == 1){ // if first ally dead
                                     if (allyDead[1] == 1){ // if second ally dead
                                         if (allyDead[2] == 1){ // if third ally dead
@@ -1425,6 +1437,9 @@ public class Game
                     case 2:
                         if (enemyDead[3] == 1){
                             turn = 0;
+                            for (int i = 0; i < 4; i++){ // resets guard status at the start of ally turn
+                                guard[i] = 0;
+                            }
                             if (allyDead[0] == 1){ // if first ally dead
                                 if (allyDead[1] == 1){ // if second ally dead
                                     if (allyDead[2] == 1){ // if third ally dead
@@ -1450,6 +1465,9 @@ public class Game
                         break;
                     case 3:
                         turn = 0;
+                        for (int i = 0; i < 4; i++){ // resets guard status at the start of ally turn
+                            guard[i] = 0;
+                        }
                         if (allyDead[0] == 1){ // if first ally dead
                             if (allyDead[1] == 1){ // if second ally dead
                                 if (allyDead[2] == 1){ // if third ally dead
@@ -1596,6 +1614,7 @@ public class Game
                 nullify = rng.nextInt(7);
             }
         }
+        
         can = false;
         weak = 0;
         resist = 0;
@@ -1648,38 +1667,4 @@ public class Game
             }
         }
     }
-    /**
-     * ELEMENTS AND INDEX
-     * 0 - fire
-     * 1 - water
-     * 2 - wind
-     * 3 - earth
-     * 4 - sun
-     * 5 - moon
-     * 6 - physicalr
-     */
-    
-    /**
-     * CHARACTERS AND INDEX
-     * 0 - ame no uzume
-     * 1 - cendrillon
-     * 2 - orpheus
-     * 3 - robin hood
-     * 4 - archangel
-     * 5 - jack frost
-     * 6 - legion
-     * 7 - principality
-     */
-    
-    /**
-     * PAGE AND INDEX
-     * 0 = home main menu
-     * 1 = select enemy (single target)
-     * 2 = select magic ability
-     * 3 = select item
-     * 4 = select ally (single target for healing n buffs n such)
-     * 5 = select enemy (multi target)
-     * 6 = select ally (multi target for healing)
-     * //calculateDamage(target, target name, move affinity, base damage, move affinity number);
-     */
 }

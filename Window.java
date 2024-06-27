@@ -16,6 +16,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     Scanner input = new Scanner(System.in);
     Images img = new Images(); // imports images from other class
     Game game = new Game(); // imports data from game region
+    int tutorial = 0;
+    JLabel tutorialContent = new JLabel();
 
     // chat window variables
     JLabel textUpdateOne = new JLabel("FILLER TEXT NUMBER ONE NO ONE WILL EVER SEE THIS XDD");
@@ -68,6 +70,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JMenu system = new JMenu("System");
     JMenu difficulty = new JMenu("Difficulty");
     JMenu battleLog = new JMenu("Battle Log");
+    JMenu tutorialMenu = new JMenu("Instructions");
+    JMenuItem openTutorial = new JMenuItem("Open Tutorial");
     JMenuItem goBackItem = new JMenuItem("Go Back");
     JMenuItem quitGame = new JMenuItem("Quit Game");
     JMenuItem easyDif = new JMenuItem("Easy");
@@ -104,6 +108,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         setImages();
         setMenu();
         // adding panel regions to the jframe
+        this.setIconImage(img.LOGO.getImage());
         this.add(gameWindow, BorderLayout.CENTER);
         this.add(enemyWindow, BorderLayout.LINE_START);
         this.add(allyWindow, BorderLayout.LINE_END);
@@ -137,7 +142,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         gameWindow.setPreferredSize(new Dimension(730, 470));
         allyWindow.setPreferredSize(new Dimension(300, 470));
         enemyWindow.setPreferredSize(new Dimension(250, 470));
-        
         
         gameWindowDead.setBounds(0,-5,730,480);
         gameWindowStats.setBounds(0,-5,730,480);
@@ -175,12 +179,12 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         initialize();
     }
     
-    ActionListener taskPerformer = new ActionListener() {
-    public void actionPerformed(ActionEvent evt) {
+    ActionListener advanceTurn = new ActionListener() { // only code taken from the internet. 
+    public void actionPerformed(ActionEvent evt) { // imma be honest, i was never figuring this out on my own
         game.goNext();
         updateUI();
         }
-    };    
+    };
     
     public void clearAffinity(){
         img.enemyOneAffinity.setIcon(null);
@@ -208,25 +212,11 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         displayStatus(game.target, game.status);
         game.checkInjured();
         
-        
-        Timer timer = new Timer(3000, taskPerformer);
+        Timer timer = new Timer(3000, advanceTurn); // this is the only code i've taken from the internet, imma be honest here.
         timer.setRepeats(false);
         
         if (game.turn == 1){
-            switch (game.currentCharacter){
-                case 0:
-                    timer.start();
-                    break;
-                case 1:
-                    timer.start();
-                    break;
-                case 2:
-                    timer.start();
-                    break;
-                case 3:
-                    timer.start();
-                    break;
-            }
+            timer.start();
         }
         
         // UPDATE CURRENT MOVE TEXT
@@ -300,6 +290,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 img.turnIndicatorFour.setIcon(img.youWinFour);
                 break;
         }
+        displayWarnings(game.warning);
         
         //UPDATE ACTION COMMANDS FOR INTERACTABLE ICONS
         allyOneButton.setActionCommand("ameNoUzume");
@@ -802,6 +793,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         this.addKeyListener(this);
         allyOneButton.addActionListener(this);
         allyTwoButton.addActionListener(this);
+
         allyThreeButton.addActionListener(this);
         allyFourButton.addActionListener(this);
         enemyOneButton.addActionListener(this);
@@ -823,6 +815,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         easyDif.addActionListener(this);
         mediumDif.addActionListener(this);
         hardDif.addActionListener(this);
+        openTutorial.addActionListener(this);
 
         gameWindow.setVisible(true);
         this.pack();
@@ -996,10 +989,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 switch (game.typeOfMove){
                     case 2: // helaing
                         if (game.hpAlly[0] == game.hpMaxAlly[0]){
-                            System.out.println("You cannot heal this character, as they are already on full hp");
+                            game.warning = 1;
                             updateUI();
                         } else if (game.allyDead[0] == 1) {
-                            System.out.println("You cannot heal this character, as they are dead");
+                            game.warning = 1;
                         } else {
                             game.healing(0);
                             updateUI();
@@ -1018,7 +1011,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             game.revive(0);
                             updateUI();
                         } else {
-                            System.out.println("You cannot revive this character, as they are not dead");
+                            game.warning = 7;
                             updateUI();
                         }
                         break;
@@ -1028,10 +1021,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 switch (game.typeOfMove){
                     case 2: // healing
                         if (game.hpAlly[1] == game.hpMaxAlly[1]){
-                            System.out.println("You cannot heal this character, as they are already on full hp");
+                            game.warning = 1;
                             updateUI();
                         } else if (game.allyDead[1] == 1) {
-                            System.out.println("You cannot heal this character, as they are dead");
+                            game.warning = 1;
                         } else  {
                             game.healing(1);
                             updateUI();
@@ -1050,7 +1043,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             game.revive(1);
                             updateUI();
                         } else {
-                            System.out.println("You cannot revive this character, as they are not dead");
+                            game.warning = 2;
                             updateUI();
                         }
                         break;
@@ -1060,10 +1053,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 switch (game.typeOfMove){
                     case 2: // healing
                         if (game.hpAlly[2] == game.hpMaxAlly[2]){
-                            System.out.println("You cannot heal this character, as they are already on full hp");
+                            game.warning = 1;
                             updateUI();
                         } else if (game.allyDead[2] == 1) {
-                            System.out.println("You cannot heal this character, as they are dead");
+                            game.warning = 1;
                         } else  {
                             game.healing(2);
                             updateUI();
@@ -1082,7 +1075,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             game.revive(2);
                             updateUI();
                         } else {
-                            System.out.println("You cannot revive this character, as they are not dead");
+                            game.warning = 2;
                             updateUI();
                         }
                         break;
@@ -1092,10 +1085,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 switch (game.typeOfMove){
                     case 2: // healing
                         if (game.hpAlly[3] == game.hpMaxAlly[3]){
-                            System.out.println("You cannot heal this character, as they are already on full hp");
+                            game.warning = 1;
                             updateUI();
                         } else if (game.allyDead[3] == 1) {
-                            System.out.println("You cannot heal this character, as they are dead");
+                            game.warning = 1;
                         } else  {
                             game.healing(3);
                             updateUI();
@@ -1114,7 +1107,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             game.revive(3);
                             updateUI();
                         } else {
-                            System.out.println("You cannot revive this character, as they are not dead");
+                            game.warning = 2;
                             updateUI();
                         }
                         break; 
@@ -1158,6 +1151,26 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 break;
             case "Display Battle Log":
                 createBattleLog();
+                break;
+            case "Open Tutorial":
+                createTutorial();
+                break;
+                
+            case "tutorialLeft":
+                if (tutorial == 0){
+                    tutorial = 0;
+                } else {
+                    tutorial--;
+                }
+                updateTutorial();
+                break;
+            case "tutorialRight":
+                if (tutorial == 19){
+                    tutorial = 19;
+                } else {
+                    tutorial++;
+                }
+                updateTutorial();
                 break;
                 
             // createStatsMenu("charName", fire, water, air, earth, sun, moon, phys);
@@ -1476,6 +1489,98 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         box.toFront();
         box.setVisible(true);
     }
+    
+    public void createTutorial(){
+        JDialog box = new JDialog(this);
+        box.setTitle("Instructions");
+        tutorial = 0;
+        
+        JButton tutorialPrev = new JButton(img.leftArrow);
+        JButton tutorialNext = new JButton(img.rightArrow);
+        tutorialPrev.setActionCommand("tutorialLeft");
+        tutorialNext.setActionCommand("tutorialRight");
+        updateTutorial();
+        
+        tutorialPrev.setOpaque(false);
+        tutorialPrev.setContentAreaFilled(false);
+        tutorialPrev.setBorderPainted(false);
+        tutorialNext.setOpaque(false);
+        tutorialNext.setContentAreaFilled(false);
+        tutorialNext.setBorderPainted(false);
+        
+        box.add(tutorialPrev, BorderLayout.LINE_START);
+        box.add(tutorialContent, BorderLayout.CENTER);
+        box.add(tutorialNext, BorderLayout.LINE_END);
+        
+        box.setBounds(400,200, 850, 400);
+        box.toFront();
+        box.setVisible(true);
+    }
+    
+    void updateTutorial(){
+        switch (tutorial){
+            case 0:
+                tutorialContent.setIcon(img.tutorial1);
+                break;
+            case 1:
+                tutorialContent.setIcon(img.tutorial2);
+                break;
+            case 2:
+                tutorialContent.setIcon(img.tutorial3);
+                break;
+            case 3:
+                tutorialContent.setIcon(img.tutorial4);
+                break;
+            case 4:
+                tutorialContent.setIcon(img.tutorial5);
+                break;
+            case 5:
+                tutorialContent.setIcon(img.tutorial6);
+                break;
+            case 6:
+                tutorialContent.setIcon(img.tutorial7);
+                break;
+            case 7:
+                tutorialContent.setIcon(img.tutorial8);
+                break;
+            case 8:
+                tutorialContent.setIcon(img.tutorial9);
+                break;
+            case 9:
+                tutorialContent.setIcon(img.tutorial10);
+                break;
+            case 10:
+                tutorialContent.setIcon(img.tutorial11);
+                break;
+            case 11:
+                tutorialContent.setIcon(img.tutorial12);
+                break;
+            case 12:
+                tutorialContent.setIcon(img.tutorial13);
+                break;
+            case 13:
+                tutorialContent.setIcon(img.tutorial14);
+                break;
+            case 14:
+                tutorialContent.setIcon(img.tutorial15);
+                break;
+            case 15:
+                tutorialContent.setIcon(img.tutorial16);
+                break;
+            case 16:
+                tutorialContent.setIcon(img.tutorial17);
+                break;
+            case 17:
+                tutorialContent.setIcon(img.tutorial18);
+                break;
+            case 18:
+                tutorialContent.setIcon(img.tutorial19);
+                break;
+            case 19:
+                tutorialContent.setIcon(img.tutorial20);
+                break;
+        }
+    }
 
     public void keyReleased(KeyEvent e){}
 
@@ -1516,6 +1621,66 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     public void mouseReleased(MouseEvent e){}
 
     public void mouseClicked(MouseEvent e){}
+    
+    public void displayWarnings(int warning){
+        System.out.println("problem, warning: " + warning);
+        img.turnIndicatorOne.setIcon(img.warningLeft);
+        img.turnIndicatorFour.setIcon(img.warningRight);
+        switch (warning){
+            case 420:
+                switch (game.turn){
+                    case 0: // allies
+                        img.turnIndicatorOne.setIcon(img.playerTurnOne);
+                        img.turnIndicatorTwo.setIcon(img.playerTurnTwo);
+                        img.turnIndicatorThree.setIcon(img.playerTurnThree);
+                        img.turnIndicatorFour.setIcon(img.playerTurnFour);
+                        break;
+                    case 1: // enemies
+                        img.turnIndicatorOne.setIcon(img.enemyTurnOne);
+                        img.turnIndicatorTwo.setIcon(img.enemyTurnTwo);
+                        img.turnIndicatorThree.setIcon(img.enemyTurnThree);
+                        img.turnIndicatorFour.setIcon(img.enemyTurnFour);
+                        break;
+                }
+                break;
+            case 0: // affinities already revealed
+                img.turnIndicatorTwo.setIcon(img.affinitiesRevealed1);
+                img.turnIndicatorThree.setIcon(img.affinitiesRevealed2);
+                break;
+            case 1: // cannot heal ally is full hp
+                img.turnIndicatorTwo.setIcon(img.fullHP1);
+                img.turnIndicatorThree.setIcon(img.fullHP2);
+                break;
+            case 2: // cannot revive, ally is alive
+                img.turnIndicatorTwo.setIcon(img.isAlive1);
+                img.turnIndicatorThree.setIcon(img.isAlive2);
+                break;
+            case 3: // cannot target, enemy is dead
+                img.turnIndicatorTwo.setIcon(img.isDead1);
+                img.turnIndicatorThree.setIcon(img.isDead2);
+                break;
+            case 4: // ally already has max sp
+                img.turnIndicatorTwo.setIcon(img.maxSP1);
+                img.turnIndicatorThree.setIcon(img.maxSP2);
+                break;
+            case 5: // not enough hp
+                img.turnIndicatorTwo.setIcon(img.noHP1);
+                img.turnIndicatorThree.setIcon(img.noHP2);
+                break;
+            case 6: // no one is injured cannot heal
+                img.turnIndicatorTwo.setIcon(img.noInjured1);
+                img.turnIndicatorThree.setIcon(img.noInjured2);
+                break;
+            case 7: // no one is dead cannot revive
+                img.turnIndicatorTwo.setIcon(img.noOneDead1);
+                img.turnIndicatorThree.setIcon(img.noOneDead2);
+                break;
+            case 8: // not enough sp
+                img.turnIndicatorTwo.setIcon(img.noSP1);
+                img.turnIndicatorThree.setIcon(img.noSP2);
+                break;
+        }
+    }
     
     public void displayStatus(int target, int status){ // 0 = weak, 1 = resist, 2 = null
         if (!game.targetAll){ // if not targetting all, clear before 
@@ -1742,6 +1907,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         menuBar.add(system);
         menuBar.add(difficulty);
         menuBar.add(battleLog);
+        menuBar.add(tutorialMenu);
 
         system.add(goBackItem);
         system.add(quitGame);
@@ -1749,6 +1915,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         difficulty.add(easyDif);
         difficulty.add(mediumDif);
         difficulty.add(hardDif);
+        
+        tutorialMenu.add(openTutorial);
 
         battleLog.add(displayBattleLog);
     }
