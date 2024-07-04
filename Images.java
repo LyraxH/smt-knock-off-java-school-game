@@ -33,8 +33,8 @@ public class Images
     JLabel blaze = new JLabel(blazeIMG);
     
     // enemies
-    ImageIcon virtueIMG = new ImageIcon("sprites/virtue.png");
-    ImageIcon eerieIMG = new ImageIcon("sprites/.png");
+    ImageIcon virtueIMG = new ImageIcon("sprites/virtue1.png");
+    ImageIcon eerieIMG = new ImageIcon("sprites/eerie.png");
     ImageIcon soulIMG = new ImageIcon("sprites/soul.png");
     ImageIcon reignIMG = new ImageIcon("sprites/reign.png");
     // turning enemies into jlabels
@@ -53,7 +53,7 @@ public class Images
     ImageIcon dawnSelected = new ImageIcon("sprites/dawnSelected.png");
     ImageIcon sentinelSelected = new ImageIcon("sprites/sentinelSelected.png");
     ImageIcon blazeSelected = new ImageIcon("sprites/blazeSelected.png");
-    ImageIcon virtueSelected = new ImageIcon("sprites/virtueSelected.png");
+    ImageIcon virtueSelected = new ImageIcon("sprites/virtueSelected1.png");
     ImageIcon eerieSelected = new ImageIcon("sprites/eerieSelected.png");
     ImageIcon soulSelected = new ImageIcon("sprites/soulSelected.png");
     ImageIcon reignSelected = new ImageIcon("sprites/reignSelected.png");

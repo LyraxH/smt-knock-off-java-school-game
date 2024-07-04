@@ -252,22 +252,22 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case 1:
                 switch (game.currentCharacter){
                     case 0:
-                        currentMoveText.setText("virtue");
+                        currentMoveText.setText("Virtue");
                         addAndRemove();
                         enemyOneSprite.setIcon(img.virtueSelected);
                         break;
                     case 1:
-                        currentMoveText.setText("Jack Frost");
+                        currentMoveText.setText("Eerie");
                         addAndRemove();
                         enemyTwoSprite.setIcon(img.eerieSelected);
                         break;
                     case 2:
-                        currentMoveText.setText("soul");
+                        currentMoveText.setText("Soul");
                         addAndRemove();
                         enemyThreeSprite.setIcon(img.soulSelected);
                         break;
                     case 3:
-                        currentMoveText.setText("reign");
+                        currentMoveText.setText("Reign");
                         addAndRemove();
                         enemyFourSprite.setIcon(img.reignSelected);
                         break;
@@ -276,18 +276,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 img.turnIndicatorTwo.setIcon(img.enemyTurnTwo);
                 img.turnIndicatorThree.setIcon(img.enemyTurnThree);
                 img.turnIndicatorFour.setIcon(img.enemyTurnFour);
-                break;
-            case 2:
-                img.turnIndicatorOne.setIcon(img.youLoseOne);
-                img.turnIndicatorTwo.setIcon(img.youLoseTwo);
-                img.turnIndicatorThree.setIcon(img.youLoseThree);
-                img.turnIndicatorFour.setIcon(img.youLoseFour);
-                break;
-            case 3:
-                img.turnIndicatorOne.setIcon(img.youWinOne);
-                img.turnIndicatorTwo.setIcon(img.youWinTwo);
-                img.turnIndicatorThree.setIcon(img.youWinThree);
-                img.turnIndicatorFour.setIcon(img.youWinFour);
                 break;
         }
         displayWarnings(game.warning);
@@ -1639,6 +1627,18 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         img.turnIndicatorTwo.setIcon(img.enemyTurnTwo);
                         img.turnIndicatorThree.setIcon(img.enemyTurnThree);
                         img.turnIndicatorFour.setIcon(img.enemyTurnFour);
+                        break;
+                    case 2:
+                        img.turnIndicatorOne.setIcon(img.youLoseOne);
+                        img.turnIndicatorTwo.setIcon(img.youLoseTwo);
+                        img.turnIndicatorThree.setIcon(img.youLoseThree);
+                        img.turnIndicatorFour.setIcon(img.youLoseFour);
+                        break;
+                    case 3:
+                        img.turnIndicatorOne.setIcon(img.youWinOne);
+                        img.turnIndicatorTwo.setIcon(img.youWinTwo);
+                        img.turnIndicatorThree.setIcon(img.youWinThree);
+                        img.turnIndicatorFour.setIcon(img.youWinFour);
                         break;
                 }
                 break;
