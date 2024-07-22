@@ -1237,6 +1237,7 @@ public class Game
     }
     
     public void goNext(){ // the script that decides whos turn is next, and basically advances the game
+        prevPage = 0;
         warning = 420;
         switch (turn){
             case 0: // if allies turn

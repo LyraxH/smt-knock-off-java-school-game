@@ -322,4 +322,16 @@ public class Images
     ImageIcon unAllyTwo = new ImageIcon("buttons/allyTwoUn.png");
     ImageIcon unAllyThree = new ImageIcon("buttons/allyThreeUn.png");
     ImageIcon unAllyFour = new ImageIcon("buttons/allyFourUn.png");
+    
+    // other, lmao
+    ImageIcon back = new ImageIcon("buttons/backSelected.png");
+    ImageIcon unBack = new ImageIcon("buttons/back.png");
+    ImageIcon currentAegis = new ImageIcon("buttons/currentAegis.png");
+    ImageIcon currentBlaze = new ImageIcon("buttons/currentBlaze.png");
+    ImageIcon currentDawn = new ImageIcon("buttons/currentDawn.png");
+    ImageIcon currentEerie = new ImageIcon("buttons/currentEerie.png");
+    ImageIcon currentReign = new ImageIcon("buttons/currentReign.png");
+    ImageIcon currentSentinel = new ImageIcon("buttons/currentSentinel.png");
+    ImageIcon currentSoul = new ImageIcon("buttons/currentSoul.png");
+    ImageIcon currentVirtue = new ImageIcon("buttons/currentVirtue.png");
 }
