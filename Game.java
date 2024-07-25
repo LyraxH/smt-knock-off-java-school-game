@@ -214,6 +214,7 @@ public class Game
                         typeOfMove = 0;
                         prevPage = 0;
                         page = 1;
+                        selected = 1;
                         break;
                     case 1: // guard
                         guard(currentCharacter);
@@ -715,6 +716,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -724,6 +726,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 5; // multi target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -734,6 +737,7 @@ public class Game
                                 typeOfMove = 2;
                                 prevPage = 2;
                                 page = 4; // single target ally select
+                                selected = 1;
                             } else {
                                 warning = 8;
                             }
@@ -747,6 +751,7 @@ public class Game
                                 typeOfMove = 7; // type of move 
                                 prevPage = 2;
                                 page = 4; // single target ally select
+                                selected = 1;
                             } else {
                                 warning = 8;
                             }
@@ -763,6 +768,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -772,6 +778,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 5; // multi target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -781,6 +788,7 @@ public class Game
                             typeOfMove = 0;
                             prevPage = 2;
                             page = 1; // single target enemy select
+                            selected = 1;
                         } else {
                             warning = 5;
                         }
@@ -790,6 +798,7 @@ public class Game
                             typeOfMove = 5; // set type move attack debuff
                             prevPage = 2;
                             page = 1; // set page enemy single target
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -803,6 +812,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -812,6 +822,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 5; // multi target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -821,6 +832,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -830,6 +842,7 @@ public class Game
                             typeOfMove = 4;
                             prevPage = 2;
                             page = 4; // single target
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -843,6 +856,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 1; // single target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -852,6 +866,7 @@ public class Game
                             typeOfMove = 1;
                             prevPage = 2;
                             page = 5; // multi target enemy select
+                            selected = 1;
                         } else {
                             warning = 8;
                         }
@@ -870,6 +885,7 @@ public class Game
                             typeOfMove = 3;
                             prevPage = 2;
                             page = 4; // single target
+                            selected = 1;
                         } else {
                             warning = 8;
                         }

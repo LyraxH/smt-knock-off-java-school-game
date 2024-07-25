@@ -892,6 +892,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         moveButtonFour.addMouseListener(this);
 
         backButton.addActionListener(this);
+        backButton.addMouseListener(this);
         goBackItem.addActionListener(this);
         quitGame.addActionListener(this);
         displayBattleLog.addActionListener(this);
@@ -927,8 +928,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 updateUI();
                 break;
             case "back":
-                goBack();
-                updateUI();
+                if (game.turn == 0 && game.page != 0){
+                    goBack();
+                    updateUI();
+                }
                 break;
                 
             // magic button clicks
@@ -1362,7 +1365,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         break;
                 }
                 break;
-            case 1,2,3,4,5,6: // if not main page
+            case 1,2,3,4,6: // if not main page
                 switch (keyCode){
                     case 37: // left arrow
                         if (game.selected == 0){
@@ -1397,6 +1400,38 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                                     break;
                                 case 4:
                                     moveButtonFour.doClick();
+                                    break;
+                            }
+                        }
+                        break;
+                }
+                break;
+                case 5: // if target all
+                switch (keyCode){
+                    case 37: // left arrow
+                        if (game.selected == 0){
+                            game.selected = 0;
+                        } else {
+                            game.selected--;
+                        }
+                        updateUI();
+                        break;
+                    case 39: // right arrow in main page
+                        if (game.selected == 1){
+                            game.selected = 1;
+                        } else {
+                            game.selected++;
+                        }
+                        updateUI();
+                        break;
+                    case 90: // if z key pressed
+                        if (game.turn == 0){
+                            switch (game.selected){
+                                case 0:
+                                    goBack();
+                                    break;
+                                case 1:
+                                    moveButtonOne.doClick();
                                     break;
                             }
                         }
@@ -1628,6 +1663,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         
         JButton tutorialPrev = new JButton(img.leftArrow);
         JButton tutorialNext = new JButton(img.rightArrow);
+        tutorialPrev.addActionListener(this);
+        tutorialNext.addActionListener(this);
         tutorialPrev.setActionCommand("tutorialLeft");
         tutorialNext.setActionCommand("tutorialRight");
         updateTutorial();
@@ -1730,7 +1767,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 game.selected = 3;
             }
         } else {
-            System.out.println(hover);
             if (hover > 267 && hover < 518){ //button one
                 game.selected = 1;
             } else if (hover > 519 && hover < 774) {// button two
@@ -1739,7 +1775,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 game.selected = 3;
             } else if (hover > 1031 && hover < 1285){ // button 4
                 game.selected = 4;
-            } else if (hover < 263) { // back button on pages that can go back 
+            } else if (hover < 257) { // back button on pages that can go back
                 game.selected = 0;
             }
         }
