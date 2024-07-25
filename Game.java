@@ -266,7 +266,7 @@ public class Game
                             }
                         } else { // if dead skip turn
                             goNext();
-                            System.out.println("dead");
+                            //System.out.println("dead");
                         }
                         break;
                     case 1:
@@ -304,7 +304,7 @@ public class Game
                             }
                         } else { // if dead skip turn
                             goNext();
-                            System.out.println("dead");
+                            //System.out.println("dead");
                         }
                         break;
                     case 2:
@@ -342,7 +342,7 @@ public class Game
                             }
                         } else {
                             goNext();
-                            System.out.println("dead");
+                            //System.out.println("dead");
                         }
                         break;
                     case 3:
@@ -380,7 +380,7 @@ public class Game
                             }
                         } else {
                             goNext();
-                            System.out.println("dead");
+                            //System.out.println("dead");
                         }
                         break;
                 }
@@ -423,7 +423,7 @@ public class Game
                     if (hpAlly[decision] == 0){ // if ally is dead
                         can = false; // cannot attack
                         decision = rng.nextInt(4); // try again
-                        System.out.println("tried to attack dead");
+                        //System.out.println("tried to attack dead");
                     } else { // else
                         can = true; // can attack
                     }
@@ -481,7 +481,7 @@ public class Game
                     if (hpAlly[decision] == 0){ // if ally is dead
                         can = false; // cannot attack
                         decision = rng.nextInt(4); // try again
-                        System.out.println("tried to attack dead");
+                        //System.out.println("tried to attack dead");
                     } else { // else
                         can = true; // can attack
                     }
@@ -1012,7 +1012,6 @@ public class Game
             if (hpEnemy[3] >= 1){
                 calculateDamage(3, "Reign", affinityString, damage, affinityInt);
             }
-            targetAll = true;
             spAlly[currentCharacter] -= 21;
         } else {
             textHistory.add(who + " uses " + what + " on " + target);
@@ -1254,6 +1253,7 @@ public class Game
     
     public void goNext(){ // the script that decides whos turn is next, and basically advances the game
         prevPage = 0;
+        selected = 0;
         warning = 420;
         switch (turn){
             case 0: // if allies turn
@@ -1268,7 +1268,7 @@ public class Game
                                         if (enemyDead[1] == 1){ // if second ally dead
                                             if (enemyDead[2] == 1){ // if third ally dead
                                                 if (enemyDead[3] == 1){ // if all allies dead
-                                                    System.out.println("you fuckin won bro");
+                                                    //System.out.println("you fuckin won bro");
                                                 } else { // if fourth enemy not dead any everyone else is
                                                     currentCharacter = 3;
                                                 }
@@ -1303,7 +1303,7 @@ public class Game
                                     if (enemyDead[1] == 1){ // if second ally dead
                                         if (enemyDead[2] == 1){ // if third ally dead
                                             if (enemyDead[3] == 1){ // if all allies dead
-                                                System.out.println("you fuckin won bro");
+                                                //System.out.println("you fuckin won bro");
                                             } else { // if fourth enemy not dead any everyone else is
                                                 currentCharacter = 3;
                                             }
@@ -1334,7 +1334,7 @@ public class Game
                                 if (enemyDead[1] == 1){ // if second ally dead
                                     if (enemyDead[2] == 1){ // if third ally dead
                                         if (enemyDead[3] == 1){ // if all allies dead
-                                            System.out.println("you fuckin won bro");
+                                            //System.out.println("you fuckin won bro");
                                         } else { // if fourth enemy not dead any everyone else is
                                             currentCharacter = 3;
                                         }
@@ -1361,7 +1361,7 @@ public class Game
                             if (enemyDead[1] == 1){ // if second ally dead
                                 if (enemyDead[2] == 1){ // if third ally dead
                                     if (enemyDead[3] == 1){ // if all allies dead
-                                        System.out.println("you fuckin won bro");
+                                        //System.out.println("you fuckin won bro");
                                     } else { // if fourth enemy not dead any everyone else is
                                         currentCharacter = 3;
                                     }
@@ -1393,7 +1393,7 @@ public class Game
                                         if (allyDead[1] == 1){ // if second ally dead
                                             if (allyDead[2] == 1){ // if third ally dead
                                                 if (allyDead[3] == 1){ // if all allies dead
-                                                    System.out.println("you fuckin dead bro"); // lose the game
+                                                    //System.out.println("you fuckin dead bro"); // lose the game
                                                 } else { // if fourth ally not dead and everyone else is
                                                     currentCharacter = 3; // start with fourth character
                                                 }
@@ -1429,7 +1429,7 @@ public class Game
                                     if (allyDead[1] == 1){ // if second ally dead
                                         if (allyDead[2] == 1){ // if third ally dead
                                             if (allyDead[3] == 1){ // if all allies dead
-                                                System.out.println("you fuckin dead bro"); // lose the game
+                                                //System.out.println("you fuckin dead bro"); // lose the game
                                             } else { // if fourth ally not dead and everyone else is
                                                 currentCharacter = 3; // start with fourth character
                                             }
@@ -1461,7 +1461,7 @@ public class Game
                                 if (allyDead[1] == 1){ // if second ally dead
                                     if (allyDead[2] == 1){ // if third ally dead
                                         if (allyDead[3] == 1){ // if all allies dead
-                                            System.out.println("you fuckin dead bro"); // lose the game
+                                            //System.out.println("you fuckin dead bro"); // lose the game
                                         } else { // if fourth ally not dead and everyone else is
                                             currentCharacter = 3; // start with fourth character
                                         }
@@ -1489,7 +1489,7 @@ public class Game
                             if (allyDead[1] == 1){ // if second ally dead
                                 if (allyDead[2] == 1){ // if third ally dead
                                     if (allyDead[3] == 1){ // if all allies dead
-                                        System.out.println("you fuckin dead bro"); // lose the game
+                                        //System.out.println("you fuckin dead bro"); // lose the game
                                     } else { // if fourth ally not dead and everyone else is
                                         currentCharacter = 3; // start with fourth character
                                     }

@@ -1325,7 +1325,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     public void keyPressed(KeyEvent e){
         jRequestFocus();
         int keyCode = e.getKeyCode();
-        //System.out.println(keyCode);
+        //System.out.println(keyCode); // 49 = 1, 50 = 2, 51 = 3, 52 = 4, 53 = 5
         switch (game.page){ // what menu are we in
             case 0: // if main page
                 switch (keyCode){
@@ -1344,6 +1344,26 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             game.selected++;
                         }
                         updateUI();
+                        break;
+                    case 49:
+                        if (game.turn == 0){
+                            moveButtonOne.doClick();
+                        }
+                        break;
+                    case 50:
+                        if (game.turn == 0){
+                            moveButtonTwo.doClick();
+                        }
+                        break;
+                    case 51:
+                        if (game.turn == 0){
+                            moveButtonThree.doClick();
+                        }
+                        break;
+                    case 52:
+                        if (game.turn == 0){
+                            moveButtonFour.doClick();
+                        }
                         break;
                     case 90: // if z key pressed
                         if (game.turn == 0){
@@ -1382,6 +1402,29 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             game.selected++;
                         }
                         updateUI();
+                        break;
+                    case 49:
+                        goBack();
+                        break;
+                    case 50:
+                        if (game.turn == 0){
+                            moveButtonOne.doClick();
+                        }
+                        break;
+                    case 51:
+                        if (game.turn == 0){
+                            moveButtonTwo.doClick();
+                        }
+                        break;
+                    case 52:
+                        if (game.turn == 0){
+                            moveButtonThree.doClick();
+                        }
+                        break;
+                    case 53:
+                        if (game.turn == 0){
+                            moveButtonFour.doClick();
+                        }
                         break;
                     case 90: // if z key pressed
                         if (game.turn == 0){
@@ -1423,6 +1466,14 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                             game.selected++;
                         }
                         updateUI();
+                        break;
+                    case 49:
+                        goBack();
+                        break;
+                    case 50,51,52,53:
+                        if (game.turn == 0){
+                            moveButtonOne.doClick();
+                        }
                         break;
                     case 90: // if z key pressed
                         if (game.turn == 0){
