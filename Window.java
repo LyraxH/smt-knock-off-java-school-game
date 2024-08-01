@@ -218,7 +218,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     public void updateUI(){
         displayStatus(game.target, game.status);
         game.checkInjured();
-        
         Timer timer = new Timer(3000, advanceTurn); // this is the only code i've taken from the internet, imma be honest here.
         timer.setRepeats(false);
         
@@ -337,6 +336,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 moveButtonTwo.setActionCommand("allEnemies");
                 moveButtonThree.setActionCommand("allEnemies");
                 moveButtonFour.setActionCommand("allEnemies");
+                break;
         }
         
         // UPDATE HP AND SP
@@ -363,6 +363,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         //UPDATE SELECTABLE ICONS
         if (game.turn == 0){
             chatWindow.setBackground(Color.green);
+            //backButton.setEnabled(true);
+            backButton.setActionCommand("back");
             moveWindow.add(backButton);
             moveWindow.add(moveButtonOne);
             moveWindow.add(moveButtonTwo);
@@ -698,6 +700,8 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         } else if (game.turn == 1){
             chatWindow.setBackground(Color.red);
             moveWindow.removeAll();
+            //backButton.setEnabled(false);
+            backButton.setActionCommand("DONOTHINGLMAO");
             moveWindow.add(backButton);
             moveWindow.repaint();
             moveWindow.revalidate();
@@ -1358,173 +1362,175 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         jRequestFocus();
         int keyCode = e.getKeyCode();
         //System.out.println(keyCode); // 49 = 1, 50 = 2, 51 = 3, 52 = 4, 53 = 5
-        switch (game.page){ // what menu are we in
-            case 0: // if main page
-                switch (keyCode){
-                    case 37: // left arrow in main page
-                        if (game.selected == 0){
-                            game.selected = 0;
-                        } else {
-                            game.selected--;
-                        }
-                        updateUI();
-                        break;
-                    case 39: // right arrow in main page
-                        if (game.selected == 3){
-                            game.selected = 3;
-                        } else {
-                            game.selected++;
-                        }
-                        updateUI();
-                        break;
-                    case 49:
-                        if (game.turn == 0){
-                            moveButtonOne.doClick();
-                        }
-                        break;
-                    case 50:
-                        if (game.turn == 0){
-                            moveButtonTwo.doClick();
-                        }
-                        break;
-                    case 51:
-                        if (game.turn == 0){
-                            moveButtonThree.doClick();
-                        }
-                        break;
-                    case 52:
-                        if (game.turn == 0){
-                            moveButtonFour.doClick();
-                        }
-                        break;
-                    case 90: // if z key pressed
-                        if (game.turn == 0){
-                            switch (game.selected){
-                                case 0:
-                                    moveButtonOne.doClick();
-                                    break;
-                                case 1:
-                                    moveButtonTwo.doClick();
-                                    break;
-                                case 2:
-                                    moveButtonThree.doClick();
-                                    break;
-                                case 3:
-                                    moveButtonFour.doClick();
-                                    break;
+        if (game.turn == 0){
+            switch (game.page){ // what menu are we in
+                case 0: // if main page
+                    switch (keyCode){
+                        case 37: // left arrow in main page
+                            if (game.selected == 0){
+                                game.selected = 0;
+                            } else {
+                                game.selected--;
                             }
-                        }
-                        break;
-                }
-                break;
-            case 1,2,3,4,6: // if not main page
-                switch (keyCode){
-                    case 37: // left arrow
-                        if (game.selected == 0){
-                            game.selected = 0;
-                        } else {
-                            game.selected--;
-                        }
-                        updateUI();
-                        break;
-                    case 39: // right arrow in main page
-                        if (game.selected == 4){
-                            game.selected = 4;
-                        } else {
-                            game.selected++;
-                        }
-                        updateUI();
-                        break;
-                    case 49:
-                        goBack();
-                        break;
-                    case 50:
-                        if (game.turn == 0){
-                            moveButtonOne.doClick();
-                        }
-                        break;
-                    case 51:
-                        if (game.turn == 0){
-                            moveButtonTwo.doClick();
-                        }
-                        break;
-                    case 52:
-                        if (game.turn == 0){
-                            moveButtonThree.doClick();
-                        }
-                        break;
-                    case 53:
-                        if (game.turn == 0){
-                            moveButtonFour.doClick();
-                        }
-                        break;
-                    case 90: // if z key pressed
-                        if (game.turn == 0){
-                            switch (game.selected){
-                                case 0:
-                                    goBack();
-                                    break;
-                                case 1:
-                                    moveButtonOne.doClick();
-                                    break;
-                                case 2:
-                                    moveButtonTwo.doClick();
-                                    break;
-                                case 3:
-                                    moveButtonThree.doClick();
-                                    break;
-                                case 4:
-                                    moveButtonFour.doClick();
-                                    break;
+                            updateUI();
+                            break;
+                        case 39: // right arrow in main page
+                            if (game.selected == 3){
+                                game.selected = 3;
+                            } else {
+                                game.selected++;
                             }
-                        }
-                        break;
-                }
-                break;
-                case 5: // if target all
-                switch (keyCode){
-                    case 37: // left arrow
-                        if (game.selected == 0){
-                            game.selected = 0;
-                        } else {
-                            game.selected--;
-                        }
-                        updateUI();
-                        break;
-                    case 39: // right arrow in main page
-                        if (game.selected == 1){
-                            game.selected = 1;
-                        } else {
-                            game.selected++;
-                        }
-                        updateUI();
-                        break;
-                    case 49:
-                        goBack();
-                        break;
-                    case 50,51,52,53:
-                        if (game.turn == 0){
-                            moveButtonOne.doClick();
-                        }
-                        break;
-                    case 90: // if z key pressed
-                        if (game.turn == 0){
-                            switch (game.selected){
-                                case 0:
-                                    goBack();
-                                    break;
-                                case 1:
-                                    moveButtonOne.doClick();
-                                    break;
+                            updateUI();
+                            break;
+                        case 49:
+                            if (game.turn == 0){
+                                moveButtonOne.doClick();
                             }
-                        }
-                        break;
-                }
-                break;
-        }
-        
-        if (keyCode == 27){
-            goBack();
+                            break;
+                        case 50:
+                            if (game.turn == 0){
+                                moveButtonTwo.doClick();
+                            }
+                            break;
+                        case 51:
+                            if (game.turn == 0){
+                                moveButtonThree.doClick();
+                            }
+                            break;
+                        case 52:
+                            if (game.turn == 0){
+                                moveButtonFour.doClick();
+                            }
+                            break;
+                        case 90: // if z key pressed
+                            if (game.turn == 0){
+                                switch (game.selected){
+                                    case 0:
+                                        moveButtonOne.doClick();
+                                        break;
+                                    case 1:
+                                        moveButtonTwo.doClick();
+                                        break;
+                                    case 2:
+                                        moveButtonThree.doClick();
+                                        break;
+                                    case 3:
+                                        moveButtonFour.doClick();
+                                        break;
+                                }
+                            }
+                            break;
+                    }
+                    break;
+                case 1,2,3,4,6: // if not main page
+                    switch (keyCode){
+                        case 37: // left arrow
+                            if (game.selected == 0){
+                                game.selected = 0;
+                            } else {
+                                game.selected--;
+                            }
+                            updateUI();
+                            break;
+                        case 39: // right arrow in main page
+                            if (game.selected == 4){
+                                game.selected = 4;
+                            } else {
+                                game.selected++;
+                            }
+                            updateUI();
+                            break;
+                        case 49:
+                            goBack();
+                            break;
+                        case 50:
+                            if (game.turn == 0){
+                                moveButtonOne.doClick();
+                            }
+                            break;
+                        case 51:
+                            if (game.turn == 0){
+                                moveButtonTwo.doClick();
+                            }
+                            break;
+                        case 52:
+                            if (game.turn == 0){
+                                moveButtonThree.doClick();
+                            }
+                            break;
+                        case 53:
+                            if (game.turn == 0){
+                                moveButtonFour.doClick();
+                            }
+                            break;
+                        case 90: // if z key pressed
+                            if (game.turn == 0){
+                                switch (game.selected){
+                                    case 0:
+                                        goBack();
+                                        break;
+                                    case 1:
+                                        moveButtonOne.doClick();
+                                        break;
+                                    case 2:
+                                        moveButtonTwo.doClick();
+                                        break;
+                                    case 3:
+                                        moveButtonThree.doClick();
+                                        break;
+                                    case 4:
+                                        moveButtonFour.doClick();
+                                        break;
+                                }
+                            }
+                            break;
+                    }
+                    break;
+                    case 5: // if target all
+                    switch (keyCode){
+                        case 37: // left arrow
+                            if (game.selected == 0){
+                                game.selected = 0;
+                            } else {
+                                game.selected--;
+                            }
+                            updateUI();
+                            break;
+                        case 39: // right arrow in main page
+                            if (game.selected == 1){
+                                game.selected = 1;
+                            } else {
+                                game.selected++;
+                            }
+                            updateUI();
+                            break;
+                        case 49:
+                            goBack();
+                            break;
+                        case 50,51,52,53:
+                            if (game.turn == 0){
+                                moveButtonOne.doClick();
+                            }
+                            break;
+                        case 90: // if z key pressed
+                            if (game.turn == 0){
+                                switch (game.selected){
+                                    case 0:
+                                        goBack();
+                                        break;
+                                    case 1:
+                                        moveButtonOne.doClick();
+                                        break;
+                                }
+                            }
+                            break;
+                    }
+                    break;
+            }
+            
+            if (keyCode == 27){
+                goBack();
+            }
         }
     }    
     
@@ -1856,7 +1862,9 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                 game.selected = 0;
             }
         }
-        updateUI();
+        if (game.turn == 0){
+            updateUI();
+        }
     }
 
     public void mouseExited(MouseEvent e){}
