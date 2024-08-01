@@ -1,9 +1,16 @@
-
 /**
- * Holds the window settings and stuff
- *
- * @ ts
- * @ 08/04/24 ->
+ * Who:
+ *      ts (Taison Shea, Sheata, whatever else you want to call me)
+ * What:
+ *      The actual window. This takes assets from the images class and chooses where to put them, and what to do with them
+ * When:
+ *      08/04/24 -> 02/08/24
+ * Where:
+ *      Wellington High School Com labs or at my house in Karori
+ * Why:
+ *      Because school wanted a project, and I wanted credits
+ * How:
+ *      With difficulty. Extensive trialling, and lots of testing and rewriting to optimize the best code I can
  */
 import java.awt.*;
 import javax.swing.*;
@@ -909,415 +916,440 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     public void actionPerformed(ActionEvent e){
         String cmd = e.getActionCommand();
         //System.out.println(e);
-        switch (cmd){
-            // move button clicks
-            case "attack":
-                game.move(0); // set page to attack
-                updateUI();
-                break;
-            case "guard":
-                game.move(1); // do guard
-                updateUI();
-                break;
-            case "magic":
-                game.move(2); // set page to magic
-                updateUI();
-                break;
-            case "item":
-                game.move(3); // set page to item
-                updateUI();
-                break;
-            case "back":
-                if (game.turn == 0 && game.page != 0){
+        if (game.turn != 2 || game.turn != 3){
+            switch (cmd){
+                // move button clicks
+                case "attack":
+                    game.move(0); // set page to attack
+                    updateUI();
+                    break;
+                case "guard":
+                    game.move(1); // do guard
+                    updateUI();
+                    break;
+                case "magic":
+                    game.move(2); // set page to magic
+                    updateUI();
+                    break;
+                case "item":
+                    game.move(3); // set page to item
+                    updateUI();
+                    break;
+                case "back":
+                    if (game.turn == 0 && game.page != 0){
+                        goBack();
+                        updateUI();
+                    }
+                    break;
+                    
+                // magic button clicks
+                case "magicOne":
+                    game.magicMoveSelect(0); // magic move one (usually single target magic damage)
+                    updateUI();
+                    break;
+                case "magicTwo":
+                    game.magicMoveSelect(1); // magic move two (usually multi target magic damage)
+                    updateUI();
+                    break;
+                case "magicThree":
+                    game.magicMoveSelect(2); // magic move three (probably going to be single target physical damage or single target heal)
+                    updateUI();
+                    break;
+                case "magicFour":
+                    game.magicMoveSelect(3); // magic move three (probably going to be multi target heal, revive, or something else special)
+                    updateUI();
+                    break;   
+                    
+                // items button clicks
+                case "itemOne": // oracle lens
+                    game.typeOfMove = 6; // set type of move to item (6 on enemy single select will mean sweeper)
+                    game.prevPage = 3;
+                    game.page = 1; // set page to select enemy
+                    updateUI();
+                    break;
+                case "itemTwo": // everfrost
+                    game.typeOfMove = 6; // set type of move to item (item on ally single select will mean everfrost)
+                    game.prevPage = 3;
+                    game.page = 4; // set page to select ally
+                    updateUI();
+                    break;
+                case "itemThree": // lightning crash
+                    game.typeOfMove = 7; // set type of move to item (7 on enemy single select will mean shock)
+                    game.prevPage = 3;
+                    game.page = 1; // set page to select ally
+                    updateUI();
+                    break;
+                case "itemFour":
+                    game.cleanse();
+                    updateUI();
+                    break;
+                    
+                // single target enemy clicks
+                case "enemyOne":
+                    switch (game.typeOfMove){
+                        case 0: // physical
+                            game.physical(0);
+                            updateUI();
+                            break;
+                        case 1: // magic
+                            game.magic(0);
+                            updateUI();
+                            break;
+                        case 5: // atk down
+                            game.debuff(0);
+                            updateUI();
+                            break;
+                        case 6: // sweeper lens
+                            game.sweeper(0);
+                            updateUI();
+                            break;
+                        case 7: // lightning crash
+                            game.lightningCrash(0);
+                            updateUI();
+                            break;
+                    }
+                    break;
+                case "enemyTwo":
+                    switch (game.typeOfMove){
+                        case 0: // physical
+                            game.physical(1);
+                            updateUI();
+                            break;
+                        case 1: // magic
+                            game.magic(1);
+                            updateUI();
+                            break;
+                        case 5: // atk down
+                            game.debuff(1);
+                            updateUI();
+                            break;
+                        case 6: // sweeper lens
+                            game.sweeper(1);
+                            updateUI();
+                            break;
+                        case 7: // lightning crash
+                            game.lightningCrash(1);
+                            updateUI();
+                            break;
+                    }
+                    break;
+                case "enemyThree":
+                    switch (game.typeOfMove){
+                        case 0: // physical
+                            game.physical(2);
+                            updateUI();
+                            break;
+                        case 1: // magic
+                            game.magic(2);
+                            updateUI();
+                            break;
+                        case 5: // atk down
+                            game.debuff(2);
+                            updateUI();
+                            break;
+                        case 6: // sweeper lens
+                            game.sweeper(2);
+                            updateUI();
+                            break;
+                        case 7: // lightning crash
+                            game.lightningCrash(2);
+                            updateUI();
+                            break;
+                    }
+                    break;
+                case "enemyFour":
+                    switch (game.typeOfMove){
+                        case 0: // physical
+                            game.physical(3);
+                            updateUI();
+                            break;
+                        case 1: // magic
+                            game.magic(3);
+                            updateUI();
+                            break;
+                        case 5: // atk down
+                            game.debuff(3);
+                            updateUI();
+                            break;
+                        case 6: // sweeper lens
+                            game.sweeper(3);
+                            updateUI();
+                            break;
+                        case 7: // lightning crash
+                            game.lightningCrash(3);
+                            updateUI();
+                            break;
+                    }
+                    break;
+                    
+                // single target ally clicks
+                case "allyOne":
+                    switch (game.typeOfMove){
+                        case 2: // helaing
+                            if (game.hpAlly[0] == game.hpMaxAlly[0]){
+                                game.warning = 1;
+                                updateUI();
+                            } else if (game.allyDead[0] == 1) {
+                                game.warning = 1;
+                                updateUI();
+                            } else {
+                                game.healing(0);
+                                updateUI();
+                            }
+                            break;
+                        case 3,4,5: // buffs
+                            if (game.allyDead[0] == 1){
+                                game.warning = 9;
+                                updateUI();
+                            } else {
+                                game.boost(0);
+                                updateUI();
+                            }
+                            break;
+                        case 6: // everfrost
+                            game.everfrost(0);
+                            updateUI();
+                            break;
+                        case 7:
+                            if (game.allyDead[0] == 1){
+                                game.revive(0);
+                                updateUI();
+                            } else {
+                                game.warning = 7;
+                                updateUI();
+                            }
+                            break;
+                    }
+                    break;
+                case "allyTwo":
+                    switch (game.typeOfMove){
+                        case 2: // healing
+                            if (game.hpAlly[1] == game.hpMaxAlly[1]){
+                                game.warning = 1;
+                                updateUI();
+                            } else if (game.allyDead[1] == 1) {
+                                game.warning = 1;
+                                updateUI();
+                            } else  {
+                                game.healing(1);
+                                updateUI();
+                            }
+                            break;
+                        case 3,4,5: // buffs
+                            if (game.allyDead[1] == 1){
+                                game.warning = 9;
+                                updateUI();
+                            } else {
+                                game.boost(1);
+                                updateUI();
+                            }
+                            break; 
+                        case 6: // everfrost
+                            game.everfrost(1);
+                            updateUI();
+                            break; 
+                        case 7:
+                            if (game.allyDead[1] == 1){
+                                game.revive(1);
+                                updateUI();
+                            } else {
+                                game.warning = 2;
+                                updateUI();
+                            }
+                            break;
+                    }
+                    break;
+                case "allyThree":
+                    switch (game.typeOfMove){
+                        case 2: // healing
+                            if (game.hpAlly[2] == game.hpMaxAlly[2]){
+                                game.warning = 1;
+                                updateUI();
+                            } else if (game.allyDead[2] == 1) {
+                                game.warning = 1;
+                                updateUI();
+                            } else  {
+                                game.healing(2);
+                                updateUI();
+                            }
+                            break;
+                        case 3,4,5: // buffs
+                            if (game.allyDead[2] == 1){
+                                game.warning = 9;
+                                updateUI();
+                            } else {
+                                game.boost(2);
+                                updateUI();
+                            }
+                            break;  
+                        case 6: // everfrost
+                            game.everfrost(2);
+                            updateUI();
+                            break;
+                        case 7:
+                            if (game.allyDead[2] == 1){
+                                game.revive(2);
+                                updateUI();
+                            } else {
+                                game.warning = 2;
+                                updateUI();
+                            }
+                            break;
+                    }
+                    break;
+                case "allyFour":
+                    switch (game.typeOfMove){
+                        case 2: // healing
+                            if (game.hpAlly[3] == game.hpMaxAlly[3]){
+                                game.warning = 1;
+                                updateUI();
+                            } else if (game.allyDead[3] == 1) {
+                                game.warning = 1;
+                            } else  {
+                                game.healing(3);
+                                updateUI();
+                            }
+                            break;
+                        case 3,4,5: // buffs
+                            if (game.allyDead[3] == 1){
+                                game.warning = 9;
+                                updateUI();
+                            } else {
+                                game.boost(3);
+                                updateUI();
+                            }
+                            break;   
+                        case 6: // everfrost
+                            game.everfrost(3);
+                            updateUI();
+                            break;    
+                        case 7:
+                            if (game.allyDead[3] == 1){
+                                game.revive(3);
+                                updateUI();
+                            } else {
+                                game.warning = 2;
+                                updateUI();
+                            }
+                            break; 
+                    }
+                    break;
+                    
+                // multi target spells
+                case "allEnemies":
+                    switch (game.typeOfMove){
+                        case 0: // physical
+                            System.out.println("physical hit all  move, which if you get here atm means its broken");
+                            break;
+                        case 1: // magic
+                            game.magic(69);
+                            updateUI();
+                            break;
+                    }
+                    break;
+    
+                // menu bar clicks
+                case "Go Back":
                     goBack();
+                    break;
+                case "Quit Game":
+                    System.exit(0);
+                    break;
+                case "Next Track":
+                    break;
+                case "Previous Track":
+                    break;
+                case "Pause Music":
+                    break;
+                case "Easy":
+                    game.setDifficulty(0);
+                    break;
+                case "Medium":
+                    game.setDifficulty(1);
+                    break;
+                case "Hard":
+                    game.setDifficulty(2);
+                    break;
+                case "Display Battle Log":
+                    createBattleLog();
+                    break;
+                case "Open Tutorial":
+                    createTutorial();
+                    break;
+                    
+                case "tutorialLeft":
+                    if (tutorial == 0){
+                        tutorial = 0;
+                    } else {
+                        tutorial--;
+                    }
+                    updateTutorial();
+                    break;
+                case "tutorialRight":
+                    if (tutorial == 19){
+                        tutorial = 19;
+                    } else {
+                        tutorial++;
+                    }
+                    updateTutorial();
+                    break;
+                    
+                // createStatsMenu("charName", fire, water, air, earth, sun, moon, phys);
+                //                    0 = normal, 1 = weak, 2 = resist, 3 = null, 4 = unknown
+                case "aegis":
+                    createStatsMenu("Aegis", 0, game.allyAffinities[0][0], game.allyAffinities[0][1], game.allyAffinities[0][2], game.allyAffinities[0][3], game.allyAffinities[0][4], game.allyAffinities[0][5], game.allyAffinities[0][6]);
                     updateUI();
-                }
-                break;
-                
-            // magic button clicks
-            case "magicOne":
-                game.magicMoveSelect(0); // magic move one (usually single target magic damage)
-                updateUI();
-                break;
-            case "magicTwo":
-                game.magicMoveSelect(1); // magic move two (usually multi target magic damage)
-                updateUI();
-                break;
-            case "magicThree":
-                game.magicMoveSelect(2); // magic move three (probably going to be single target physical damage or single target heal)
-                updateUI();
-                break;
-            case "magicFour":
-                game.magicMoveSelect(3); // magic move three (probably going to be multi target heal, revive, or something else special)
-                updateUI();
-                break;   
-                
-            // items button clicks
-            case "itemOne": // oracle lens
-                game.typeOfMove = 6; // set type of move to item (6 on enemy single select will mean sweeper)
-                game.prevPage = 3;
-                game.page = 1; // set page to select enemy
-                updateUI();
-                break;
-            case "itemTwo": // everfrost
-                game.typeOfMove = 6; // set type of move to item (item on ally single select will mean everfrost)
-                game.prevPage = 3;
-                game.page = 4; // set page to select ally
-                updateUI();
-                break;
-            case "itemThree": // lightning crash
-                game.typeOfMove = 7; // set type of move to item (7 on enemy single select will mean shock)
-                game.prevPage = 3;
-                game.page = 1; // set page to select ally
-                updateUI();
-                break;
-            case "itemFour":
-                game.cleanse();
-                updateUI();
-                break;
-                
-            // single target enemy clicks
-            case "enemyOne":
-                switch (game.typeOfMove){
-                    case 0: // physical
-                        game.physical(0);
-                        updateUI();
-                        break;
-                    case 1: // magic
-                        game.magic(0);
-                        updateUI();
-                        break;
-                    case 5: // atk down
-                        game.debuff(0);
-                        updateUI();
-                        break;
-                    case 6: // sweeper lens
-                        game.sweeper(0);
-                        updateUI();
-                        break;
-                    case 7: // lightning crash
-                        game.lightningCrash(0);
-                        updateUI();
-                        break;
-                }
-                break;
-            case "enemyTwo":
-                switch (game.typeOfMove){
-                    case 0: // physical
-                        game.physical(1);
-                        updateUI();
-                        break;
-                    case 1: // magic
-                        game.magic(1);
-                        updateUI();
-                        break;
-                    case 5: // atk down
-                        game.debuff(1);
-                        updateUI();
-                        break;
-                    case 6: // sweeper lens
-                        game.sweeper(1);
-                        updateUI();
-                        break;
-                    case 7: // lightning crash
-                        game.lightningCrash(1);
-                        updateUI();
-                        break;
-                }
-                break;
-            case "enemyThree":
-                switch (game.typeOfMove){
-                    case 0: // physical
-                        game.physical(2);
-                        updateUI();
-                        break;
-                    case 1: // magic
-                        game.magic(2);
-                        updateUI();
-                        break;
-                    case 5: // atk down
-                        game.debuff(2);
-                        updateUI();
-                        break;
-                    case 6: // sweeper lens
-                        game.sweeper(2);
-                        updateUI();
-                        break;
-                    case 7: // lightning crash
-                        game.lightningCrash(2);
-                        updateUI();
-                        break;
-                }
-                break;
-            case "enemyFour":
-                switch (game.typeOfMove){
-                    case 0: // physical
-                        game.physical(3);
-                        updateUI();
-                        break;
-                    case 1: // magic
-                        game.magic(3);
-                        updateUI();
-                        break;
-                    case 5: // atk down
-                        game.debuff(3);
-                        updateUI();
-                        break;
-                    case 6: // sweeper lens
-                        game.sweeper(3);
-                        updateUI();
-                        break;
-                    case 7: // lightning crash
-                        game.lightningCrash(3);
-                        updateUI();
-                        break;
-                }
-                break;
-                
-            // single target ally clicks
-            case "allyOne":
-                switch (game.typeOfMove){
-                    case 2: // helaing
-                        if (game.hpAlly[0] == game.hpMaxAlly[0]){
-                            game.warning = 1;
-                            updateUI();
-                        } else if (game.allyDead[0] == 1) {
-                            game.warning = 1;
-                        } else {
-                            game.healing(0);
-                            updateUI();
-                        }
-                        break;
-                    case 3,4,5: // buffs
-                        game.boost(0);
-                        updateUI();
-                        break;
-                    case 6: // everfrost
-                        game.everfrost(0);
-                        updateUI();
-                        break;
-                    case 7:
-                        if (game.allyDead[0] == 1){
-                            game.revive(0);
-                            updateUI();
-                        } else {
-                            game.warning = 7;
-                            updateUI();
-                        }
-                        break;
-                }
-                break;
-            case "allyTwo":
-                switch (game.typeOfMove){
-                    case 2: // healing
-                        if (game.hpAlly[1] == game.hpMaxAlly[1]){
-                            game.warning = 1;
-                            updateUI();
-                        } else if (game.allyDead[1] == 1) {
-                            game.warning = 1;
-                        } else  {
-                            game.healing(1);
-                            updateUI();
-                        }
-                        break;
-                    case 3,4,5: // buffs
-                        game.boost(1);
-                        updateUI();
-                        break; 
-                    case 6: // everfrost
-                        game.everfrost(1);
-                        updateUI();
-                        break; 
-                    case 7:
-                        if (game.allyDead[1] == 1){
-                            game.revive(1);
-                            updateUI();
-                        } else {
-                            game.warning = 2;
-                            updateUI();
-                        }
-                        break;
-                }
-                break;
-            case "allyThree":
-                switch (game.typeOfMove){
-                    case 2: // healing
-                        if (game.hpAlly[2] == game.hpMaxAlly[2]){
-                            game.warning = 1;
-                            updateUI();
-                        } else if (game.allyDead[2] == 1) {
-                            game.warning = 1;
-                        } else  {
-                            game.healing(2);
-                            updateUI();
-                        }
-                        break;
-                    case 3,4,5: // buffs
-                        game.boost(2);
-                        updateUI();
-                        break;  
-                    case 6: // everfrost
-                        game.everfrost(2);
-                        updateUI();
-                        break;
-                    case 7:
-                        if (game.allyDead[2] == 1){
-                            game.revive(2);
-                            updateUI();
-                        } else {
-                            game.warning = 2;
-                            updateUI();
-                        }
-                        break;
-                }
-                break;
-            case "allyFour":
-                switch (game.typeOfMove){
-                    case 2: // healing
-                        if (game.hpAlly[3] == game.hpMaxAlly[3]){
-                            game.warning = 1;
-                            updateUI();
-                        } else if (game.allyDead[3] == 1) {
-                            game.warning = 1;
-                        } else  {
-                            game.healing(3);
-                            updateUI();
-                        }
-                        break;
-                    case 3,4,5: // buffs
-                        game.boost(3);
-                        updateUI();
-                        break;   
-                    case 6: // everfrost
-                        game.everfrost(3);
-                        updateUI();
-                        break;    
-                    case 7:
-                        if (game.allyDead[3] == 1){
-                            game.revive(3);
-                            updateUI();
-                        } else {
-                            game.warning = 2;
-                            updateUI();
-                        }
-                        break; 
-                }
-                break;
-                
-            // multi target spells
-            case "allEnemies":
-                switch (game.typeOfMove){
-                    case 0: // physical
-                        System.out.println("physical hit all  move, which if you get here atm means its broken");
-                        break;
-                    case 1: // magic
-                        game.magic(69);
-                        updateUI();
-                        break;
-                }
-                break;
-
-            // menu bar clicks
-            case "Go Back":
-                goBack();
-                break;
-            case "Quit Game":
-                System.exit(0);
-                break;
-            case "Next Track":
-                break;
-            case "Previous Track":
-                break;
-            case "Pause Music":
-                break;
-            case "Easy":
-                game.setDifficulty(0);
-                break;
-            case "Medium":
-                game.setDifficulty(1);
-                break;
-            case "Hard":
-                game.setDifficulty(2);
-                break;
-            case "Display Battle Log":
-                createBattleLog();
-                break;
-            case "Open Tutorial":
-                createTutorial();
-                break;
-                
-            case "tutorialLeft":
-                if (tutorial == 0){
-                    tutorial = 0;
-                } else {
-                    tutorial--;
-                }
-                updateTutorial();
-                break;
-            case "tutorialRight":
-                if (tutorial == 19){
-                    tutorial = 19;
-                } else {
-                    tutorial++;
-                }
-                updateTutorial();
-                break;
-                
-            // createStatsMenu("charName", fire, water, air, earth, sun, moon, phys);
-            //                    0 = normal, 1 = weak, 2 = resist, 3 = null, 4 = unknown
-            case "aegis":
-                createStatsMenu("Ame-No-Uzume", 0, game.allyAffinities[0][0], game.allyAffinities[0][1], game.allyAffinities[0][2], game.allyAffinities[0][3], game.allyAffinities[0][4], game.allyAffinities[0][5], game.allyAffinities[0][6]);
-                updateUI();
-                break;            
-            case "Dawn":
-                createStatsMenu("Dawn", 1, game.allyAffinities[1][0], game.allyAffinities[1][1], game.allyAffinities[1][2], game.allyAffinities[1][3], game.allyAffinities[1][4], game.allyAffinities[1][5], game.allyAffinities[1][6]);
-                updateUI();
-                break;
-            case "Sentinel":
-                createStatsMenu("Sentinel", 2, game.allyAffinities[2][0], game.allyAffinities[2][1], game.allyAffinities[2][2], game.allyAffinities[2][3], game.allyAffinities[2][4], game.allyAffinities[2][5], game.allyAffinities[2][6]);
-                updateUI();
-                break;
-            case "blaze":
-                createStatsMenu("Blaze", 3, game.allyAffinities[3][0], game.allyAffinities[3][1], game.allyAffinities[3][2], game.allyAffinities[3][3], game.allyAffinities[3][4], game.allyAffinities[3][5], game.allyAffinities[3][6]);
-                updateUI();
-                break;
-                
-            case "virtue":
-                if (game.affinitiesKnown[0] == 1) {
-                    createStatsMenu("virtue", 4, game.enemyAffinities[0][0], game.enemyAffinities[0][1], game.enemyAffinities[0][2], game.enemyAffinities[0][3], game.enemyAffinities[0][4], game.enemyAffinities[0][5], game.enemyAffinities[0][6]);
+                    break;            
+                case "dawn":
+                    createStatsMenu("Dawn", 1, game.allyAffinities[1][0], game.allyAffinities[1][1], game.allyAffinities[1][2], game.allyAffinities[1][3], game.allyAffinities[1][4], game.allyAffinities[1][5], game.allyAffinities[1][6]);
                     updateUI();
-                } else {
-                    createStatsMenu("virtue", 4, 4, 4, 4, 4, 4, 4, 4);
+                    break;
+                case "sentinel":
+                    createStatsMenu("Sentinel", 2, game.allyAffinities[2][0], game.allyAffinities[2][1], game.allyAffinities[2][2], game.allyAffinities[2][3], game.allyAffinities[2][4], game.allyAffinities[2][5], game.allyAffinities[2][6]);
                     updateUI();
-                }
-                break;
-            case "eerie":
-                if (game.affinitiesKnown[1] == 1) {
-                    createStatsMenu("Jack Frost", 5, game.enemyAffinities[1][0], game.enemyAffinities[1][1], game.enemyAffinities[1][2], game.enemyAffinities[1][3], game.enemyAffinities[1][4], game.enemyAffinities[1][5], game.enemyAffinities[1][6]);
+                    break;
+                case "blaze":
+                    createStatsMenu("Blaze", 3, game.allyAffinities[3][0], game.allyAffinities[3][1], game.allyAffinities[3][2], game.allyAffinities[3][3], game.allyAffinities[3][4], game.allyAffinities[3][5], game.allyAffinities[3][6]);
                     updateUI();
-                } else {
-                    createStatsMenu("Jack Frost", 5, 4, 4, 4, 4, 4, 4, 4);
-                    updateUI();
-                }
-                break;
-            case "soul":
-                if (game.affinitiesKnown[2] == 1) {
-                    createStatsMenu("soul", 6, game.enemyAffinities[2][0], game.enemyAffinities[2][1], game.enemyAffinities[2][2], game.enemyAffinities[2][3], game.enemyAffinities[2][4], game.enemyAffinities[2][5], game.enemyAffinities[2][6]);
-                    updateUI();
-                } else {
-                    createStatsMenu("soul", 6, 4, 4, 4, 4, 4, 4, 4);
-                    updateUI();
-                }
-                break;
-            case "reign":
-                if (game.affinitiesKnown[3] == 1) {
-                    createStatsMenu("reign", 7, game.enemyAffinities[3][0], game.enemyAffinities[3][1], game.enemyAffinities[3][2], game.enemyAffinities[3][3], game.enemyAffinities[3][4], game.enemyAffinities[3][5], game.enemyAffinities[3][6]);
-                    updateUI();
-                } else {
-                    createStatsMenu("reign", 7, 4, 4, 4, 4, 4, 4, 4);
-                    updateUI();
-                }
-                break;
+                    break;
+                    
+                case "virtue":
+                    if (game.affinitiesKnown[0] == 1) {
+                        createStatsMenu("Virtue", 4, game.enemyAffinities[0][0], game.enemyAffinities[0][1], game.enemyAffinities[0][2], game.enemyAffinities[0][3], game.enemyAffinities[0][4], game.enemyAffinities[0][5], game.enemyAffinities[0][6]);
+                        updateUI();
+                    } else {
+                        createStatsMenu("Virtue", 4, 4, 4, 4, 4, 4, 4, 4);
+                        updateUI();
+                    }
+                    break;
+                case "eerie":
+                    if (game.affinitiesKnown[1] == 1) {
+                        createStatsMenu("Jack Frost", 5, game.enemyAffinities[1][0], game.enemyAffinities[1][1], game.enemyAffinities[1][2], game.enemyAffinities[1][3], game.enemyAffinities[1][4], game.enemyAffinities[1][5], game.enemyAffinities[1][6]);
+                        updateUI();
+                    } else {
+                        createStatsMenu("Jack Frost", 5, 4, 4, 4, 4, 4, 4, 4);
+                        updateUI();
+                    }
+                    break;
+                case "soul":
+                    if (game.affinitiesKnown[2] == 1) {
+                        createStatsMenu("Soul", 6, game.enemyAffinities[2][0], game.enemyAffinities[2][1], game.enemyAffinities[2][2], game.enemyAffinities[2][3], game.enemyAffinities[2][4], game.enemyAffinities[2][5], game.enemyAffinities[2][6]);
+                        updateUI();
+                    } else {
+                        createStatsMenu("Soul", 6, 4, 4, 4, 4, 4, 4, 4);
+                        updateUI();
+                    }
+                    break;
+                case "reign":
+                    if (game.affinitiesKnown[3] == 1) {
+                        createStatsMenu("Reign", 7, game.enemyAffinities[3][0], game.enemyAffinities[3][1], game.enemyAffinities[3][2], game.enemyAffinities[3][3], game.enemyAffinities[3][4], game.enemyAffinities[3][5], game.enemyAffinities[3][6]);
+                        updateUI();
+                    } else {
+                        createStatsMenu("Reign", 7, 4, 4, 4, 4, 4, 4, 4);
+                        updateUI();
+                    }
+                    break;
+            }
         }
         jRequestFocus();
     }
@@ -1494,13 +1526,6 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         if (keyCode == 27){
             goBack();
         }
-        
-        /*
-        if (keyCode == 84){
-            game.goNext();
-            updateUI();
-        }
-        */
     }    
     
     void goBack(){
@@ -1726,12 +1751,13 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         tutorialNext.setOpaque(false);
         tutorialNext.setContentAreaFilled(false);
         tutorialNext.setBorderPainted(false);
-        
+
         box.add(tutorialPrev, BorderLayout.LINE_START);
         box.add(tutorialContent, BorderLayout.CENTER);
         box.add(tutorialNext, BorderLayout.LINE_END);
         
         box.setBounds(400,200, 850, 400);
+        box.setResizable(false);
         box.toFront();
         box.setVisible(true);
     }
@@ -1864,12 +1890,18 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
                         img.turnIndicatorTwo.setIcon(img.youLoseTwo);
                         img.turnIndicatorThree.setIcon(img.youLoseThree);
                         img.turnIndicatorFour.setIcon(img.youLoseFour);
+                        moveWindow.removeAll();
+                        moveWindow.repaint();
+                        moveWindow.revalidate();
                         break;
                     case 3:
                         img.turnIndicatorOne.setIcon(img.youWinOne);
                         img.turnIndicatorTwo.setIcon(img.youWinTwo);
                         img.turnIndicatorThree.setIcon(img.youWinThree);
                         img.turnIndicatorFour.setIcon(img.youWinFour);
+                        moveWindow.removeAll();
+                        moveWindow.repaint();
+                        moveWindow.revalidate();
                         break;
                 }
                 break;
@@ -1908,6 +1940,10 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
             case 8: // not enough sp
                 img.turnIndicatorTwo.setIcon(img.noSP1);
                 img.turnIndicatorThree.setIcon(img.noSP2);
+                break;
+            case 9: // not enough alive to boost
+                img.turnIndicatorTwo.setIcon(img.noBoost1);
+                img.turnIndicatorThree.setIcon(img.noBoost2);
                 break;
         }
     }

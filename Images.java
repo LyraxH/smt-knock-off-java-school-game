@@ -1,9 +1,18 @@
-
 /**
- * holds / imports all the images for the game
- *
- * @ ts
- * @ 08/04/24 -> 
+ * Who:
+ *      ts (Taison Shea, Sheata, whatever else you want to call me)
+ * What:
+ *      This script holds all the images. While the window will decide what goes where
+ *      this decides and declares what is what
+ * When:
+ *      08/04/24 -> 02/08/24
+ * Where:
+ *      Wellington High School Com labs or at my house in Karori
+ * Why:
+ *      Because school wanted a project, and I wanted credits
+ * How:
+ *      With a bit of ease. It started difficult actually as I struggled with how to declare images and find the difference between iamge icon
+ *      set icon, set label, jlabel and all that, but we got there in the end
  */
 import javax.swing.*;
 import java.awt.*;
@@ -94,6 +103,8 @@ public class Images
     ImageIcon noOneDead2 = new ImageIcon("sprites/warnings/noOneDead2.png");
     ImageIcon noSP1 = new ImageIcon("sprites/warnings/noSP1.png");
     ImageIcon noSP2 = new ImageIcon("sprites/warnings/noSP2.png");
+    ImageIcon noBoost1 = new ImageIcon("sprites/warnings/noBoost1.png");
+    ImageIcon noBoost2 = new ImageIcon("sprites/warnings/noBoost2.png");
     JLabel turnIndicatorOne = new JLabel(playerTurnOne);
     JLabel turnIndicatorTwo = new JLabel(playerTurnTwo);
     JLabel turnIndicatorThree = new JLabel(playerTurnThree);
@@ -232,7 +243,10 @@ public class Images
     ImageIcon tutorial19 = new ImageIcon("tutorial/19difficulty.png");
     ImageIcon tutorial20 = new ImageIcon("tutorial/20battleLog.png");
     
+    
     // move icons
+    // These ability names are all from league of legends, but according to their "legal jibber jabber" document, I am allowed
+    // to use assets of the league IP as long as it is for non commercial use
     // 0 fire // alchemy symbol: fire
     ImageIcon pyroclasm = new ImageIcon("moves/0fire/pyroclasm.png"); // fire to all
     ImageIcon unPyroclasm = new ImageIcon("moves/0fire/pyroclasmUn.png"); // fire to all

@@ -1,15 +1,31 @@
 /**
- * The actual game, window displays what goes on here
- *
- * @ ts
- * @ 11/04/24
+ * Who:
+ *      ts (Taison Shea, Sheata, whatever else you want to call me)
+ * What:
+ *      The actual game, window displays what goes on here, but this is the brains of the operations.
+ *      Window will reference these variables, but game cannot call any window variables or functions
+ * When:
+ *      11/04/24 -> 02/08/24
+ * Where:
+ *      Wellington High School Com labs or at my house in Karori
+ * Why:
+ *      Because school wanted a project, and I wanted credits
+ * How:
+ *      With difficulty. Extensive trialling, and lots of testing and rewriting to optimize the best code I can
  */
 import java.util.*;
+import java.io.File; 
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.IOException;
 public class Game
 {
     Random rng = new Random();
     
     // game variables
+    int score;
+    int highScore;
     int prevPage = 0;
     int page = 0; // what page you are on, e.g: 0 = home, 1 = attack, 2 = magic, 3 = items (guard doesnt have a page)
     int selected = 0; // what option is currently being hovered, 0-3 left to right
@@ -23,7 +39,7 @@ public class Game
     ArrayList<String> textHistory = new ArrayList<String>();
     
     // varialbes for characters
-    int hpMaxAlly[] = new int[]{440,630,540,720};
+    int hpMaxAlly[] = new int[]{480,630,540,720};
     int hpAlly[] = new int[]{hpMaxAlly[0],hpMaxAlly[1],hpMaxAlly[2],hpMaxAlly[3]};
     boolean isAllyInjured = false;
     int allyInjured[] = new int[]{0,0,0,0};
@@ -65,14 +81,13 @@ public class Game
     public void Start(){ // start.. yea,, its the initializing method
         initializeAffinitiesStats();
         /**
-        textHistory.add("Welcome to my shitty SMT knockoff for school");
+        textHistory.add("Welcome to my ty SMT knockoff for school");
         textHistory.add("made by taison");
         textHistory.add("xdd");
         **/
-        textHistory.add("Welcome to Stim Megumi Sensei made by taison s");
-        textHistory.add("If you need direction. Open the tutorial via the 'Instructions' menu above");
-        textHistory.add("Otherwise have fun and good luck!");
-        setDifficulty(1);
+        textHistory.add("Welcome to Stim Megumi Sensei made by taison s. If you need help on where to get started open the tutorial via the 'Instructions' menu above");
+        file("get", 0); // means load the saved difficulty, if nothing is saved default difficulty to medium
+        file("get", 1);
     }
     
     void setStatus(int target1, int status1){ // like i could easily just copy paste this but having it as a function is so much easier
@@ -1179,7 +1194,9 @@ public class Game
     void everfrost(int ally){
         switch (ally){
             case 0:
-                if (spAlly[0] == spMaxAlly[0]){
+                if (allyDead[0] == 1){
+                    warning = 9;
+                } else if (spAlly[0] == spMaxAlly[0]){
                     warning = 4;
                 } else {
                     spAlly[0] += 30;
@@ -1191,7 +1208,9 @@ public class Game
                 }
                 break;
             case 1:
-                if (spAlly[1] == spMaxAlly[1]){
+                if (allyDead[1] == 1){
+                    warning = 9;
+                } else if (spAlly[1] == spMaxAlly[1]){
                     warning = 4;
                 } else {
                     spAlly[1] += 30;
@@ -1203,7 +1222,9 @@ public class Game
                 }
                 break;
             case 2:
-                if (spAlly[2] == spMaxAlly[2]){
+                if (allyDead[2] == 1){
+                    warning = 9;
+                } else if (spAlly[2] == spMaxAlly[2]){
                     warning = 4;
                 } else {
                     spAlly[2] += 30;
@@ -1215,7 +1236,9 @@ public class Game
                 }
                 break;
             case 3:
-                if (spAlly[3] == spMaxAlly[3]){
+                if (allyDead[3] == 1){
+                    warning = 9;
+                } else if (spAlly[3] == spMaxAlly[3]){
                     warning = 4;
                 } else {
                     spAlly[3] += 30;
@@ -1257,6 +1280,7 @@ public class Game
         warning = 420;
         switch (turn){
             case 0: // if allies turn
+                score++;
                 switch (currentCharacter){
                     case 0:
                         if (allyDead[1] == 1){
@@ -1268,7 +1292,7 @@ public class Game
                                         if (enemyDead[1] == 1){ // if second ally dead
                                             if (enemyDead[2] == 1){ // if third ally dead
                                                 if (enemyDead[3] == 1){ // if all allies dead
-                                                    //System.out.println("you fuckin won bro");
+                                                    //System.out.println("you  won bro");
                                                 } else { // if fourth enemy not dead any everyone else is
                                                     currentCharacter = 3;
                                                 }
@@ -1303,7 +1327,7 @@ public class Game
                                     if (enemyDead[1] == 1){ // if second ally dead
                                         if (enemyDead[2] == 1){ // if third ally dead
                                             if (enemyDead[3] == 1){ // if all allies dead
-                                                //System.out.println("you fuckin won bro");
+                                                //System.out.println("you  won bro");
                                             } else { // if fourth enemy not dead any everyone else is
                                                 currentCharacter = 3;
                                             }
@@ -1334,7 +1358,7 @@ public class Game
                                 if (enemyDead[1] == 1){ // if second ally dead
                                     if (enemyDead[2] == 1){ // if third ally dead
                                         if (enemyDead[3] == 1){ // if all allies dead
-                                            //System.out.println("you fuckin won bro");
+                                            //System.out.println("you  won bro");
                                         } else { // if fourth enemy not dead any everyone else is
                                             currentCharacter = 3;
                                         }
@@ -1361,7 +1385,7 @@ public class Game
                             if (enemyDead[1] == 1){ // if second ally dead
                                 if (enemyDead[2] == 1){ // if third ally dead
                                     if (enemyDead[3] == 1){ // if all allies dead
-                                        //System.out.println("you fuckin won bro");
+                                        //System.out.println("you  won bro");
                                     } else { // if fourth enemy not dead any everyone else is
                                         currentCharacter = 3;
                                     }
@@ -1393,7 +1417,7 @@ public class Game
                                         if (allyDead[1] == 1){ // if second ally dead
                                             if (allyDead[2] == 1){ // if third ally dead
                                                 if (allyDead[3] == 1){ // if all allies dead
-                                                    //System.out.println("you fuckin dead bro"); // lose the game
+                                                    //System.out.println("you  dead bro"); // lose the game
                                                 } else { // if fourth ally not dead and everyone else is
                                                     currentCharacter = 3; // start with fourth character
                                                 }
@@ -1429,7 +1453,7 @@ public class Game
                                     if (allyDead[1] == 1){ // if second ally dead
                                         if (allyDead[2] == 1){ // if third ally dead
                                             if (allyDead[3] == 1){ // if all allies dead
-                                                //System.out.println("you fuckin dead bro"); // lose the game
+                                                //System.out.println("you  dead bro"); // lose the game
                                             } else { // if fourth ally not dead and everyone else is
                                                 currentCharacter = 3; // start with fourth character
                                             }
@@ -1461,7 +1485,7 @@ public class Game
                                 if (allyDead[1] == 1){ // if second ally dead
                                     if (allyDead[2] == 1){ // if third ally dead
                                         if (allyDead[3] == 1){ // if all allies dead
-                                            //System.out.println("you fuckin dead bro"); // lose the game
+                                            //System.out.println("you  dead bro"); // lose the game
                                         } else { // if fourth ally not dead and everyone else is
                                             currentCharacter = 3; // start with fourth character
                                         }
@@ -1489,7 +1513,7 @@ public class Game
                             if (allyDead[1] == 1){ // if second ally dead
                                 if (allyDead[2] == 1){ // if third ally dead
                                     if (allyDead[3] == 1){ // if all allies dead
-                                        //System.out.println("you fuckin dead bro"); // lose the game
+                                        //System.out.println("you  dead bro"); // lose the game
                                     } else { // if fourth ally not dead and everyone else is
                                         currentCharacter = 3; // start with fourth character
                                     }
@@ -1553,11 +1577,13 @@ public class Game
                 allyDead[i] = 0; // set status to alive
             }
         }
-        if (enemyDead[0] == 1 && enemyDead[1] == 1 && enemyDead[2] == 1 && enemyDead[3] == 1){
-            turn = 3;
+        if (enemyDead[0] == 1 && enemyDead[1] == 1 && enemyDead[2] == 1 && enemyDead[3] == 1){ // if all enemies are dead
+            turn = 3; // set turn to 3 so that window class knows its won
+            textHistory.add("You Won! It took you " + score + " turns to eliminate all enemies");
+            file("write", 1);
         }
-        if (allyDead[0] == 1 && allyDead[1] == 1 && allyDead[2] == 1 && allyDead[3] == 1){
-            turn = 2;
+        if (allyDead[0] == 1 && allyDead[1] == 1 && allyDead[2] == 1 && allyDead[3] == 1){ // if all allies are dead
+            turn = 2; // set turn to 2 so that window class knows its lost
         }
     }
 
@@ -1569,18 +1595,21 @@ public class Game
                 difficulty = set;
                 damageMultiplier = 1.6;
                 damageTakenMultiplier = 0.6;
+                file("write", 0);
                 break;
             case 1:
                 //System.out.println("difficulty : medium");
                 damageMultiplier = 1;
                 damageTakenMultiplier = 1;
                 difficulty = set;
+                file("write", 0);
                 break;
             case 2:
                 //System.out.println("difficulty : hard");
                 damageMultiplier = 0.6;
                 damageTakenMultiplier = 1.6;
                 difficulty = set;
+                file("write", 0);
                 break;
         }
     }
@@ -1682,6 +1711,119 @@ public class Game
                 resist = rng.nextInt(7);
                 nullify = rng.nextInt(7);
             }
+        }
+    }
+    
+    void file(String doing, int what){
+        switch (doing){
+            case "get":
+                switch (what){ // what file gets read
+                    case 0: // difficulty
+                        try { // open the saved difficulty file
+                            File difficultyTXT = new File("difficulty.txt"); // with this
+                            Scanner scanner = new Scanner(difficultyTXT); // use the scanner to read the file
+                            try {
+                                String difficultySaved = scanner.nextLine(); // set the saved difficulty STRING to this file
+                                try { // try to get an int from this
+                                int difficultyInt = Integer.parseInt(difficultySaved); // if you can, great
+                                if (difficultyInt < 0 || difficultyInt > 2){ // if its not a normal difficulty number (and the marker thinks theyre sly changing my files)
+                                    setDifficulty(1); // set the difficulty to medium anyways
+                                    //System.out.println("defaulted the difficulty to medium");
+                                    textHistory.add("No previous difficulty detected. Your current difficulty is MEDIUM");
+                                } else { // but if the number is a normal difficulty number 0 -> 2
+                                    setDifficulty(difficultyInt); // set the difficulty to the saved difficulty
+                                    switch (difficultyInt){
+                                        case 0:
+                                            textHistory.add("Previous difficulty detected. Your current difficulty is EASY");
+                                            break;
+                                        case 1:
+                                            textHistory.add("Previous difficulty detected. Your current difficulty is MEDIUM");
+                                            break;
+                                        case 2:
+                                            textHistory.add("Previous difficulty detected. Your current difficulty is HARD");
+                                            break;
+                                    }
+                                }
+                                } catch (Exception e) { // but if we cannot get an int at all (Because the marker thinks theyre sly and changing code) 
+                                    setDifficulty(1); // set the difficulty to medium anyways
+                                    //System.out.println("defaulted the difficulty to medium");
+                                    textHistory.add("No previous difficulty detected. Your current difficulty is MEDIUM");
+                                }
+                                scanner.close(); // remove scanner
+                            } catch (Exception e) {
+                                setDifficulty(1); // set the difficulty to medium anyways
+                                //System.out.println("defaulted the difficulty to medium");
+                                textHistory.add("No previous difficulty detected. Your current difficulty is MEDIUM");
+                            }
+                        } catch (FileNotFoundException e) {
+                            //System.out.println("no file DETECTED XDD ( difficulty)");
+                            try {
+                                File difficultyFile = new File("difficulty.txt");
+                                if (difficultyFile.createNewFile()){
+                                    //System.out.println("difficulty file created");
+                                    setDifficulty(1);
+                                    textHistory.add("No previous difficulty detected. Your current difficulty is MEDIUM");
+                                } else {
+                                    //System.out.println("file already exists"); // but like, how would you manage getting here lmao. the whole point of this is that there is no file and it has to be created. so how can it already exist
+                                }
+                            } catch (IOException ee) {
+                                ee.printStackTrace();
+                            }
+                        }
+                        break;
+                    case 1: // high score
+                        try {
+                            File highScoreTXT = new File("highScore.txt");
+                            Scanner scanner = new Scanner(highScoreTXT);
+                            try {
+                                String highScore = scanner.nextLine();
+                                textHistory.add("Your previous high score was " + highScore + ". Try and beat it!");
+                                scanner.close();
+                            } catch (Exception e){
+                                textHistory.add("No previous high score was detected. Try and do your best!");
+                            }
+                        } catch (FileNotFoundException e) {
+                            //System.out.println("NO FILE FOUND LMAO (high score file not found)");
+                            try {
+                                File difficultyFile = new File("highScore.txt");
+                                if (difficultyFile.createNewFile()){
+                                    //System.out.println("high score file created");
+                                    textHistory.add("No previous high score was detected. Try and do your best!");
+                                } else {
+                                    //System.out.println("file already exists"); // but like, how would you manage getting here lmao. the whole point of this is that there is no file and it has to be created. so how can it already exist
+                                }
+                            } catch (IOException ee) {
+                                ee.printStackTrace();
+                            }
+                        }
+                        break;
+                }
+                break;
+            case "write":
+                // i technically shouldn't need to marker proof this because writing to a file should 
+                switch (what){ // what file gets written to
+                    case 0: // difficulty
+                        try {
+                            FileWriter writer = new FileWriter("difficulty.txt");
+                            writer.write(new Integer(difficulty).toString());
+                            //System.out.println("wrote " + difficulty);
+                            writer.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 1: // high score
+                        try {
+                            FileWriter writer = new FileWriter("highScore.txt");
+                            writer.write(new Integer(score).toString());
+                            //System.out.println("high score " + score + " saved");
+                            writer.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+                break;
         }
     }
 }
