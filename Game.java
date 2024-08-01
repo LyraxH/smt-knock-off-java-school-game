@@ -642,7 +642,7 @@ public class Game
         String what = "o";
         String target = "o";
         int damage = 0;
-        if (hpEnemy[enemy] <= 0){
+        if (enemyDead[enemy] == 1){
             warning = 3;
         } else {
             switch (currentCharacter){
@@ -918,6 +918,20 @@ public class Game
         String affinityString = "o";
         int damage = 0;
         targetAll = false;
+        switch (enemy){
+            case 0:
+                target = "Virtue";
+                break;
+            case 1:
+                target = "Eerie";
+                break;
+            case 2:
+                target = "Soul";
+                break;
+            case 3:
+                target = "Reign";
+                break;
+        }
         if (enemy == 69){ // if a target all skill
             targetAll = true;
             damage = 65;
@@ -947,8 +961,23 @@ public class Game
                     affinityString = "Sun";
                     break;
             }
+            textHistory.add(who + " uses " + what + "on on every enemy");
+            if (hpEnemy[0] >= 1){
+                calculateDamage(0, "Virtue", affinityString, damage, affinityInt);
+            }
+            if (hpEnemy[1] >= 1){
+                calculateDamage(1, "Eerie", affinityString, damage, affinityInt);
+            }
+            if (hpEnemy[2] >= 1){
+                calculateDamage(2, "Soul", affinityString, damage, affinityInt);
+            }
+            if (hpEnemy[3] >= 1){
+                calculateDamage(3, "Reign", affinityString, damage, affinityInt);
+            }
+            spAlly[currentCharacter] -= 21;
+            goNext();
         } else {
-            if (hpEnemy[enemy] <= 0){
+            if (enemyDead[enemy] == 1){
                 warning = 3;
             } else {
                 damage = 85;
@@ -997,43 +1026,12 @@ public class Game
                         }
                         break;
                 }
+                textHistory.add(who + " uses " + what + " on " + target);
+                calculateDamage(enemy, target, affinityString, damage, affinityInt);
+                spAlly[currentCharacter] -= 9;
+                goNext();
             }
         }
-        switch (enemy){
-            case 0:
-                target = "Virtue";
-                break;
-            case 1:
-                target = "Eerie";
-                break;
-            case 2:
-                target = "Soul";
-                break;
-            case 3:
-                target = "Reign";
-                break;
-        }
-        if (targetAll){
-            textHistory.add(who + " uses " + what + "on on every enemy");
-            if (hpEnemy[0] >= 1){
-                calculateDamage(0, "Virtue", affinityString, damage, affinityInt);
-            }
-            if (hpEnemy[1] >= 1){
-                calculateDamage(1, "Eerie", affinityString, damage, affinityInt);
-            }
-            if (hpEnemy[2] >= 1){
-                calculateDamage(2, "Soul", affinityString, damage, affinityInt);
-            }
-            if (hpEnemy[3] >= 1){
-                calculateDamage(3, "Reign", affinityString, damage, affinityInt);
-            }
-            spAlly[currentCharacter] -= 21;
-        } else {
-            textHistory.add(who + " uses " + what + " on " + target);
-            calculateDamage(enemy, target, affinityString, damage, affinityInt);
-            spAlly[currentCharacter] -= 9;
-        }
-        goNext();
     }
     
     void healing(int ally){
