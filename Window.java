@@ -20,83 +20,83 @@ import java.io.*;
 import java.util.*;
 public class Window extends JFrame implements ActionListener, KeyListener, MouseListener
 {
-    Scanner input = new Scanner(System.in);
+    Scanner input = new Scanner(System.in); // declare scanner to take inputs, this wont affect privacy because the inputs are only being taken while the app is open and in focus (not running in the background)
     Images img = new Images(); // imports images from other class
     Game game = new Game(); // imports data from game region
-    int tutorial = 0;
-    JLabel tutorialContent = new JLabel();
+    int tutorial = 0; // declares which page the tutorial will be
+    JLabel tutorialContent = new JLabel(); // contains the images for the tutorial to be displayed
 
     // chat window variables
-    JLabel textUpdateOne = new JLabel("FILLER TEXT NUMBER ONE NO ONE WILL EVER SEE THIS XDD");
-    JLabel textUpdateTwo = new JLabel("https://youtube.com/@lyraxh");
-    JLabel textUpdateThree = new JLabel("ASDASDASD");
+    JLabel textUpdateOne = new JLabel("FILLER TEXT NUMBER ONE NO ONE WILL EVER SEE THIS XDD"); // the top part of the screen that displays the battle history
+    JLabel textUpdateTwo = new JLabel("https://youtube.com/@lyraxh"); // ^ that but part 2
+    JLabel textUpdateThree = new JLabel("ASDASDASD"); // ^ that but part 3
 
     // enemy window variables
-    JButton enemyOneButton = new JButton();
-    JButton enemyTwoButton = new JButton();
-    JButton enemyThreeButton = new JButton();
-    JButton enemyFourButton = new JButton();
-    JLabel enemyOneHPText = new JLabel("300 / 300");
-    JLabel enemyTwoHPText = new JLabel("300 / 300");
-    JLabel enemyThreeHPText = new JLabel("300 / 300");
-    JLabel enemyFourHPText = new JLabel("300 / 300");
+    JButton enemyOneButton = new JButton(); // enemy one icon, is a button so that you can open their stats
+    JButton enemyTwoButton = new JButton(); // ^ same for enemy 2
+    JButton enemyThreeButton = new JButton(); // ^same for enemy 3
+    JButton enemyFourButton = new JButton(); // ^ same for enemy 4
+    JLabel enemyOneHPText = new JLabel("300 / 300"); // displays current hp and max hp
+    JLabel enemyTwoHPText = new JLabel("300 / 300");// displays current hp and max hp
+    JLabel enemyThreeHPText = new JLabel("300 / 300");// displays current hp and max hp
+    JLabel enemyFourHPText = new JLabel("300 / 300");// displays current hp and max hp
 
     // ally window variables
-    JButton allyOneButton = new JButton();
-    JButton allyTwoButton = new JButton();
-    JButton allyThreeButton = new JButton();
-    JButton allyFourButton =  new JButton();
-    JLabel allyOneHPText = new JLabel("HP: 200 / 200");
-    JLabel allyTwoHPText = new JLabel("HP: 200 / 200");
-    JLabel allyThreeHPText = new JLabel("HP: 200 / 200");
-    JLabel allyFourHPText = new JLabel("HP: 200 / 200");
-    JLabel allyOneSPText = new JLabel("SP: 150 / 150");
-    JLabel allyTwoSPText = new JLabel("SP: 150 / 150");
-    JLabel allyThreeSPText = new JLabel("SP: 150 / 150");
-    JLabel allyFourSPText = new JLabel("SP: 150 / 150");
+    JButton allyOneButton = new JButton(); // ally one icon, is a button so that you can open their stats
+    JButton allyTwoButton = new JButton(); // ^ same for ally 2
+    JButton allyThreeButton = new JButton(); // ^same for ally 3
+    JButton allyFourButton =  new JButton(); // ^ same for ally 4
+    JLabel allyOneHPText = new JLabel("HP: 200 / 200");// displays current hp and max hp
+    JLabel allyTwoHPText = new JLabel("HP: 200 / 200");// displays current hp and max hp
+    JLabel allyThreeHPText = new JLabel("HP: 200 / 200");// displays current hp and max hp
+    JLabel allyFourHPText = new JLabel("HP: 200 / 200");// displays current hp and max hp
+    JLabel allyOneSPText = new JLabel("SP: 150 / 150");// displays current sp and max sp
+    JLabel allyTwoSPText = new JLabel("SP: 150 / 150");// displays current sp and max sp
+    JLabel allyThreeSPText = new JLabel("SP: 150 / 150");// displays current sp and max sp
+    JLabel allyFourSPText = new JLabel("SP: 150 / 150");// displays current sp and max sp
 
-    //move window variables
-    JButton backButton = new JButton(img.unBack);
-    JButton moveButtonOne = new JButton(img.attackIcon);
-    JButton moveButtonTwo = new JButton(img.unGuardIcon);
-    JButton moveButtonThree = new JButton(img.unMagicIcon);
-    JButton moveButtonFour = new JButton(img.unItemIcon);
+    //move window variables (the five action buttons you get access to to progress the game and control your characters
+    JButton backButton = new JButton(img.unBack);  // default settings, but its appearance and action value will be changed based on the page
+    JButton moveButtonOne = new JButton(img.attackIcon);// default settings, but its appearance and action value will be changed based on the page
+    JButton moveButtonTwo = new JButton(img.unGuardIcon);// default settings, but its appearance and action value will be changed based on the page
+    JButton moveButtonThree = new JButton(img.unMagicIcon);// default settings, but its appearance and action value will be changed based on the page
+    JButton moveButtonFour = new JButton(img.unItemIcon);// default settings, but its appearance and action value will be changed based on the page
 
-    // game window variables
-    JLabel allyOneSprite = new JLabel();
-    JLabel allyTwoSprite = new JLabel();
-    JLabel allyThreeSprite = new JLabel();
-    JLabel allyFourSprite = new JLabel();
-    JLabel enemyOneSprite = new JLabel();
-    JLabel enemyTwoSprite = new JLabel();
-    JLabel enemyThreeSprite = new JLabel();
-    JLabel enemyFourSprite = new JLabel();
+    // game window variables (large middle screen that displays most actions
+    JLabel allyOneSprite = new JLabel(); // as name says
+    JLabel allyTwoSprite = new JLabel();// as name says
+    JLabel allyThreeSprite = new JLabel();// as name says
+    JLabel allyFourSprite = new JLabel();// as name says
+    JLabel enemyOneSprite = new JLabel();// as name says
+    JLabel enemyTwoSprite = new JLabel();// as name says
+    JLabel enemyThreeSprite = new JLabel();// as name says
+    JLabel enemyFourSprite = new JLabel();// as name says
 
-    // j menu variables
+    // j menu variables 
     JMenuBar menuBar = new JMenuBar();
-    JMenu system = new JMenu("System");
-    JMenu difficulty = new JMenu("Difficulty");
-    JMenu battleLog = new JMenu("Battle Log");
-    JMenu tutorialMenu = new JMenu("Instructions");
-    JMenuItem openTutorial = new JMenuItem("Open Tutorial");
-    JMenuItem goBackItem = new JMenuItem("Go Back");
-    JMenuItem quitGame = new JMenuItem("Quit Game");
-    JMenuItem easyDif = new JMenuItem("Easy");
-    JMenuItem mediumDif = new JMenuItem("Medium");
-    JMenuItem hardDif = new JMenuItem("Hard");
-    JMenuItem displayBattleLog = new JMenuItem("Display Battle Log");
+    JMenu system = new JMenu("System"); // open system tabs, like the go back button and quit game
+    JMenu difficulty = new JMenu("Difficulty"); // will open to reveal what types of difficulties you can switch to
+    JMenu battleLog = new JMenu("Battle Log"); // will open battle log
+    JMenu tutorialMenu = new JMenu("Instructions");// as name says
+    JMenuItem openTutorial = new JMenuItem("Open Tutorial");// as name says
+    JMenuItem goBackItem = new JMenuItem("Go Back");// as name says
+    JMenuItem quitGame = new JMenuItem("Quit Game");// as name says
+    JMenuItem easyDif = new JMenuItem("Easy"); // will set and save the difficulty to easy
+    JMenuItem mediumDif = new JMenuItem("Medium"); // will set and save the difficulty to medium
+    JMenuItem hardDif = new JMenuItem("Hard"); // will set and save the difficulty to hard
+    JMenuItem displayBattleLog = new JMenuItem("Display Battle Log"); // will open the battle log in a new window
     
     // panel for different regions of the game
     JPanel moveWindow = new JPanel(); // where actions can be taken
     JPanel chatWindow = new JPanel(); // where text of the actions taken is displayed
     
     JLayeredPane enemyWindow = new JLayeredPane();
-    JPanel enemyWindowBase = new JPanel();
+    JPanel enemyWindowBase = new JPanel(); // where health is displayed
     JPanel enemyWindowBackgroundPanel = new JPanel();
     JLabel enemyWindowBackground = new JLabel();
     
     JLayeredPane allyWindow = new JLayeredPane();
-    JPanel allyWindowBase = new JPanel(); // where ally health is displayed
+    JPanel allyWindowBase = new JPanel(); // where ally health and sp is displayed
     JPanel allyWindowBackgroundPanel = new JPanel();
     JLabel allyWindowBackground = new JLabel();
     
@@ -105,14 +105,13 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
     JPanel gameWindowStats = new JPanel(); // stat overlay
     JPanel gameWindowAttack = new JPanel(); // attack
     JPanel gameWindowDefense = new JPanel(); // defense
-    JPanel gameWindowDead = new JPanel(); // skull emoji
+    JPanel gameWindowDead = new JPanel(); // skull emoji for if the character is dead or not
     JPanel gameWindowAffinities = new JPanel();  // where weakness indicator is displayed
     JPanel gameWindowBackgroundPanel = new JPanel();
     JLabel gameWindowBackground = new JLabel();
-
     public Window(){
-        game.Start();
-        setImages();
+        game.Start(); // initializes the game class
+        setImages(); // 
         setMenu();
         // adding panel regions to the jframe
         this.setIconImage(img.LOGO.getImage());
@@ -2195,7 +2194,7 @@ public class Window extends JFrame implements ActionListener, KeyListener, Mouse
         battleLog.add(displayBattleLog);
     }
 
-    void setImages(){
+    void setImages(){ // as name says
         allyOneButton.setIcon(img.aegisIMG);
         allyTwoButton.setIcon(img.dawnIMG);
         allyThreeButton.setIcon(img.sentinelIMG);
